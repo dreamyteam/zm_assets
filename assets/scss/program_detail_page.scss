@@ -7,6 +7,7 @@
 @import "./components/program_info.scss";
 @import "./components/program_nav.scss";
 @import "./components/comments.scss";
+@import "./components/backtotop.scss";
 // 指数综合
 section.program_values {
     font-size: 0;
@@ -405,8 +406,8 @@ section.user_reviews {
         padding-bottom: 44px;
         .review_chart {
             padding-right: 30px;
-            button{
-                right:30px;
+            button {
+                right: 30px;
             }
         }
     }
@@ -442,6 +443,18 @@ section.user_reviews {
     margin-top: 67px;
     height: 305px;
     padding: 0 20px;
+}
+
+#chart_heat_trend {
+    position: relative;
+    &::before {
+        content: '一周热度指数趋势';
+        position: absolute;
+        left: 20px;
+        top: -20px;
+        font-size: 16px;
+        color: #4a4a4a;
+    }
 }
 
 //传播能力图表

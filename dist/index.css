@@ -76,7 +76,9 @@ h1, h2, h3, h4, h5, h6 {
 
 input, button {
   outline: none;
-  border: none;
+  border: none; }
+
+button {
   cursor: pointer; }
 
 .clearfix:before, .clearfix:after {
@@ -110,6 +112,13 @@ section {
       height: 20px;
       background: #00A69D;
       border-radius: 0 4px 4px 0; }
+    section h1.title .date_region {
+      margin-left: 10px;
+      font-size: 14px;
+      color: #9b9b9b; }
+  section h6.trend_introduction {
+    font-size: 14px;
+    color: #9b9b9b; }
   section .values_container {
     font-size: 0; }
     section .values_container .number {
@@ -199,6 +208,27 @@ section {
     text-align: center;
     font-size: 14px;
     height: 370px; }
+    .col_2_container .col h3.title {
+      font-size: 14px;
+      color: #4a4a4a;
+      line-height: 16px; }
+    .col_2_container .col h4.sub_title {
+      font-size: 14px;
+      color: #9b9b9b;
+      margin-bottom: 22px; }
+    .col_2_container .col .tags span {
+      display: inline-block;
+      margin-right: 10px;
+      width: 40px;
+      border-radius: 31px;
+      border: 1px solid #979797;
+      text-align: center;
+      line-height: 18px; }
+      .col_2_container .col .tags span a {
+        cursor: pointer;
+        line-height: 18px;
+        font-size: 12px;
+        color: #979797; }
 
 footer {
   width: 780px;
@@ -287,15 +317,17 @@ footer {
     width: 690px;
     margin: 0 auto;
     margin-top: 40px; }
-    .index_head .search_bar_container input[type=radio] {
+    .index_head .search_bar_container label {
+      cursor: pointer;
       position: relative;
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
       margin-right: 33px; }
-    .index_head .search_bar_container input[type=radio]:checked {
-      font-size: 14px;
+    .index_head .search_bar_container input[type=radio] {
+      display: none; }
+    .index_head .search_bar_container input[type=radio]:checked + label {
       color: white; }
-      .index_head .search_bar_container input[type=radio]:checked:after {
+      .index_head .search_bar_container input[type=radio]:checked + label:after {
         content: '';
         position: absolute;
         bottom: -14px;
@@ -306,16 +338,6 @@ footer {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-bottom: 10px solid #fff; }
-    .index_head .search_bar_container input[value="all"]::before {
-      content: '全部'; }
-    .index_head .search_bar_container input[value="literature"]::before {
-      content: '文学'; }
-    .index_head .search_bar_container input[value="film"]::before {
-      content: '影视'; }
-    .index_head .search_bar_container input[value="character"]::before {
-      content: '人物'; }
-    .index_head .search_bar_container input[value="mechanism"]::before {
-      content: '机构'; }
     .index_head .search_bar_container .serarch_bar_container {
       padding-right: 100px;
       position: relative;
@@ -779,5 +801,3 @@ header {
 footer {
   margin: 0 auto;
   background: #262729; }
-
-/*# sourceMappingURL=index.css.map */

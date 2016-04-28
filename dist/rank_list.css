@@ -75,7 +75,9 @@ h1, h2, h3, h4, h5, h6 {
 
 input, button {
   outline: none;
-  border: none;
+  border: none; }
+
+button {
   cursor: pointer; }
 
 .clearfix:before, .clearfix:after {
@@ -109,6 +111,13 @@ section {
       height: 20px;
       background: #00A69D;
       border-radius: 0 4px 4px 0; }
+    section h1.title .date_region {
+      margin-left: 10px;
+      font-size: 14px;
+      color: #9b9b9b; }
+  section h6.trend_introduction {
+    font-size: 14px;
+    color: #9b9b9b; }
   section .values_container {
     font-size: 0; }
     section .values_container .number {
@@ -198,6 +207,27 @@ section {
     text-align: center;
     font-size: 14px;
     height: 370px; }
+    .col_2_container .col h3.title {
+      font-size: 14px;
+      color: #4a4a4a;
+      line-height: 16px; }
+    .col_2_container .col h4.sub_title {
+      font-size: 14px;
+      color: #9b9b9b;
+      margin-bottom: 22px; }
+    .col_2_container .col .tags span {
+      display: inline-block;
+      margin-right: 10px;
+      width: 40px;
+      border-radius: 31px;
+      border: 1px solid #979797;
+      text-align: center;
+      line-height: 18px; }
+      .col_2_container .col .tags span a {
+        cursor: pointer;
+        line-height: 18px;
+        font-size: 12px;
+        color: #979797; }
 
 header.ipcool_hearder {
   background: rgba(255, 255, 255, 0.95);
@@ -516,5 +546,3 @@ section.rank_detail {
       border-top: 1px solid #cbcbcb; }
     section.rank_detail table td {
       color: #9b9b9b; }
-
-/*# sourceMappingURL=rank_list.css.map */

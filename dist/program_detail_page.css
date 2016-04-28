@@ -385,7 +385,6 @@ footer {
       line-height: 46px; }
 
 .popup_mask {
-  display: none;
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -591,11 +590,19 @@ section.program_info {
     background: #f5a623;
     right: 30px;
     top: -6px;
-    font-family: Avenir-Black;
+    font-family: Avenir-Black,helvetica ,Arial;
     font-size: 20px;
     color: #f2f2f2;
     text-align: center;
     line-height: 66px; }
+    section.program_info .level_flag span {
+      font-size: 14px;
+      line-height: 14px;
+      position: absolute;
+      left: 50%;
+      top: 5px;
+      -webkit-transform: translateX(-50%);
+              transform: translateX(-50%); }
     section.program_info .level_flag::before {
       content: '';
       position: absolute;
@@ -816,6 +823,81 @@ section.write_comment_container form.write_comment {
     width: 120px;
     height: 40px;
     font-size: 14px; }
+
+#gotoTop {
+  position: fixed;
+  bottom: 100px;
+  width: 50px;
+  right: 20px;
+  height: 110px; }
+  #gotoTop button.back_to_top, #gotoTop a.feedback {
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    background: #84d2cd;
+    border-radius: 3px;
+    color: #fff;
+    position: relative;
+    transition: all 1s linear;
+    box-shadow: 0px 2px 2px 0px rgba(209, 209, 209, 0.5); }
+    #gotoTop button.back_to_top:hover, #gotoTop a.feedback:hover {
+      background: #00a69d; }
+  #gotoTop button.back_to_top {
+    font-size: 28px;
+    line-height: 50px;
+    margin-bottom: 10px; }
+    #gotoTop button.back_to_top::after {
+      position: absolute;
+      content: '';
+      width: 30px;
+      height: 31px;
+      background: url("../assets/images/uparror.png") no-repeat;
+      background-size: 30px;
+      left: 10px;
+      top: 10px; }
+    #gotoTop button.back_to_top:hover::after {
+      -webkit-animation: uparr 2s linear infinite;
+              animation: uparr 2s linear infinite; }
+  #gotoTop a.feedback {
+    padding: 5px; }
+    #gotoTop a.feedback::after {
+      position: absolute;
+      content: '';
+      width: 30px;
+      height: 31px;
+      background: url("../assets/images/yijianfankui.png") no-repeat;
+      background-size: 30px;
+      left: 10px;
+      top: 10px; }
+    #gotoTop a.feedback:hover::after {
+      content: '意见反馈';
+      font-size: 14px;
+      line-height: 16px;
+      background: none; }
+
+@-webkit-keyframes uparr {
+  0% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); }
+  50% {
+    -webkit-transform: translateY(-2px);
+            transform: translateY(-2px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
+
+@keyframes uparr {
+  0% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); }
+  50% {
+    -webkit-transform: translateY(-2px);
+            transform: translateY(-2px); }
+  100% {
+    -webkit-transform: translateY(0px);
+            transform: translateY(0px); } }
 
 section.program_values {
   font-size: 0; }
@@ -1155,6 +1237,16 @@ section.user_reviews .review_container {
   height: 305px;
   padding: 0 20px; }
 
+#chart_heat_trend {
+  position: relative; }
+  #chart_heat_trend::before {
+    content: '一周热度指数趋势';
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    font-size: 16px;
+    color: #4a4a4a; }
+
 #chart_transmission_index {
   padding: 0 20px;
   height: 250px; }
@@ -1178,5 +1270,3 @@ section.user_reviews .review_container {
   width: 100%;
   height: 470px;
   position: relative; }
-
-/*# sourceMappingURL=program_detail_page.css.map */

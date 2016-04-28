@@ -66,14 +66,17 @@
         width: 690px;
         margin: 0 auto;
         margin-top: 40px;
-        input[type=radio] {
+        label {
+            cursor:pointer;
             position: relative;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.7);
             margin-right: 33px;
         }
-        input[type=radio]:checked {
-            font-size: 14px;
+        input[type=radio] {
+            display: none;
+        }
+        input[type=radio]:checked+label {
             color: rgba(255, 255, 255, 1);
             &:after {
                 content: '';
@@ -86,31 +89,6 @@
                 border-left: 10px solid transparent;
                 border-right: 10px solid transparent;
                 border-bottom: 10px solid #fff;
-            }
-        }
-        input[value="all"] {
-            &::before {
-                content: '全部';
-            }
-        }
-        input[value="literature"] {
-            &::before {
-                content: '文学';
-            }
-        }
-        input[value="film"] {
-            &::before {
-                content: '影视';
-            }
-        }
-        input[value="character"] {
-            &::before {
-                content: '人物';
-            }
-        }
-        input[value="mechanism"] {
-            &::before {
-                content: '机构';
             }
         }
         .serarch_bar_container {
@@ -675,12 +653,12 @@ header {
     }
 }
 
-.footer_container{
-     background: #262729;
-     padding:45px 0;
-}
-footer {
-    margin:0 auto;
+.footer_container {
     background: #262729;
+    padding: 45px 0;
+}
 
+footer {
+    margin: 0 auto;
+    background: #262729;
 }

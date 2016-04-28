@@ -11,19 +11,13 @@
     <header class="ipcool_hearder clearfix">
         <div class="inner">
             <a href="/" class="logo"></a>
-            <!--搜索框 用户中心显示-->
-            <div class="form_search">
-                <input type="text" class="search" placeholder="试试搜索美人鱼">
-                <input class="submit" type="submit" value="">
-            </div>
-            <!-- 搜索框 结束 -->
             <!--注册 登录按钮-->
-            <!-- <nav>
-				<button class="register">注册</button>
-				<button class="login">登录</button>
-			</nav> -->
+            <nav>
+                <button class="register" id="register">注册</button>
+                <button class="login" id="login">登录</button>
+            </nav>
             <!--登录后用户id-->
-            <div class="user">
+            <!-- <div class="user">
                 <h2 class="user_name">土豆</h2>
                 <div class="user_menu">
                     <div class="arrow">
@@ -38,7 +32,7 @@
                         <li><a href="#">退出登录</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </header>
     <!--main-->
@@ -57,17 +51,22 @@
         <section class="search_result">
             <!--搜索结果为0时 显示-->
             <!-- <div class="sresult_none clearfix" >
-				<h5>"<span class="name">霸道总裁爱上我</span>"可能不具备分析价值或暂未被收录</h5>
-				<h6>您可以:</h6>
-				<button>提交收录申请</button>
-				<h6>或</h6>
-				<button class="disabled">购买专属分析服务 | ￥999.00</button>
-			</div> -->
+                <h5>"<span class="name">霸道总裁爱上我</span>"可能不具备分析价值或暂未被收录</h5>
+                <h6>您可以:</h6>
+                <button>提交收录申请</button>
+                <h6>或</h6>
+                <button class="disabled">购买专属分析服务 | ￥999.00</button>
+            </div> -->
             <!--搜索结果-->
             <div class="sresult_ip clearfix">
-                <img src="../assets/images/pic.png">
+                <a href="">
+                    <img src="../assets/images/pic.png">
+                </a>
                 <div class="sresult_content">
-                    <h2>美人鱼（2016） <span class="type">小说</span></h2>
+                    <h2>
+                        <a href="">美人鱼（2016)</a>
+                        <span class="type">小说</span>
+                    </h2>
                     <h6>作者: 琼瑶</h6>
                     <ul class="quotient">
                         <li>
@@ -152,25 +151,6 @@
                 </div>
             </div>
         </section>
-        <!--分页器 -->
-        <div class="paging">
-            <ul>
-                <li>
-                    <a href="#">
-                        <</a>
-                </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">6</a></li>
-                <li><a href="#">7</a></li>
-                <li><a href="#">8</a></li>
-                <li><a href="#">></a></li>
-            </ul>
-        </div>
-        <!--分页器-->
     </div>
     <footer>
         <nav>
@@ -189,6 +169,64 @@
             </div>
         </nav>
     </footer>
+
+    <!-- 登录注册弹窗 -->
+    <div class="popup_box sign" id="popup_register">
+        <button class="close"></button>
+        <span class="logo"></span>
+        <form id="from_register">
+            <span class="err_msg"></span>
+            <div class="sign_container">
+                <label class="icon_phone_number"></label>
+                <input type="text" name="phone_number" placeholder="手机号码" value="" />
+            </div>
+            <div class="sign_container">
+                <label class="icon_password"></label>
+                <input type="password" name="password" placeholder="密码" />
+            </div>
+            <div class="sign_container verify">
+                <label class="icon_verify"></label>
+                <input type="text" name="verify_code" placeholder="验证码" />
+                <button class="btn_send_verify_code">发送验证码</button>
+            </div>
+            <button class="solid">登录</button>
+            <input class="hollow" type="submit" value="创建帐号" />
+        </form>
+        <div class="infos">
+            <a href="#" target="_blank">用户协议</a>
+            <a href="#" target="_blank">隐私政策</a>
+            <a href="#" target="_blank">帮助文档</a>
+        </div>
+    </div>
+    <div class="popup_box sign" id="popup_login">
+        <button class="close"></button>
+        <span class="logo"></span>
+        <form id="from_login">
+            <span class="err_msg"></span>
+            <div class="sign_container">
+                <label class="icon_phone_number"></label>
+                <input type="text" name="phone_number" placeholder="手机号码" />
+            </div>
+            <div class="sign_container">
+                <label class="icon_password"></label>
+                <input type="password" name="password" placeholder="密码" />
+            </div>
+            <div class="remember_pwd_container clearfix">
+                <input name="remember_pwd" type="checkbox" value="remember_pwd" checked="checked" />
+                <label>记住密码</label>
+                <a href="#">忘记密码</a>
+            </div>
+            <input class="solid" type="submit" value="登录" />
+            <button class="hollow">创建帐号</button>
+        </form>
+        <div class="infos">
+            <a href="#" target="_blank">用户协议</a>
+            <a href="#" target="_blank">隐私政策</a>
+            <a href="#" target="_blank">帮助文档</a>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="../dist/searchresult.js"></script>
 </body>
 
 </html>
