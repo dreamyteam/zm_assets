@@ -28,7 +28,7 @@ $(function() {
         })
     })
     //分页
-    var paging = new Paging(12,7);
+    var paging = new Paging('#paging');
 
     //返回顶部
     var backTop = new BackTop();
