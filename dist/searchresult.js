@@ -10101,14 +10101,15 @@
 
 	function Paging(element) {
 	    this.element = $(element);
-	    this.url = window.location.href;
+	    this.url = window.location.pathname;
 	    this.pageAttach = this.element.data("pageAttach");
 	    this.init();
 	}
 	Paging.prototype.init = function() {
 	    console.log(this.pageAttach);
-	    var total = this.pageAttach.total;
-	    var current = this.pageAttach.current;
+	    var total = this.pageAttach.totalNum;
+	    var current = this.pageAttach.currentPage;
+	    var pageSize = this.pageAttach.pageSize;
 	    console.log(current);
 	    var content = this.pageAttach.content;
 	    //TODO 不显示 分页器
