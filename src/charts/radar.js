@@ -22,7 +22,6 @@ Chart.prototype = {
                 name: {
                     textStyle: {
                         color: '#000',
-                        fontFamily: 'Pingfang SC',
                         fontSize: 14,
                     },
                 },

@@ -16,7 +16,6 @@ Chart.prototype = {
         var optionBasic = {
             title: {
                 text: '在新闻媒体平台的传播构成',
-                subtext: '平台的传播推动能力较大',
                 left: 'center',
                 textStyle: {
                     color: '#4a4a4a',
@@ -29,20 +28,19 @@ Chart.prototype = {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{c}"
             },
             series: [{
-                name: '平台传播能力推动',
+                name: '新闻媒体平台传播构成',
                 type: 'pie',
                 startAngle: 140,
                 radius: ['40%', '65%'],
+                center: ['50%', '55%'],
                 avoidLabelOverlap: true,
                 label: {
                     normal: {
-                        show: true,
+                        show: true,   
                         textStyle: {
                             color: '#4a4a4a',
-                            fontFamily: 'pingfang SC',
                             fontSize: 16,
                         }
                     }
@@ -52,15 +50,25 @@ Chart.prototype = {
                         show: false
                     }
                 },
+                itemStyle:{
+                    emphasis:{
+                        color:'#00a69d',
+                        opacity:0.8
+                    }
+                },
                 data: [
-                    { value: 12, name: '凤凰' },
-                    { value: 32, name: '网易' },
-                    { value: 28, name: '虎嗅' },
-                    { value: 18, name: '腾讯' },
-                    { value: 9, name: '起点' }
+                    // { value: 12, name: '凤凰' },
+                    // { value: 32, name: '网易' },
+                    // { value: 28, name: '虎嗅' },
+                    // { value: 18, name: '腾讯' },
+                    // { value: 9, name: '起点' }
                 ]
             }],
-            color: ['#00A69D', '#84D2CD', '#EEEEEE', '#84D2CD', '#EEEEEE']
+            color: ['#00A69D', '#84D2CD', '#EEEEEE', '#84D2CD', '#EEEEEE'],
+            animation: false,
+            textStyle: {
+                fontFamily: 'pingfang SC'
+            }
         }
         this.chart.setOption(optionBasic);
         if (this.url) {
@@ -77,7 +85,6 @@ Chart.prototype = {
             jsonp: 'callback',
             success: function(result) {
                 self.chart.hideLoading();
-                console.log(result.value);
                 var option = {
                     series: [{
                         data: result
@@ -89,8 +96,6 @@ Chart.prototype = {
                 console.log(msg);
             }
         })
-
     }
 }
-
 module.exports = Chart;

@@ -165,16 +165,17 @@ section {
     section .tooltip .tooltip_info {
       position: absolute;
       top: -60px;
-      left: -37px;
+      left: 50%;
+      margin-left: -130px;
       display: none;
-      padding: 3px 6px;
+      padding: 6px;
       font-size: 12px;
       font-weight: 100;
       color: #ffffff;
       line-height: 14px;
       background: #4a4a4a;
       border-radius: 3px;
-      width: 84px;
+      width: 260px;
       text-align: left; }
       section .tooltip .tooltip_info::after {
         content: '';
@@ -590,7 +591,7 @@ section.program_info {
     background: #f5a623;
     right: 30px;
     top: -6px;
-    font-family: Avenir-Black,helvetica ,Arial;
+    font-family: Avenir-Black, helvetica, Arial;
     font-size: 20px;
     color: #f2f2f2;
     text-align: center;
@@ -632,16 +633,20 @@ section.program_info {
     float: left;
     padding-top: 42px;
     padding-left: 23px; }
-    section.program_info .content h1 {
+    section.program_info .content h1.name {
+      display: inline-block;
       font-size: 24px;
-      color: #5e5e5e; }
-      section.program_info .content h1 span {
-        border: 1px solid #00A69D;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #00A69D;
-        padding: 2px 3px;
-        vertical-align: middle; }
+      color: #5e5e5e;
+      vertical-align: middle; }
+    section.program_info .content span.type {
+      margin-left: 10px;
+      display: inline-block;
+      border: 1px solid #00A69D;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #00A69D;
+      padding: 2px 3px;
+      vertical-align: middle; }
     section.program_info .content h6 {
       font-size: 14px;
       color: #979797; }
@@ -1233,19 +1238,26 @@ section.user_reviews .review_container {
     color: #4a4a4a; }
 
 #chart_heat_trend, #chart_vitality_trend, #chart_vote_result, #chart_potential_trend, #chart_user_vitalty {
+  position: relative;
   margin-top: 67px;
   height: 305px;
   padding: 0 20px; }
 
-#chart_heat_trend {
-  position: relative; }
-  #chart_heat_trend::before {
-    content: '一周热度指数趋势';
-    position: absolute;
-    left: 20px;
-    top: -20px;
-    font-size: 16px;
-    color: #4a4a4a; }
+#chart_heat_trend::before {
+  content: '一周热度指数趋势';
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  font-size: 16px;
+  color: #4a4a4a; }
+
+#chart_user_vitalty::before {
+  content: '用户活跃度趋势';
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  font-size: 16px;
+  color: #4a4a4a; }
 
 #chart_transmission_index {
   padding: 0 20px;

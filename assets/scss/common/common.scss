@@ -130,16 +130,17 @@ section {
         .tooltip_info {
             position: absolute;
             top: -60px;
-            left: -37px;
-            display: none;
-            padding: 3px 6px;
+            left:50%;
+            margin-left: -130px;
+            display:  none;
+            padding: 6px;
             font-size: 12px;
             font-weight: 100;
             color: #ffffff;
             line-height: 14px;
             background: #4a4a4a;
             border-radius: 3px;
-            width: 84px;
+            width: 260px;
             text-align: left;
             &::after {
                 content: '';

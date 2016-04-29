@@ -440,15 +440,26 @@ section.user_reviews {
 #chart_potential_trend,
 #chart_user_vitalty,
 {
+    position: relative;
     margin-top: 67px;
     height: 305px;
     padding: 0 20px;
 }
 
 #chart_heat_trend {
-    position: relative;
     &::before {
         content: '一周热度指数趋势';
+        position: absolute;
+        left: 20px;
+        top: -20px;
+        font-size: 16px;
+        color: #4a4a4a;
+    }
+}
+
+#chart_user_vitalty {
+    &::before {
+        content: '用户活跃度趋势';
         position: absolute;
         left: 20px;
         top: -20px;

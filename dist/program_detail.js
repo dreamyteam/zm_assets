@@ -46,30 +46,93 @@
 
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
+	var Popup = __webpack_require__(357);
+	var Validate = __webpack_require__(358);
 	var Tab = __webpack_require__(351);
 	var FixTop = __webpack_require__(352);
 	var BackTop = __webpack_require__(353);
 	var LineChart = __webpack_require__(354);
 	var RadaChart = __webpack_require__(355);
 	var PieChartMedia = __webpack_require__(356);
+	var PieChartDouble = __webpack_require__(360);
+	var VerticalBar = __webpack_require__(361);
+	var CommentReviews = __webpack_require__(362);
+
 
 	$(function() {
-	    //列表切换
-	    new Tab({ selector: '#program_tab' });
+	    $("#register").on('click', function() {
+
+	        var popReg = new Popup('#popup_register');
+	        popReg.alert();
+
+	        var validate = new Validate({
+	            element: "#from_register",
+	            tips: ".err_msg"
+	        })
+	    })
+
+	    $("#login").on('click', function() {
+
+	            var popLogin = new Popup("#popup_login");
+	            popLogin.alert();
+
+	            var validate = new Validate({
+	                element: "#from_login",
+	                tips: ".err_msg"
+	            })
+	        })
+	        //列表切换
+	    new Tab({ selector: '.program_tab' });
 	    //导航置顶
 	    new FixTop();
 	    //返回顶部
 	    var back_top = new BackTop();
+
+	    //找到ip名字
+	    var ip_name = $('.program_info .content h1.name').html();
+
+	    //图表们
 	    //综合指数
-	    var comprehensiveValue = new LineChart('chart_comprehensive_value','http://localhost:3000/jsonp');
+	    if ($('chart_comprehensive_value')) {
+	        var comprehensiveValue = new LineChart('chart_comprehensive_value', 'http://localhost:3000/jsonp');
+	    }
+
 	    //潜力模型
-	    var potentialModel = new RadaChart('chart_potential_model','http://localhost:3000/jsonpp');
+	    var potentialModel = new RadaChart('chart_potential_model', 'http://localhost:3000/jsonpp');
 	    //热度趋势
-	    var heatTrend = new LineChart('chart_heat_trend','http://localhost:3000/jsonp');
+	    var heatTrend = new LineChart('chart_heat_trend', 'http://localhost:3000/jsonp');
 	    //传播能力趋势
-	    var transmissionIndex = new LineChart('chart_transmission_index','http://localhost:3000/jsonp');
+	    var transmissionIndex = new LineChart('chart_transmission_index', 'http://localhost:3000/jsonp');
 	    //新闻媒体平台
-	    var mediaPlatform = new PieChartMedia('chart_media_platform');
+	    var mediaPlatform = new PieChartMedia('chart_media_platform', 'http://localhost:3000/jsonppp');
+	    //社交平台
+	    var socialPlatform = new PieChartDouble({
+	        el: 'chart_social_platform',
+	        type: 'social',
+	        left: 'center',
+	        name: ip_name,
+	        url: 'http://localhost:3000/social',
+	    });
+	    //用户活跃度趋势
+	    var userVitalty = new LineChart('chart_user_vitalty', 'http://localhost:3000/jsonp');
+	    //性别比例分布
+	    var sexDistribution = new PieChartDouble({
+	        el: 'chart_sex_distribution',
+	        type: 'sex',
+	        left: 'center',
+	        name: ip_name,
+	        url: 'http://localhost:3000/sex'
+	    });
+	    //年龄分布
+	    var ageDistribution = new VerticalBar({
+	        el: 'chart_age_distribution',
+	        type: 'age',
+	        left: 'center',
+	        name: ip_name,
+	        url: 'http://localhost:3000/age'
+	    });
+	    //点评图表
+	    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');
 
 	})
 
@@ -64951,7 +65014,6 @@
 	                name: {
 	                    textStyle: {
 	                        color: '#000',
-	                        fontFamily: 'Pingfang SC',
 	                        fontSize: 14,
 	                    },
 	                },
@@ -65057,7 +65119,6 @@
 	        var optionBasic = {
 	            title: {
 	                text: '在新闻媒体平台的传播构成',
-	                subtext: '平台的传播推动能力较大',
 	                left: 'center',
 	                textStyle: {
 	                    color: '#4a4a4a',
@@ -65070,20 +65131,19 @@
 	            },
 	            tooltip: {
 	                trigger: 'item',
-	                formatter: "{c}"
 	            },
 	            series: [{
-	                name: '平台传播能力推动',
+	                name: '新闻媒体平台传播构成',
 	                type: 'pie',
 	                startAngle: 140,
 	                radius: ['40%', '65%'],
+	                center: ['50%', '55%'],
 	                avoidLabelOverlap: true,
 	                label: {
 	                    normal: {
-	                        show: true,
+	                        show: true,   
 	                        textStyle: {
 	                            color: '#4a4a4a',
-	                            fontFamily: 'pingfang SC',
 	                            fontSize: 16,
 	                        }
 	                    }
@@ -65093,15 +65153,25 @@
 	                        show: false
 	                    }
 	                },
+	                itemStyle:{
+	                    emphasis:{
+	                        color:'#00a69d',
+	                        opacity:0.8
+	                    }
+	                },
 	                data: [
-	                    { value: 12, name: '凤凰' },
-	                    { value: 32, name: '网易' },
-	                    { value: 28, name: '虎嗅' },
-	                    { value: 18, name: '腾讯' },
-	                    { value: 9, name: '起点' }
+	                    // { value: 12, name: '凤凰' },
+	                    // { value: 32, name: '网易' },
+	                    // { value: 28, name: '虎嗅' },
+	                    // { value: 18, name: '腾讯' },
+	                    // { value: 9, name: '起点' }
 	                ]
 	            }],
-	            color: ['#00A69D', '#84D2CD', '#EEEEEE', '#84D2CD', '#EEEEEE']
+	            color: ['#00A69D', '#84D2CD', '#EEEEEE', '#84D2CD', '#EEEEEE'],
+	            animation: false,
+	            textStyle: {
+	                fontFamily: 'pingfang SC'
+	            }
 	        }
 	        this.chart.setOption(optionBasic);
 	        if (this.url) {
@@ -65118,7 +65188,6 @@
 	            jsonp: 'callback',
 	            success: function(result) {
 	                self.chart.hideLoading();
-	                console.log(result.value);
 	                var option = {
 	                    series: [{
 	                        data: result
@@ -65130,9 +65199,534 @@
 	                console.log(msg);
 	            }
 	        })
-
 	    }
 	}
+	module.exports = Chart;
+
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	function Popup(element) {
+		this.element = $(element);
+		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+		this.init();
+	}
+	Popup.prototype.init = function(){
+		this.close();
+	};
+	Popup.prototype.alert = function(){
+		this.mask.appendTo("body");
+		this.element.show();
+	};
+	Popup.prototype.destory = function(){
+		this.mask.remove();
+		this.element.hide();
+	};
+	Popup.prototype.close = function(){
+		var self = this;
+		if(this.element.find('button.close')){
+			var btnClose = this.element.find('button.close');
+			btnClose.on('click',function(){
+				self.destory();
+			})
+		}
+	}
+
+	module.exports = Popup;
+
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+
+	function Validate(cfg) {
+	    this.cfg = {
+	        element: $(cfg.element),
+	        tips: $(cfg.tips)
+	    }
+	    this.init()
+	}
+	Validate.prototype.init = function() {
+		var self = this;
+
+	    this.cfg.tips.hide();
+
+	    this.cfg.element.find('input').blur(function() {
+	        // 验证手机号
+	        if ($(this).is("input[name='phone_number']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请填写手机号码")
+	            } else if (!regPhone.test($(this).val())) {
+	                self.cfg.tips.show().html("手机号码格式错误")
+	            } else {
+	                this.cfg.tips.hide()
+	            }
+	        }
+	        //验证密码
+	        if ($(this).is("input[name='password']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入密码")
+	            }
+	        }
+	        // 验证验证码
+	        if ($(this).is("input[name='verify_code']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入验证码")
+	            }
+	        }
+
+	    })
+	}
+
+	module.exports = Validate;
+
+
+/***/ },
+/* 359 */,
+/* 360 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+	var echarts = __webpack_require__(2);
+
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    this.type = null; // 类型 sex social
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
+	    this.init();
+	}
+	Chart.prototype = {
+	    init: function() {
+	        this.el = document.getElementById(this.cfg.el);
+	        this.type = this.cfg.type;
+	        if (this.type == 'sex') {
+	            this.titleText = '受众性别分布';
+	        } else if (this.type == 'social') {
+	            this.titleText = '社交媒体平台传播构成';
+	        }
+	        this.name = this.cfg.name;
+	        this.left = this.cfg.left || 'center';
+	        this.url = this.cfg.url ? this.cfg.url : null;
+	        this.renderChart();
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
+	        optionBasic = {
+	            title: {
+	                text: this.titleText,
+	                left: this.left,
+	                subtext: '',
+	                textStyle: {
+	                    color: '#4a4a4a',
+	                    fontSize: 16
+	                },
+	                subtextStyle: {
+	                    color: '#9b9b9b',
+	                    fontSize: 14
+	                }
+	            },
+	            legend: {
+	                left: 'center',
+	                top: 50,
+	                data: []
+	            },
+	            tooltip: {
+	                trigger: 'item',
+	            },
+	            series: [{
+	                name: this.name,
+	                type: 'pie',
+	                startAngle: 240,
+	                minAngle: 50,
+	                radius: ['40%', '65%'],
+	                center: ['50%', '55%'],
+	                avoidLabelOverlap: true,
+	                label: {
+	                    normal: {
+	                        show: false,
+	                        position: 'center',
+	                    },
+	                    emphasis: {
+	                        show: true,
+	                        textStyle: {
+	                            fontSize: 24,
+	                        }
+	                    }
+	                },
+	                labelLine: {
+	                    normal: {
+	                        show: false
+	                    }
+	                },
+	                data: [
+	                    /*  { value: 0, name: '微信', itemStyle: { emphasis: { color: '#84d2cd' } } },
+	                      { value: 0, name: '微博', itemStyle: { emphasis: { color: '#EEEEEE' } } }*/
+	                ]
+	            }],
+	            color: ['#EEEEEE', '#84D2CD', '#84D2CD', '#EEEEEE', '#84D2CD'],
+	            animation: false,
+	            textStyle: {
+	                fontFamily: 'pingfang SC'
+	            }
+	        }
+	        this.chart.setOption(optionBasic);
+	        if (this.url) {
+	            this.update();
+	        }
+	    },
+	    caculateSubTitle: function(male, female) {
+	        var total = male + female
+	        var malePer = (male / total) * 100;
+	        if (malePer > 65) {
+	            return '主要受众人群为男性'
+	        } else if (malePer > 55 && malePer <= 65) {
+	            return '受众用户偏向男性'
+	        } else if (malePer > 45 && malePer <= 55) {
+	            return '受众用户性别均衡'
+	        } else if (malePer > 35 && malePer <= 45) {
+	            return '受众用户偏向女性'
+	        } else {
+	            return '主要受众人群为女性'
+	        }
+	    },
+	    update: function() {
+	        this.chart.showLoading();
+	        var self = this;
+	        $.ajax({
+	            url: self.url,
+	            type: 'GET',
+	            dataType: 'jsonp',
+	            jsonp: 'callback',
+	            success: function(result) {
+	                self.chart.hideLoading();
+	                if (self.type == 'sex') {
+	                    self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+	                }
+	                var option = {
+	                    title: {
+	                        subtext: self.subTitle,
+	                    },
+	                    legend: {
+	                        data: [
+	                            { name: result[0].name, icon: 'rect' },
+	                            { name: result[1].name, icon: 'rect' }
+	                        ]
+	                    },
+	                    series: [{
+	                        data: [
+	                            { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
+	                            { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
+	                        ]
+	                    }]
+	                }
+	                self.chart.setOption(option);
+	            },
+	            error: function(msg) {
+	                console.log(msg);
+	            }
+	        })
+	    }
+	}
+
+	module.exports = Chart;
+
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+	var echarts = __webpack_require__(2);
+
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    this.type = null; // 类型 'age' 'vote'
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
+	    this.init();
+	}
+	Chart.prototype = {
+	    init: function() {
+	        this.el = document.getElementById(this.cfg.el);
+	        this.type = this.cfg.type;
+	        if (this.type == 'age') {
+	            this.titleText = '受众年龄分布';
+	        } else if (this.type == 'social') {
+	            this.titleText = '投票结果';
+	        }
+	        this.name = this.cfg.name;
+	        this.left = this.cfg.left || 'center';
+	        this.url = this.cfg.url ? this.cfg.url : null;
+	        this.renderChart();
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
+	        optionBasic = {
+	            title: {
+	                text: this.titleText,
+	                subtext: '',
+	                left: this.left,
+	                textStyle: {
+	                    color: '#4a4a4a',
+	                    fontSize: 16
+	                },
+	                subtextStyle: {
+	                    color: '#9b9b9b',
+	                    fontSize: 14
+	                }
+	            },
+	            tooltip: {
+	                trigger: 'axis',
+	                axisPointer: {
+	                    type: 'shadow',
+	                    shadowStyle: {
+	                        opacity: 0.3
+	                    }
+	                }
+	            },
+	            legend: {
+	                top: 50,
+	                data: []
+	            },
+	            grid: {
+	                top: 70,
+	                show: false,
+	            },
+	            yAxis: {
+	                type: 'value',
+	                axisLabel: {
+	                    show: false,
+	                },
+	                splitLine: {
+	                    show: false,
+	                },
+	                axisTick: {
+	                    show: false,
+	                },
+	                axisLine: {
+	                    show: false,
+	                    onZero: true,
+	                },
+	            },
+	            xAxis: {
+	                axisLine: {
+	                    show: true,
+	                    lineStyle: {
+	                        color: '#d8d8d8',
+	                        width: 1,
+	                    }
+	                },
+	                splitLine: {
+	                    show: false,
+	                },
+	                axisTick: {
+	                    show: false,
+	                },
+	                type: 'category',
+	                data: ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上']
+	            },
+	            series: [],
+	            color: ['#EEEEEE', '#84D2CD'],
+	            animation: false,
+	            textStyle: {
+	                fontFamily: 'pingfang SC'
+	            }
+	        }
+	        this.chart.setOption(optionBasic);
+	        if (this.url) {
+	            this.update();
+	        }
+	    },
+	    getSubText: function(resArr) {
+	        var maxAge = Math.max.apply(null, resArr);
+	        var titleArr = ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上'];
+	        for (var i = 0; i < resArr.length; i++) {
+	            if (resArr[i] == maxAge) {
+	                var subscript = i;
+	            }
+	        }
+	        return '主要受众年龄段为[' + titleArr[subscript] + ']'
+	    },
+	    update: function() {
+	        this.chart.showLoading();
+	        var self = this;
+	        $.ajax({
+	            url: self.url,
+	            type: 'GET',
+	            dataType: 'jsonp',
+	            jsonp: 'callback',
+	            success: function(result) {
+	                self.chart.hideLoading();
+	                if (self.type == 'age') {
+	                    self.subTitle = self.getSubText(result[1].value);
+	                }
+	                var option = {
+	                    title: {
+	                        subtext: self.subTitle,
+	                    },
+	                    legend: {
+	                        data: [result[0].name, result[1].name]
+	                    },
+	                    series: [{
+	                        name: result[0].name,
+	                        type: 'bar',
+	                        data: result[0].value,
+	                        itemStyle: {
+	                            emphasis: {
+	                                color: '#EEE'
+	                            }
+	                        }
+	                    }, {
+	                        name: result[1].name,
+	                        type: 'bar',
+	                        barGap: '-50%',
+	                        z: 3,
+	                        data: result[1].value
+	                    }]
+	                }
+	                self.chart.setOption(option);
+	            },
+	            error: function(msg) {
+	                console.log(msg);
+	            }
+	        })
+	    }
+	}
+
+
+	module.exports = Chart;
+
+
+/***/ },
+/* 362 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+	var echarts = __webpack_require__(2);
+
+	function Chart(element, url) {
+	    this.element = document.getElementById(element);
+	    this.chart = null;
+	    this.option = null;
+	    if (url) {
+	        this.url = url;
+	    }
+	    this.init();
+	}
+	Chart.prototype = {
+	    init: function() {
+	        this.chart = echarts.init(this.element);
+	        optionBasic = {
+	            grid: {
+	                left: 65,
+	                top: 27,
+	                right: '10%',
+	                bottom: 0,
+	                show: false,
+	            },
+	            yAxis: {
+	                type: 'category',
+	                data: ['豆瓣评分', '起点评分', '纵横评分', '17k评分'],
+	                splitLine: {
+	                    show: false,
+	                },
+	                axisTick: {
+	                    show: false,
+	                },
+	                axisLine: {
+	                    show: false,
+	                    onZero: true,
+	                },
+	                axisLabel: {
+	                    textStyle: {
+	                        color: '#979797',
+	                        fontSize: 14
+	                    }
+	                }
+	            },
+	            xAxis: {
+	                type: 'value',
+	                axisLine: {
+	                    show: false,
+	                },
+	                splitLine: {
+	                    show: false,
+	                },
+	                axisTick: {
+	                    show: false,
+	                }
+	            },
+	            series: [{
+	                name: '',
+	                type: 'bar',
+	                data: [],
+	                barWidth: 16,
+	                label: {
+	                    normal: {
+	                        show: true,
+	                        position: 'right',
+	                        textStyle: {
+	                            color: '#979797',
+	                            fontSize: 14
+	                        }
+	                    }
+	                }
+	            }],
+	            color: ['#84D2CD'],
+	            animation: false,
+	            textStyle: {
+	                fontFamily: 'pingfang SC'
+	            }
+	        }
+	        this.chart.setOption(optionBasic);
+	        if (this.url) {
+	            this.update();
+	        }
+	    },
+	    update: function() {
+	        this.chart.showLoading();
+	        var self = this;
+	        $.ajax({
+	            url: self.url,
+	            type: 'GET',
+	            dataType: 'jsonp',
+	            jsonp: 'callback',
+	            success: function(result) {
+	                self.chart.hideLoading();
+	                option = {
+	                    series: [{
+	                        name: result.name,
+	                        data: result.data,
+	                    }],
+	                }
+	                self.chart.setOption(option);
+	            },
+	            error: function(msg) {
+	                console.log(msg);
+	            }
+	        })
+	    }
+	}
+
 
 	module.exports = Chart;
 

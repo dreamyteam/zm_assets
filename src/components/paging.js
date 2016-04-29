@@ -8,11 +8,9 @@ function Paging(element) {
     this.init();
 }
 Paging.prototype.init = function() {
-    console.log(this.pageAttach);
     var total = this.pageAttach.totalNum;
     var current = this.pageAttach.currentPage;
     var pageSize = this.pageAttach.pageSize;
-    console.log(current);
     var content = this.pageAttach.content;
     //TODO 不显示 分页器
     var ul = $('<ul></ul>');
