@@ -46,16 +46,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
-	var Popup = __webpack_require__(357);
-	var Validate = __webpack_require__(358);
-	var Paging = __webpack_require__(359);
-	var BackTop = __webpack_require__(353);
+	var PopupSign = __webpack_require__(351);
+	var Validate = __webpack_require__(353);
+	var Paging = __webpack_require__(363);
+	var BackTop = __webpack_require__(356);
 
 
 	$(function() {
 	    $("#register").on('click', function() {
 
-	        var popReg = new Popup('#popup_register');
+	        var popReg = new PopupSign('#popup_register');
 	        popReg.alert();
 
 	        var validate = new Validate({
@@ -66,7 +66,7 @@
 
 	    $("#login").on('click', function() {
 
-	        var popLogin = new Popup("#popup_login");
+	        var popLogin = new PopupSign("#popup_login");
 	        popLogin.alert();
 
 	        var validate = new Validate({
@@ -79,7 +79,6 @@
 
 	    //返回顶部
 	    var backTop = new BackTop();
-
 	})
 
 
@@ -9934,7 +9933,94 @@
 
 /***/ },
 
+/***/ 351:
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	function Popup(element) {
+		this.element = $(element);
+		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+		this.init();
+	}
+	Popup.prototype.init = function(){
+		this.close();
+	};
+	Popup.prototype.alert = function(){
+		this.mask.appendTo("body");
+		this.element.show();
+	};
+	Popup.prototype.destory = function(){
+		this.mask.remove();
+		this.element.hide();
+	};
+	Popup.prototype.close = function(){
+		var self = this;
+		if(this.element.find('button.close')){
+			var btnClose = this.element.find('button.close');
+			btnClose.on('click',function(){
+				self.destory();
+			})
+		}
+	}
+
+	module.exports = Popup;
+
+
+/***/ },
+
 /***/ 353:
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+
+	function Validate(cfg) {
+	    this.cfg = {
+	        element: $(cfg.element),
+	        tips: $(cfg.tips)
+	    }
+	    this.init()
+	}
+	Validate.prototype.init = function() {
+		var self = this;
+
+	    this.cfg.tips.hide();
+
+	    this.cfg.element.find('input').blur(function() {
+	        // 验证手机号
+	        if ($(this).is("input[name='phone_number']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请填写手机号码")
+	            } else if (!regPhone.test($(this).val())) {
+	                self.cfg.tips.show().html("手机号码格式错误")
+	            } else {
+	                this.cfg.tips.hide()
+	            }
+	        }
+	        //验证密码
+	        if ($(this).is("input[name='password']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入密码")
+	            }
+	        }
+	        // 验证验证码
+	        if ($(this).is("input[name='verify_code']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入验证码")
+	            }
+	        }
+
+	    })
+	}
+
+	module.exports = Validate;
+
+
+/***/ },
+
+/***/ 356:
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -10006,94 +10092,7 @@
 
 /***/ },
 
-/***/ 357:
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(1);
-
-	function Popup(element) {
-		this.element = $(element);
-		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-		this.init();
-	}
-	Popup.prototype.init = function(){
-		this.close();
-	};
-	Popup.prototype.alert = function(){
-		this.mask.appendTo("body");
-		this.element.show();
-	};
-	Popup.prototype.destory = function(){
-		this.mask.remove();
-		this.element.hide();
-	};
-	Popup.prototype.close = function(){
-		var self = this;
-		if(this.element.find('button.close')){
-			var btnClose = this.element.find('button.close');
-			btnClose.on('click',function(){
-				self.destory();
-			})
-		}
-	}
-
-	module.exports = Popup;
-
-
-/***/ },
-
-/***/ 358:
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(1);
-
-	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-
-	function Validate(cfg) {
-	    this.cfg = {
-	        element: $(cfg.element),
-	        tips: $(cfg.tips)
-	    }
-	    this.init()
-	}
-	Validate.prototype.init = function() {
-		var self = this;
-
-	    this.cfg.tips.hide();
-
-	    this.cfg.element.find('input').blur(function() {
-	        // 验证手机号
-	        if ($(this).is("input[name='phone_number']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请填写手机号码")
-	            } else if (!regPhone.test($(this).val())) {
-	                self.cfg.tips.show().html("手机号码格式错误")
-	            } else {
-	                this.cfg.tips.hide()
-	            }
-	        }
-	        //验证密码
-	        if ($(this).is("input[name='password']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请输入密码")
-	            }
-	        }
-	        // 验证验证码
-	        if ($(this).is("input[name='verify_code']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请输入验证码")
-	            }
-	        }
-
-	    })
-	}
-
-	module.exports = Validate;
-
-
-/***/ },
-
-/***/ 359:
+/***/ 363:
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -10115,7 +10114,7 @@
 	    this.element.append(ul);
 	    //是否显示prev
 	    if (current != 1) {
-	        var prevBtn = $("<li><a href="+ this.url +'?content='+content+'&current='+(current-1)+"><</a></li>");
+	        var prevBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current-1)+"><</a></li>");
 	        prevBtn.appendTo(ul);
 	    }
 
@@ -10123,18 +10122,18 @@
 	    if (total <= 7) {
 	        for (var i = 1, len = total + 1; i < len; i++) {
 	            if (i == current) {
-	                ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	            } else {
-	                ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	            }
 	        }
 	    } else {
 	        if (current <= 4) {
 	            for (var i = 1, len = 7; i <= len; i++) {
 	                if (i == current) {
-	                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	                } else {
-	                    ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	                }
 	            }
 	        } else {
@@ -10144,9 +10143,9 @@
 	            // console.log(pageEnd);
 	            for (var i = pageStart; i <= pageEnd; i++) {
 	                if (i == current) {
-	                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	                } else {
-	                    ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+	                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
 	                }
 	            }
 	        }
@@ -10154,7 +10153,7 @@
 
 	    //是否显示next
 	    if (current != total) {
-	        var nextBtn = $("<li><a href="+ this.url +'?content='+content+'&current='+(current+1)+">></a></li>");
+	        var nextBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current+1)+">></a></li>");
 	        nextBtn.appendTo(ul);
 	    }
 

@@ -17,7 +17,7 @@ Paging.prototype.init = function() {
     this.element.append(ul);
     //是否显示prev
     if (current != 1) {
-        var prevBtn = $("<li><a href="+ this.url +'?content='+content+'&current='+(current-1)+"><</a></li>");
+        var prevBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current-1)+"><</a></li>");
         prevBtn.appendTo(ul);
     }
 
@@ -25,18 +25,18 @@ Paging.prototype.init = function() {
     if (total <= 7) {
         for (var i = 1, len = total + 1; i < len; i++) {
             if (i == current) {
-                ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
             } else {
-                ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
             }
         }
     } else {
         if (current <= 4) {
             for (var i = 1, len = 7; i <= len; i++) {
                 if (i == current) {
-                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
                 } else {
-                    ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
                 }
             }
         } else {
@@ -46,9 +46,9 @@ Paging.prototype.init = function() {
             // console.log(pageEnd);
             for (var i = pageStart; i <= pageEnd; i++) {
                 if (i == current) {
-                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
                 } else {
-                    ul.append($("<li><a href="+ this.url +'?content='+content+'&current='+i+">" + i + "</a></li>"))
+                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
                 }
             }
         }
@@ -56,7 +56,7 @@ Paging.prototype.init = function() {
 
     //是否显示next
     if (current != total) {
-        var nextBtn = $("<li><a href="+ this.url +'?content='+content+'&current='+(current+1)+">></a></li>");
+        var nextBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current+1)+">></a></li>");
         nextBtn.appendTo(ul);
     }
 

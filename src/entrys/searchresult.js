@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var Popup = require('../components/pop_up');
+var PopupSign = require('../components/pop_up_sign');
 var Validate = require('../components/validate.js');
 var Paging = require('../components/paging.js');
 var BackTop = require('../components/back_top.js');
@@ -8,7 +8,7 @@ var BackTop = require('../components/back_top.js');
 $(function() {
     $("#register").on('click', function() {
 
-        var popReg = new Popup('#popup_register');
+        var popReg = new PopupSign('#popup_register');
         popReg.alert();
 
         var validate = new Validate({
@@ -19,7 +19,7 @@ $(function() {
 
     $("#login").on('click', function() {
 
-        var popLogin = new Popup("#popup_login");
+        var popLogin = new PopupSign("#popup_login");
         popLogin.alert();
 
         var validate = new Validate({
@@ -32,5 +32,4 @@ $(function() {
 
     //返回顶部
     var backTop = new BackTop();
-
 })

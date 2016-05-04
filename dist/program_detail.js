@@ -46,14 +46,15 @@
 
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
-	var Popup = __webpack_require__(357);
-	var Validate = __webpack_require__(358);
-	var Tab = __webpack_require__(351);
-	var FixTop = __webpack_require__(352);
-	var BackTop = __webpack_require__(353);
-	var LineChart = __webpack_require__(354);
-	var RadaChart = __webpack_require__(355);
-	var PieChartMedia = __webpack_require__(356);
+	var PopupSign = __webpack_require__(351);
+	var PopUpVote = __webpack_require__(352);
+	var Validate = __webpack_require__(353);
+	var Tab = __webpack_require__(354);
+	var FixTop = __webpack_require__(355);
+	var BackTop = __webpack_require__(356);
+	var LineChart = __webpack_require__(357);
+	var RadaChart = __webpack_require__(358);
+	var PieChartMedia = __webpack_require__(359);
 	var PieChartDouble = __webpack_require__(360);
 	var VerticalBar = __webpack_require__(361);
 	var CommentReviews = __webpack_require__(362);
@@ -62,7 +63,7 @@
 	$(function() {
 	    $("#register").on('click', function() {
 
-	        var popReg = new Popup('#popup_register');
+	        var popReg = new PopupSign('#popup_register');
 	        popReg.alert();
 
 	        var validate = new Validate({
@@ -73,7 +74,7 @@
 
 	    $("#login").on('click', function() {
 
-	            var popLogin = new Popup("#popup_login");
+	            var popLogin = new PopupSign("#popup_login");
 	            popLogin.alert();
 
 	            var validate = new Validate({
@@ -134,6 +135,42 @@
 	    //点评图表
 	    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');
 
+
+	    //期待开发投票
+	    if ($('.vote_container .vote_content')) {
+	        var btns = $('.vote_container .vote_content').find('button');
+	        var btnExpexts = $('.vote_container .vote_content').find('button.expext');
+	        var btnWantDevelop = $('.vote_container .vote_content').find('button.wantDevelop');
+	        var canClick = true;
+	        console.log(btns);
+	        btns.each(function() {
+	            $(this).on('click', function() {
+	                if (canClick) {
+	                    var parent = $(this).closest('.vote');
+	                    var projectName = parent.find('h5').html();
+	                    if ($(this).hasClass('expext')) {
+	                        var popupVote = new PopUpVote({
+	                            type: 'expext',
+	                            ipName: ip_name,
+	                            project: projectName
+	                        });
+	                    } else if ($(this).hasClass('wantDevelop')) {
+	                        var popupVote = new PopUpVote({
+	                            type: 'wantDevelop',
+	                            ipName: ip_name,
+	                            project: projectName
+	                        });
+	                    }
+	                    popupVote.alert();
+	                    canClick = false;
+	                    $('button.close').on('click', function() {
+	                        popupVote.destory();
+	                        canClick = true;
+	                    })
+	                }
+	            })
+	        })
+	    }
 	})
 
 
@@ -64714,6 +64751,141 @@
 
 	var $ = __webpack_require__(1);
 
+	function Popup(element) {
+		this.element = $(element);
+		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+		this.init();
+	}
+	Popup.prototype.init = function(){
+		this.close();
+	};
+	Popup.prototype.alert = function(){
+		this.mask.appendTo("body");
+		this.element.show();
+	};
+	Popup.prototype.destory = function(){
+		this.mask.remove();
+		this.element.hide();
+	};
+	Popup.prototype.close = function(){
+		var self = this;
+		if(this.element.find('button.close')){
+			var btnClose = this.element.find('button.close');
+			btnClose.on('click',function(){
+				self.destory();
+			})
+		}
+	}
+
+	module.exports = Popup;
+
+
+/***/ },
+/* 352 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	function PopUp(cfg) {
+	    this.cfg = cfg;
+	    this.ipName = null;
+	    this.project = null;
+	    this.type = null;
+	    this.boundingBox = null;
+	    this.title = null;
+	    this.placeholder = null;
+	    this.init();
+	}
+	PopUp.prototype = {
+	    init: function() {
+	        this.ipName = this.cfg.ipName || '';
+	        this.project = this.cfg.project || '';
+	        this.type = this.cfg.type || '';
+	        if(this.type == 'expext'){
+	        	this.title = '<h2 class="title">我期待[' + this.ipName + ']被开发成' + this.project + '</h2>';
+	        	this.placeholder = "说说你的期待吧!"
+	        }else if (this.type = 'wantDevelop') {
+	        	this.title = '<h2 class="title">愿意为[' + this.ipName + ']开发' + this.project + '贡献一份力</h2>';
+	        	this.placeholder = "说说你聪明绝顶的想法吧!"
+	        }
+
+	        this.boundingBox = $(
+	            '<div class="popup_box pop_up_vote clearfix">' +
+	            '<button class="close"></button>' +
+	             this.title+
+	            '<textarea class="vote_textarea" placeholder='+this.placeholder+'></textarea>' +
+	            '<button class="btn_vote">发布</button>' +
+	            "</div>"
+	        )
+	    },
+	    alert: function() {
+	        this.boundingBox.appendTo('body');
+	        this.boundingBox.show();
+	    },
+	    destory: function() {
+	    	this.boundingBox.off();
+	    	this.boundingBox.remove();
+	    }
+	}
+	module.exports = PopUp;
+
+
+/***/ },
+/* 353 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+
+	function Validate(cfg) {
+	    this.cfg = {
+	        element: $(cfg.element),
+	        tips: $(cfg.tips)
+	    }
+	    this.init()
+	}
+	Validate.prototype.init = function() {
+		var self = this;
+
+	    this.cfg.tips.hide();
+
+	    this.cfg.element.find('input').blur(function() {
+	        // 验证手机号
+	        if ($(this).is("input[name='phone_number']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请填写手机号码")
+	            } else if (!regPhone.test($(this).val())) {
+	                self.cfg.tips.show().html("手机号码格式错误")
+	            } else {
+	                this.cfg.tips.hide()
+	            }
+	        }
+	        //验证密码
+	        if ($(this).is("input[name='password']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入密码")
+	            }
+	        }
+	        // 验证验证码
+	        if ($(this).is("input[name='verify_code']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入验证码")
+	            }
+	        }
+
+	    })
+	}
+
+	module.exports = Validate;
+
+
+/***/ },
+/* 354 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
 	function Tab(config) {
 	    this.config = config || {};
 	    this.selector = $(this.config.selector) || $('.program_tab');
@@ -64752,7 +64924,7 @@
 
 
 /***/ },
-/* 352 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -64775,7 +64947,7 @@
 	module.exports = FixTop
 
 /***/ },
-/* 353 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -64846,7 +65018,7 @@
 
 
 /***/ },
-/* 354 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -64987,7 +65159,7 @@
 
 
 /***/ },
-/* 355 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -65098,7 +65270,7 @@
 
 
 /***/ },
-/* 356 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
@@ -65205,92 +65377,6 @@
 
 
 /***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(1);
-
-	function Popup(element) {
-		this.element = $(element);
-		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-		this.init();
-	}
-	Popup.prototype.init = function(){
-		this.close();
-	};
-	Popup.prototype.alert = function(){
-		this.mask.appendTo("body");
-		this.element.show();
-	};
-	Popup.prototype.destory = function(){
-		this.mask.remove();
-		this.element.hide();
-	};
-	Popup.prototype.close = function(){
-		var self = this;
-		if(this.element.find('button.close')){
-			var btnClose = this.element.find('button.close');
-			btnClose.on('click',function(){
-				self.destory();
-			})
-		}
-	}
-
-	module.exports = Popup;
-
-
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(1);
-
-	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-
-	function Validate(cfg) {
-	    this.cfg = {
-	        element: $(cfg.element),
-	        tips: $(cfg.tips)
-	    }
-	    this.init()
-	}
-	Validate.prototype.init = function() {
-		var self = this;
-
-	    this.cfg.tips.hide();
-
-	    this.cfg.element.find('input').blur(function() {
-	        // 验证手机号
-	        if ($(this).is("input[name='phone_number']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请填写手机号码")
-	            } else if (!regPhone.test($(this).val())) {
-	                self.cfg.tips.show().html("手机号码格式错误")
-	            } else {
-	                this.cfg.tips.hide()
-	            }
-	        }
-	        //验证密码
-	        if ($(this).is("input[name='password']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请输入密码")
-	            }
-	        }
-	        // 验证验证码
-	        if ($(this).is("input[name='verify_code']")) {
-	            if ($(this).val() == "" || null) {
-	                self.cfg.tips.show().html("请输入验证码")
-	            }
-	        }
-
-	    })
-	}
-
-	module.exports = Validate;
-
-
-/***/ },
-/* 359 */,
 /* 360 */
 /***/ function(module, exports, __webpack_require__) {
 

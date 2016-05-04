@@ -1,6 +1,7 @@
 var $ = require('jquery');
 var echarts = require('echarts');
-var Popup = require('../components/pop_up');
+var PopupSign = require('../components/pop_up_sign.js');
+var PopUpVote = require('../components/pop_up_vote.js');
 var Validate = require('../components/validate.js');
 var Tab = require('../components/tab.js');
 var FixTop = require('../components/fix_top.js');
@@ -16,7 +17,7 @@ var CommentReviews = require('../charts/commentBar.js');
 $(function() {
     $("#register").on('click', function() {
 
-        var popReg = new Popup('#popup_register');
+        var popReg = new PopupSign('#popup_register');
         popReg.alert();
 
         var validate = new Validate({
@@ -27,7 +28,7 @@ $(function() {
 
     $("#login").on('click', function() {
 
-            var popLogin = new Popup("#popup_login");
+            var popLogin = new PopupSign("#popup_login");
             popLogin.alert();
 
             var validate = new Validate({
@@ -88,4 +89,40 @@ $(function() {
     //点评图表
     var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');
 
+
+    //期待开发投票
+    if ($('.vote_container .vote_content')) {
+        var btns = $('.vote_container .vote_content').find('button');
+        var btnExpexts = $('.vote_container .vote_content').find('button.expext');
+        var btnWantDevelop = $('.vote_container .vote_content').find('button.wantDevelop');
+        var canClick = true;
+        console.log(btns);
+        btns.each(function() {
+            $(this).on('click', function() {
+                if (canClick) {
+                    var parent = $(this).closest('.vote');
+                    var projectName = parent.find('h5').html();
+                    if ($(this).hasClass('expext')) {
+                        var popupVote = new PopUpVote({
+                            type: 'expext',
+                            ipName: ip_name,
+                            project: projectName
+                        });
+                    } else if ($(this).hasClass('wantDevelop')) {
+                        var popupVote = new PopUpVote({
+                            type: 'wantDevelop',
+                            ipName: ip_name,
+                            project: projectName
+                        });
+                    }
+                    popupVote.alert();
+                    canClick = false;
+                    $('button.close').on('click', function() {
+                        popupVote.destory();
+                        canClick = true;
+                    })
+                }
+            })
+        })
+    }
 })
