@@ -26,10 +26,15 @@ section.search_result {
             border: none;
             padding-bottom: 0;
         }
-        img {
-            width: 120px;
-            float: left;
+        .sresult_ip_img_cointainer{
+        	display: block;
+        	width: 120px;
+        	height: 168px;
+        	float: left;
             margin-right: 30px;
+             img {
+           		 width: 120px;
+        	}
         }
         .sresult_content {
             float: left;

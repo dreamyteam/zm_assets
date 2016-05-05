@@ -81,6 +81,12 @@ input, button {
 button {
   cursor: pointer; }
 
+.hidden {
+  display: none; }
+
+.disable {
+  color: gray; }
+
 .clearfix:before, .clearfix:after {
   content: "";
   display: table; }

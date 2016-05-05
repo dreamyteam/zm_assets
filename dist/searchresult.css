@@ -81,6 +81,12 @@ input, button {
 button {
   cursor: pointer; }
 
+.hidden {
+  display: none; }
+
+.disable {
+  color: gray; }
+
 .clearfix:before, .clearfix:after {
   content: "";
   display: table; }
@@ -690,10 +696,14 @@ section.search_result {
     section.search_result .sresult_ip:last-child {
       border: none;
       padding-bottom: 0; }
-    section.search_result .sresult_ip img {
+    section.search_result .sresult_ip .sresult_ip_img_cointainer {
+      display: block;
       width: 120px;
+      height: 168px;
       float: left;
       margin-right: 30px; }
+      section.search_result .sresult_ip .sresult_ip_img_cointainer img {
+        width: 120px; }
     section.search_result .sresult_ip .sresult_content {
       float: left;
       padding-top: 14px; }
