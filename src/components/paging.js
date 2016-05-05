@@ -12,7 +12,7 @@ Paging.prototype.init = function() {
     var current = this.pageAttach.currentPage;
     var pageSize = this.pageAttach.pageSize;
 
-    var total = parseInt(totalNum/pageSize);
+    var total = Math.ceil(totalNum/pageSize);
 
     console.log(total);
     var content = this.pageAttach.content;
