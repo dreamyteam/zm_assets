@@ -53,25 +53,25 @@ $(function() {
     }
 
     //潜力模型
-    var potentialModel = new RadaChart('chart_potential_model', 'http://localhost:3000/jsonpp');
+    // var potentialModel = new RadaChart('chart_potential_model', 'http://localhost:3000/jsonpp');
     //热度趋势
-    var heatTrend = new LineChart('chart_heat_trend', 'http://localhost:3000/jsonp');
+    // var heatTrend = new LineChart('chart_heat_trend', 'http://localhost:3000/jsonp');
     //传播能力趋势
-    var transmissionIndex = new LineChart('chart_transmission_index', 'http://localhost:3000/jsonp');
+    // var transmissionIndex = new LineChart('chart_transmission_index', 'http://localhost:3000/jsonp');
     //新闻媒体平台
-    var mediaPlatform = new PieChartMedia('chart_media_platform', 'http://localhost:3000/jsonppp');
+    // var mediaPlatform = new PieChartMedia('chart_media_platform', 'http://localhost:3000/jsonppp');
     //社交平台
-    var socialPlatform = new PieChartDouble({
-        el: 'chart_social_platform',
-        type: 'social',
-        left: 'center',
-        name: ip_name,
-        url: 'http://localhost:3000/social',
-    });
+    // var socialPlatform = new PieChartDouble({
+    //     el: 'chart_social_platform',
+    //     type: 'social',
+    //     left: 'center',
+    //     name: ip_name,
+    //     url: 'http://localhost:3000/social',
+    // });
     //用户活跃度趋势
-    var userVitalty = new LineChart('chart_user_vitalty', 'http://localhost:3000/jsonp');
+    // var userVitalty = new LineChart('chart_user_vitalty', 'http://localhost:3000/jsonp');
     //性别比例分布
-    var sexDistribution = new PieChartDouble({
+   /* var sexDistribution = new PieChartDouble({
         el: 'chart_sex_distribution',
         type: 'sex',
         left: 'center',
@@ -87,7 +87,7 @@ $(function() {
         url: 'http://localhost:3000/age'
     });
     //点评图表
-    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');
+    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');*/
 
 
     //期待开发投票

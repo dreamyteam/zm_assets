@@ -1,5 +1,5 @@
 /**
- * Global Reset of all HTML Elements wewreadfadfadfadfs
+ * Global Reset of all HTML Elements
  *
  * Resetting all of our HTML Elements ensures a smoother
  * visual transition between browsers. If you don't believe me,
@@ -76,6 +76,9 @@ h1, h2, h3, h4, h5, h6 {
 input, button {
   outline: none;
   border: none; }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; }
 
 button {
   cursor: pointer; }

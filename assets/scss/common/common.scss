@@ -18,6 +18,10 @@ button {
     outline: none;
     border: none;
 }
+// 去掉chrome表单自动填充后黄色背景
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
 
 button {cursor: pointer;}
 
