@@ -65068,6 +65068,7 @@
 	        this.name = this.cfg.name;
 	        if (this.el.getAttribute('data-fetch-url')) {
 	            this.url = this.el.getAttribute('data-fetch-url');
+	            console.log(this.url);
 	        }
 	        var optionBasic = {
 	            tooltip: {
@@ -65164,16 +65165,16 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                // console.log(result);
+	                console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    var option = {
 	                        xAxis: [{
-	                            data: result.date
+	                            data: result.data.date
 	                        }],
 	                        series: [{
-	                            name: result.name,
-	                            data: result.data
+	                            name: self.name,
+	                            data: result.data.data
 	                        }]
 	                    }
 	                    self.chart.setOption(option);
@@ -65215,6 +65216,7 @@
 	        this.name = this.cfg.name;
 	        if (this.el.getAttribute('data-fetch-url')) {
 	            this.url = this.el.getAttribute('data-fetch-url');
+	            // console.log(this.url);
 	        }
 	        var option = {
 	            tooltip: {
@@ -65247,7 +65249,7 @@
 	                }
 	            },
 	            series: [{
-	                name: '',
+	                name: this.name,
 	                type: 'radar',
 	                symbol: 'circle',
 	                symbolSize: 8,
@@ -65264,7 +65266,7 @@
 	                },
 	                data: [{
 	                    value: [],
-	                    name: ''
+	                    name: this.name
 	                }]
 	            }],
 	            color: ['#00A69D'],
@@ -65287,22 +65289,19 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
+	                // console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    var option = {
+	                        indicator:result.data.indicator,
 	                        series: [{
-	                            name: result.name,
 	                            data: [{
-	                                value: result.value,
-	                                name: result.name
+	                                value: result.data.value,
 	                            }]
 	                        }]
 	                    }
 	                    self.chart.setOption(option);
 	                }
-	            },
-	            error: function(msg) {
-	                console.log(msg);
 	            }
 	        })
 	    }
@@ -65726,7 +65725,7 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                console.log(result);
+	                // console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    if (self.type == 'age') {
@@ -65930,7 +65929,7 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	            	console.log(result);
+	            	// console.log(result);
 	                if (result.error_code == 0) {
 	                    self.result = result.data;
 	                    self.renderUI();

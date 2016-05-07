@@ -20,6 +20,7 @@ Chart.prototype = {
         this.name = this.cfg.name;
         if (this.el.getAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url');
+            console.log(this.url);
         }
         var optionBasic = {
             tooltip: {
@@ -116,16 +117,16 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                // console.log(result);
+                console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {
                         xAxis: [{
-                            data: result.date
+                            data: result.data.date
                         }],
                         series: [{
-                            name: result.name,
-                            data: result.data
+                            name: self.name,
+                            data: result.data.data
                         }]
                     }
                     self.chart.setOption(option);

@@ -20,6 +20,7 @@ Chart.prototype = {
         this.name = this.cfg.name;
         if (this.el.getAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url');
+            // console.log(this.url);
         }
         var option = {
             tooltip: {
@@ -52,7 +53,7 @@ Chart.prototype = {
                 }
             },
             series: [{
-                name: '',
+                name: this.name,
                 type: 'radar',
                 symbol: 'circle',
                 symbolSize: 8,
@@ -69,7 +70,7 @@ Chart.prototype = {
                 },
                 data: [{
                     value: [],
-                    name: ''
+                    name: this.name
                 }]
             }],
             color: ['#00A69D'],
@@ -92,22 +93,19 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
+                // console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {
+                        indicator:result.data.indicator,
                         series: [{
-                            name: result.name,
                             data: [{
-                                value: result.value,
-                                name: result.name
+                                value: result.data.value,
                             }]
                         }]
                     }
                     self.chart.setOption(option);
                 }
-            },
-            error: function(msg) {
-                console.log(msg);
             }
         })
     }

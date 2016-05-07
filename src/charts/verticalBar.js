@@ -131,7 +131,7 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                console.log(result);
+                // console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     if (self.type == 'age') {
