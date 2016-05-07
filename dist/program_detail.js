@@ -65920,8 +65920,7 @@
 	        this.historyValueEL = this.el.find('.highest_histroy_value');
 	        this.bookId = $('#bookId').val();
 	        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type;
-	        console.log(this.url);
-	        this.getData();
+	        if(this.el){this.getData();}
 	    },
 	    getData: function() {
 	        var self = this;
@@ -65931,7 +65930,8 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                if (result.err_code = 0) {
+	            	console.log(result);
+	                if (result.error_code == 0) {
 	                    self.result = result.data;
 	                    self.renderUI();
 	                }
