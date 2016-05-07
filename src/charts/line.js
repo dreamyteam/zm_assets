@@ -21,7 +21,6 @@ Chart.prototype = {
         if (this.el.getAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url');
         }
-        console.log(this.url);
         var optionBasic = {
             tooltip: {
                 trigger: 'axis',
@@ -117,6 +116,7 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
+                // console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {

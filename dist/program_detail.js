@@ -58,6 +58,7 @@
 	var PieChartDouble = __webpack_require__(360);
 	var VerticalBar = __webpack_require__(361);
 	var CommentReviews = __webpack_require__(362);
+	var GetHistory = __webpack_require__(364);
 
 
 	$(function() {
@@ -89,7 +90,15 @@
 	    var back_top = new BackTop();
 	    //找到ip名字
 	    var ip_name = $('.program_info .content h1.name').html();
+	    //异步趋势历史最高 
+	    var compositeValues = new GetHistory($('#composite_values'),5);
+	    var hotValues = new GetHistory($('#hot_values'),1);
+	    var developValues = new GetHistory($('#develop_values'),2);
+	    var propagateValues = new GetHistory($('#propagate_values'),3);
+	    var reputationValues = new GetHistory($('#reputation_values'),4);
+
 	    //图表们
+
 	    //综合指数
 	    if ($('chart_comprehensive_value')) {
 	        var comprehensiveValue = new LineChart({
@@ -158,7 +167,7 @@
 	        var btnExpexts = $('.vote_container .vote_content').find('button.expext');
 	        var btnWantDevelop = $('.vote_container .vote_content').find('button.wantDevelop');
 	        var canClick = true;
-	        console.log(btns);
+	        // console.log(btns);
 	        btns.each(function() {
 	            $(this).on('click', function() {
 	                if (canClick) {
@@ -65060,7 +65069,6 @@
 	        if (this.el.getAttribute('data-fetch-url')) {
 	            this.url = this.el.getAttribute('data-fetch-url');
 	        }
-	        console.log(this.url);
 	        var optionBasic = {
 	            tooltip: {
 	                trigger: 'axis',
@@ -65156,6 +65164,7 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
+	                // console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    var option = {
@@ -65545,7 +65554,6 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                console.log(result)
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    if (self.type == 'sex') {
@@ -65885,6 +65893,75 @@
 
 
 	module.exports = Chart;
+
+
+/***/ },
+/* 363 */,
+/* 364 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	function GetHistory(el, type) {
+	    this.el = el;
+	    this.trendEL = null; //趋势箭头元素
+	    this.historyDateEL = null; //历史最高日起元素
+	    this.historyValueEL = null; //历史最高日起值元素
+	    this.bookId = null; //取到bookid
+	    this.type = type; //指数type
+	    this.url = null; //ajax地址
+	    this.result = null; //ajax 值
+	    this.init();
+	}
+	GetHistory.prototype = {
+	    init: function() {
+	        this.trendEL = this.el.find(".arrow");
+	        this.historyDateEL = this.el.find('.highest_history_date');
+	        this.historyValueEL = this.el.find('.highest_histroy_value');
+	        this.bookId = $('#bookId').val();
+	        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type;
+	        console.log(this.url);
+	        this.getData();
+	    },
+	    getData: function() {
+	        var self = this;
+	        $.ajax({
+	            url: self.url,
+	            type: 'GET',
+	            dataType: 'jsonp',
+	            jsonp: 'callback',
+	            success: function(result) {
+	                if (result.err_code = 0) {
+	                    self.result = result.data;
+	                    self.renderUI();
+	                }
+	            }
+	        })
+	    },
+	    renderUI: function() {
+	        //处理箭头
+	        switch (this.result.current_index_trend) {
+	            case "0":
+	                this.trendEL.html('-');
+	                break;
+	            case "1":
+	                this.trendEL.html('↑');
+	                break;
+	            case "2":
+	                this.trendEL.html('↓');
+	                break;
+	            default:
+	                this.trendEL.html('-');
+	                break;
+	        }
+	        //处理日期
+	        this.historyDateEL.html(this.result.history_top_date);
+	        //处理数值
+	        this.historyValueEL.html(this.result.history_top_value);
+	    }
+	}
+
+	module.exports = GetHistory;
 
 
 /***/ }

@@ -8,6 +8,9 @@
 </head>
 
 <body>
+    <div class="hidden">
+        <input type="hidden" id="bookId" value="1">
+    </div>
     <header class="ipcool_hearder">
         <div class="inner clearfix">
             <a href="/" class="logo"></a>
@@ -149,7 +152,7 @@
         <!--综合价值-->
         <section>
             <h1 class="title">综合价值</h1>
-            <div class="values_container">
+            <div class="values_container" id="comprehensive_history" data-fetch-history="http://ipcool.me/index/historyTrend?">
                 <!--综合指数 -->
                 <div class="values_content">
                     <h2 class="program_title">综合指数</h2>
@@ -163,8 +166,8 @@
                 </div>
                 <!-- 历史最高 -->
                 <div class="values_content">
-                    <h2 class="program_title">历史最高 <span class="date">2015/03/24</span></h2>
-                    <h5 class="number">10,345</h5>
+                    <h2 class="program_title">历史最高 <span class="date highest_history_date">2015/03/24</span></h2>
+                    <h5 class="number highest_histroy_value">10,345</h5>
                 </div>
                 <!--同类排名 -->
                 <div class="values_content">

@@ -12,6 +12,7 @@ var PieChartMedia = require('../charts/pieChartMedia.js');
 var PieChartDouble = require('../charts/pieChartDouble.js');
 var VerticalBar = require('../charts/verticalBar.js');
 var CommentReviews = require('../charts/commentBar.js');
+var GetHistory = require('../components/get_value_history.js');
 
 
 $(function() {
@@ -43,7 +44,15 @@ $(function() {
     var back_top = new BackTop();
     //找到ip名字
     var ip_name = $('.program_info .content h1.name').html();
+    //异步趋势历史最高 
+    var compositeValues = new GetHistory($('#composite_values'),5);
+    var hotValues = new GetHistory($('#hot_values'),1);
+    var developValues = new GetHistory($('#develop_values'),2);
+    var propagateValues = new GetHistory($('#propagate_values'),3);
+    var reputationValues = new GetHistory($('#reputation_values'),4);
+
     //图表们
+
     //综合指数
     if ($('chart_comprehensive_value')) {
         var comprehensiveValue = new LineChart({
@@ -112,7 +121,7 @@ $(function() {
         var btnExpexts = $('.vote_container .vote_content').find('button.expext');
         var btnWantDevelop = $('.vote_container .vote_content').find('button.wantDevelop');
         var canClick = true;
-        console.log(btns);
+        // console.log(btns);
         btns.each(function() {
             $(this).on('click', function() {
                 if (canClick) {

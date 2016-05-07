@@ -4,7 +4,6 @@
 .index_head {
     width: 100%;
     height: 707px;
-    background: url("../assets/images/index/videohive.png") no-repeat;
     background-size: cover;
     position: relative;
     overflow: hidden;
@@ -73,12 +72,29 @@
             color: rgba(255, 255, 255, 0.7);
             margin-right: 33px;
         }
+        label.tips{
+            //收录后删除
+            &::before{
+                content:'正在收录中 敬请期待';
+                width:200px;
+                position: absolute;
+                top:-24px;
+                left:0;
+                opacity:0;
+                transition: opacity 300ms ease;
+            }
+            &:hover{
+                &::before{
+                    opacity:1;
+                }
+            }
+        }
         input[type=radio] {
             display: none;
         }
         input[type=radio]:checked+label {
             color: rgba(255, 255, 255, 1);
-            &:after {
+            &::after {
                 content: '';
                 position: absolute;
                 bottom: -14px;
@@ -91,7 +107,7 @@
                 border-bottom: 10px solid #fff;
             }
         }
-        .serarch_bar_container {
+        .serarch_bar_content {
             padding-right: 100px;
             position: relative;
             margin-top: 10px;
