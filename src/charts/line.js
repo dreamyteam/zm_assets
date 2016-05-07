@@ -20,7 +20,6 @@ Chart.prototype = {
         this.name = this.cfg.name;
         if (this.el.getAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url');
-            console.log(this.url);
         }
         var optionBasic = {
             tooltip: {

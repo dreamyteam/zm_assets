@@ -21,6 +21,7 @@ Chart.prototype = {
         if (this.el.getAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url');
         }
+        console.log(this.url);
         optionBasic = {
             grid: {
                 left: 65,
@@ -62,7 +63,7 @@ Chart.prototype = {
                 }
             },
             series: [{
-                name: '',
+                name: this.name,
                 type: 'bar',
                 data: [],
                 barWidth: 16,
@@ -99,17 +100,17 @@ Chart.prototype = {
             success: function(result) {
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
+                    //tudo 自动遍历数组
                     option = {
+                        yAxis: {
+                            data: [result.data[0].name, result.data[1].name, result.data[2].name, result.data[3].name]
+                        },
                         series: [{
-                            name: result.name,
-                            data: result.data,
+                            data: [result.data[0].value, result.data[1].value, result.data[2].value, result.data[3].value],
                         }],
                     }
                     self.chart.setOption(option);
                 }
-            },
-            error: function(msg) {
-                console.log(msg);
             }
         })
     }
