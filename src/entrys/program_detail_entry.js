@@ -7,7 +7,7 @@ var Tab = require('../components/tab.js');
 var FixTop = require('../components/fix_top.js');
 var BackTop = require('../components/back_top.js');
 var LineChart = require('../charts/line.js');
-var RadaChart = require('../charts/radar.js');
+var RadarChart = require('../charts/radar.js');
 var PieChartMedia = require('../charts/pieChartMedia.js');
 var PieChartDouble = require('../charts/pieChartDouble.js');
 var VerticalBar = require('../charts/verticalBar.js');
@@ -25,7 +25,6 @@ $(function() {
             tips: ".err_msg"
         })
     })
-
     $("#login").on('click', function() {
 
             var popLogin = new PopupSign("#popup_login");
@@ -35,48 +34,63 @@ $(function() {
                 element: "#from_login",
                 tips: ".err_msg"
             })
-        })
-        //列表切换
+    })
+    //列表切换
     new Tab({ selector: '.program_tab' });
     //导航置顶
     new FixTop();
     //返回顶部
     var back_top = new BackTop();
-
     //找到ip名字
     var ip_name = $('.program_info .content h1.name').html();
-
     //图表们
     //综合指数
     if ($('chart_comprehensive_value')) {
-        var comprehensiveValue = new LineChart('chart_comprehensive_value', 'http://localhost:3000/jsonp');
+        var comprehensiveValue = new LineChart({
+            el:'chart_comprehensive_value',
+            name:ip_name,
+        });
     }
 
     //潜力模型
-    // var potentialModel = new RadaChart('chart_potential_model', 'http://localhost:3000/jsonpp');
+    var potentialModel = new RadarChart({
+        el:'chart_potential_model',
+        name:ip_name
+    });
     //热度趋势
-    // var heatTrend = new LineChart('chart_heat_trend', 'http://localhost:3000/jsonp');
+    var heatTrend = new LineChart({
+        el:'chart_heat_trend',
+        name:ip_name
+    });
     //传播能力趋势
-    // var transmissionIndex = new LineChart('chart_transmission_index', 'http://localhost:3000/jsonp');
+    var transmissionIndex = new LineChart({
+        el:'chart_transmission_index',
+        name:ip_name
+    });
     //新闻媒体平台
-    // var mediaPlatform = new PieChartMedia('chart_media_platform', 'http://localhost:3000/jsonppp');
-    //社交平台
-    // var socialPlatform = new PieChartDouble({
-    //     el: 'chart_social_platform',
-    //     type: 'social',
-    //     left: 'center',
-    //     name: ip_name,
-    //     url: 'http://localhost:3000/social',
-    // });
-    //用户活跃度趋势
-    // var userVitalty = new LineChart('chart_user_vitalty', 'http://localhost:3000/jsonp');
-    //性别比例分布
-   /* var sexDistribution = new PieChartDouble({
+    var mediaPlatform = new PieChartMedia({
+        el:'chart_media_platform',
+        left:'center',
+        name:ip_name,
+    })
+    // 社交平台
+    var socialPlatform = new PieChartDouble({
+        el: 'chart_social_platform',
+        type: 'social',
+        left: 'center',
+        name: ip_name,
+    });
+    // 用户活跃度趋势
+    var userVitalty = new LineChart({
+        el:'chart_user_vitalty',
+        name:ip_name
+    });
+    // 性别比例分布
+   var sexDistribution = new PieChartDouble({
         el: 'chart_sex_distribution',
         type: 'sex',
         left: 'center',
         name: ip_name,
-        url: 'http://localhost:3000/sex'
     });
     //年龄分布
     var ageDistribution = new VerticalBar({
@@ -84,10 +98,12 @@ $(function() {
         type: 'age',
         left: 'center',
         name: ip_name,
-        url: 'http://localhost:3000/age'
     });
     //点评图表
-    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');*/
+    var commentReviews = new CommentReviews({
+        el:'chart_reviews',
+        name:ip_name
+    });
 
 
     //期待开发投票

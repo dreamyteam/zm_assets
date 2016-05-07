@@ -1,22 +1,32 @@
 var $ = require('jquery');
 var echarts = require('echarts');
 
-function Chart(element, url) {
-    this.element = document.getElementById(element);
-    this.chart = null;
-    this.option = null;
-    if (url) {
-        this.url = url;
-    }
+function Chart(cfg) {
+    this.cfg = cfg;
+    this.el = null;
+    // this.titleText = null; // 标题 由type决定
+    this.subTitle = null; //如果是sex图表 计算得出
+    this.name = null; // ip名称 
+    // this.type = null; // 类型 sex social
+    this.left = null; //  标题是否剧中 'center' 'left'
+    this.chart = null; // 图表实例
+    this.url = null; //ajax 请求地址
     this.init();
 }
 Chart.prototype = {
     init: function() {
-        this.chart = echarts.init(this.element);
+        this.el = document.getElementById(this.cfg.el);
+        this.chart = echarts.init(this.el);
+        this.name = this.cfg.name;
+        this.left = this.cfg.left || 'center';
+        if(this.el.getAttribute('data-fetch-url')){
+            this.url = this.el.getAttribute('data-fetch-url');
+        }
+        console.log(this.url)
         var optionBasic = {
             title: {
                 text: '在新闻媒体平台的传播构成',
-                left: 'center',
+                left: this.left,
                 textStyle: {
                     color: '#4a4a4a',
                     fontSize: 16
@@ -30,7 +40,7 @@ Chart.prototype = {
                 trigger: 'item',
             },
             series: [{
-                name: '新闻媒体平台传播构成',
+                name: this.name,
                 type: 'pie',
                 startAngle: 140,
                 radius: ['40%', '65%'],
@@ -38,7 +48,7 @@ Chart.prototype = {
                 avoidLabelOverlap: true,
                 label: {
                     normal: {
-                        show: true,   
+                        show: true,
                         textStyle: {
                             color: '#4a4a4a',
                             fontSize: 16,
@@ -50,10 +60,10 @@ Chart.prototype = {
                         show: false
                     }
                 },
-                itemStyle:{
-                    emphasis:{
-                        color:'#00a69d',
-                        opacity:0.8
+                itemStyle: {
+                    emphasis: {
+                        color: '#00a69d',
+                        opacity: 0.8
                     }
                 },
                 data: [
@@ -84,13 +94,17 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                self.chart.hideLoading();
-                var option = {
-                    series: [{
-                        data: result
-                    }]
+                if (result.error_code == 0) {
+                    self.chart.hideLoading();
+                    var option = {
+                        series: [{
+                            data: result.data
+                        }]
+                    }
+                    self.chart.setOption(option);
+                } else {
+                    return false;
                 }
-                self.chart.setOption(option);
             },
             error: function(msg) {
                 console.log(msg);

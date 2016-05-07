@@ -24,7 +24,9 @@ Chart.prototype = {
         }
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
-        this.url = this.cfg.url ? this.cfg.url : null;
+        if (this.el.getAttribute('data-fetch-url')) {
+            this.url = this.el.getAttribute('data-fetch-url');
+        }
         this.renderChart();
     },
     renderChart: function() {
@@ -91,7 +93,7 @@ Chart.prototype = {
                     show: false,
                 },
                 type: 'category',
-                data: ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上']
+                data: ['19岁以下', '20-29', '30-39', '40-49', '49以上']
             },
             series: [],
             color: ['#EEEEEE', '#84D2CD'],
@@ -107,7 +109,7 @@ Chart.prototype = {
     },
     getSubText: function(resArr) {
         var maxAge = Math.max.apply(null, resArr);
-        var titleArr = ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上'];
+        var titleArr = ['19岁以下', '20-29', '30-39', '40-49', '49以上'];
         for (var i = 0; i < resArr.length; i++) {
             if (resArr[i] == maxAge) {
                 var subscript = i;
@@ -124,35 +126,37 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                self.chart.hideLoading();
-                if (self.type == 'age') {
-                    self.subTitle = self.getSubText(result[1].value);
-                }
-                var option = {
-                    title: {
-                        subtext: self.subTitle,
-                    },
-                    legend: {
-                        data: [result[0].name, result[1].name]
-                    },
-                    series: [{
-                        name: result[0].name,
-                        type: 'bar',
-                        data: result[0].value,
-                        itemStyle: {
-                            emphasis: {
-                                color: '#EEE'
+                if (result.error_code == 0) {
+                    self.chart.hideLoading();
+                    if (self.type == 'age') {
+                        self.subTitle = self.getSubText(result[1].value);
+                    }
+                    var option = {
+                        title: {
+                            subtext: self.subTitle,
+                        },
+                        legend: {
+                            data: [result[0].name, result[1].name]
+                        },
+                        series: [{
+                            name: result[0].name,
+                            type: 'bar',
+                            data: result[0].value,
+                            itemStyle: {
+                                emphasis: {
+                                    color: '#EEE'
+                                }
                             }
-                        }
-                    }, {
-                        name: result[1].name,
-                        type: 'bar',
-                        barGap: '-50%',
-                        z: 3,
-                        data: result[1].value
-                    }]
+                        }, {
+                            name: result[1].name,
+                            type: 'bar',
+                            barGap: '-50%',
+                            z: 3,
+                            data: result[1].value
+                        }]
+                    }
+                    self.chart.setOption(option);
                 }
-                self.chart.setOption(option);
             },
             error: function(msg) {
                 console.log(msg);

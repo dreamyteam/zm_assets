@@ -53,7 +53,7 @@
 	var FixTop = __webpack_require__(355);
 	var BackTop = __webpack_require__(356);
 	var LineChart = __webpack_require__(357);
-	var RadaChart = __webpack_require__(358);
+	var RadarChart = __webpack_require__(358);
 	var PieChartMedia = __webpack_require__(359);
 	var PieChartDouble = __webpack_require__(360);
 	var VerticalBar = __webpack_require__(361);
@@ -71,7 +71,6 @@
 	            tips: ".err_msg"
 	        })
 	    })
-
 	    $("#login").on('click', function() {
 
 	            var popLogin = new PopupSign("#popup_login");
@@ -81,48 +80,63 @@
 	                element: "#from_login",
 	                tips: ".err_msg"
 	            })
-	        })
-	        //列表切换
+	    })
+	    //列表切换
 	    new Tab({ selector: '.program_tab' });
 	    //导航置顶
 	    new FixTop();
 	    //返回顶部
 	    var back_top = new BackTop();
-
 	    //找到ip名字
 	    var ip_name = $('.program_info .content h1.name').html();
-
 	    //图表们
 	    //综合指数
 	    if ($('chart_comprehensive_value')) {
-	        var comprehensiveValue = new LineChart('chart_comprehensive_value', 'http://localhost:3000/jsonp');
+	        var comprehensiveValue = new LineChart({
+	            el:'chart_comprehensive_value',
+	            name:ip_name,
+	        });
 	    }
 
 	    //潜力模型
-	    // var potentialModel = new RadaChart('chart_potential_model', 'http://localhost:3000/jsonpp');
+	    var potentialModel = new RadarChart({
+	        el:'chart_potential_model',
+	        name:ip_name
+	    });
 	    //热度趋势
-	    // var heatTrend = new LineChart('chart_heat_trend', 'http://localhost:3000/jsonp');
+	    var heatTrend = new LineChart({
+	        el:'chart_heat_trend',
+	        name:ip_name
+	    });
 	    //传播能力趋势
-	    // var transmissionIndex = new LineChart('chart_transmission_index', 'http://localhost:3000/jsonp');
+	    var transmissionIndex = new LineChart({
+	        el:'chart_transmission_index',
+	        name:ip_name
+	    });
 	    //新闻媒体平台
-	    // var mediaPlatform = new PieChartMedia('chart_media_platform', 'http://localhost:3000/jsonppp');
-	    //社交平台
-	    // var socialPlatform = new PieChartDouble({
-	    //     el: 'chart_social_platform',
-	    //     type: 'social',
-	    //     left: 'center',
-	    //     name: ip_name,
-	    //     url: 'http://localhost:3000/social',
-	    // });
-	    //用户活跃度趋势
-	    // var userVitalty = new LineChart('chart_user_vitalty', 'http://localhost:3000/jsonp');
-	    //性别比例分布
-	   /* var sexDistribution = new PieChartDouble({
+	    var mediaPlatform = new PieChartMedia({
+	        el:'chart_media_platform',
+	        left:'center',
+	        name:ip_name,
+	    })
+	    // 社交平台
+	    var socialPlatform = new PieChartDouble({
+	        el: 'chart_social_platform',
+	        type: 'social',
+	        left: 'center',
+	        name: ip_name,
+	    });
+	    // 用户活跃度趋势
+	    var userVitalty = new LineChart({
+	        el:'chart_user_vitalty',
+	        name:ip_name
+	    });
+	    // 性别比例分布
+	   var sexDistribution = new PieChartDouble({
 	        el: 'chart_sex_distribution',
 	        type: 'sex',
 	        left: 'center',
 	        name: ip_name,
-	        url: 'http://localhost:3000/sex'
 	    });
 	    //年龄分布
 	    var ageDistribution = new VerticalBar({
@@ -130,10 +144,12 @@
 	        type: 'age',
 	        left: 'center',
 	        name: ip_name,
-	        url: 'http://localhost:3000/age'
 	    });
 	    //点评图表
-	    var commentReviews = new CommentReviews('chart_reviews', 'http://localhost:3000/comment');*/
+	    var commentReviews = new CommentReviews({
+	        el:'chart_reviews',
+	        name:ip_name
+	    });
 
 
 	    //期待开发投票
@@ -65024,18 +65040,26 @@
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
 
-	function Chart(element, url) {
-	    this.element = document.getElementById(element);
-	    this.chart = null;
-	    this.option = null;
-	    if (url) {
-	        this.url = url;
-	    }
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    // this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    // this.type = null; // 类型 sex social
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
 	    this.init();
 	}
 	Chart.prototype = {
 	    init: function() {
-	        this.chart = echarts.init(this.element);
+	        this.el = document.getElementById(this.cfg.el);
+	        this.chart = echarts.init(this.el);
+	        this.name = this.cfg.name;
+	        if (this.el.getAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
 	        var optionBasic = {
 	            tooltip: {
 	                trigger: 'axis',
@@ -65077,7 +65101,7 @@
 	                    show: false,
 	                },
 	                boundaryGap: false,
-	                data: ['5月1日', '5月2日', '5月3日', '5月4日', '5月5日', '5月6日', '5月7日', '5月8日', '5月9日', '5月10日', '5/11', '5/12', '5/13', '5/14', '5/15', '5/16', '5/17', '5/18', '5/19', '5/20', '5/21', '5/22', '5/23', '5/24', '5/25', '5/26', '5/27', '5/28', '5/29', '5/30', '5/31']
+	                data: []
 	            }],
 	            yAxis: [{
 	                type: 'value',
@@ -65096,7 +65120,7 @@
 	                },
 	            }],
 	            series: [{
-	                name: '',
+	                name: this.name,
 	                type: 'line',
 	                symbolSize: 6,
 	                lineStyle: {
@@ -65120,9 +65144,7 @@
 	            }
 	        }
 	        this.chart.setOption(optionBasic);
-	        if (this.url) {
-	            this.update();
-	        }
+	        if (this.url) { this.update(); }
 	    },
 	    update: function() {
 	        this.chart.showLoading();
@@ -65133,17 +65155,19 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                var option = {
-	                    xAxis: [{
-	                        data: result.date
-	                    }],
-	                    series: [{
-	                        name: result.name,
-	                        data: result.data
-	                    }]
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    var option = {
+	                        xAxis: [{
+	                            data: result.date
+	                        }],
+	                        series: [{
+	                            name: result.name,
+	                            data: result.data
+	                        }]
+	                    }
+	                    self.chart.setOption(option);
 	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);
@@ -65155,9 +65179,6 @@
 	module.exports = Chart;
 
 
-
-
-
 /***/ },
 /* 358 */
 /***/ function(module, exports, __webpack_require__) {
@@ -65165,18 +65186,26 @@
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
 
-	function Chart(element, url) {
-	    this.element = document.getElementById(element);
-	    this.chart = null;
-	    this.option = null;
-	    if (url) {
-	        this.url = url;
-	    }
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    // this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    // this.type = null; // 类型 sex social
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
 	    this.init();
 	}
 	Chart.prototype = {
 	    init: function() {
-	        this.chart = echarts.init(this.element);
+	        this.el = document.getElementById(this.cfg.el);
+	        this.chart = echarts.init(this.el);
+	        this.name = this.cfg.name;
+	        if (this.el.getAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
 	        var option = {
 	            tooltip: {
 	                show: true,
@@ -65248,17 +65277,19 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                var option = {
-	                    series: [{
-	                        name: result.name,
-	                        data: [{
-	                            value: result.value,
-	                            name: result.name
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    var option = {
+	                        series: [{
+	                            name: result.name,
+	                            data: [{
+	                                value: result.value,
+	                                name: result.name
+	                            }]
 	                        }]
-	                    }]
+	                    }
+	                    self.chart.setOption(option);
 	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);
@@ -65276,22 +65307,32 @@
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
 
-	function Chart(element, url) {
-	    this.element = document.getElementById(element);
-	    this.chart = null;
-	    this.option = null;
-	    if (url) {
-	        this.url = url;
-	    }
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    // this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    // this.type = null; // 类型 sex social
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
 	    this.init();
 	}
 	Chart.prototype = {
 	    init: function() {
-	        this.chart = echarts.init(this.element);
+	        this.el = document.getElementById(this.cfg.el);
+	        this.chart = echarts.init(this.el);
+	        this.name = this.cfg.name;
+	        this.left = this.cfg.left || 'center';
+	        if(this.el.getAttribute('data-fetch-url')){
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
+	        console.log(this.url)
 	        var optionBasic = {
 	            title: {
 	                text: '在新闻媒体平台的传播构成',
-	                left: 'center',
+	                left: this.left,
 	                textStyle: {
 	                    color: '#4a4a4a',
 	                    fontSize: 16
@@ -65305,7 +65346,7 @@
 	                trigger: 'item',
 	            },
 	            series: [{
-	                name: '新闻媒体平台传播构成',
+	                name: this.name,
 	                type: 'pie',
 	                startAngle: 140,
 	                radius: ['40%', '65%'],
@@ -65313,7 +65354,7 @@
 	                avoidLabelOverlap: true,
 	                label: {
 	                    normal: {
-	                        show: true,   
+	                        show: true,
 	                        textStyle: {
 	                            color: '#4a4a4a',
 	                            fontSize: 16,
@@ -65325,10 +65366,10 @@
 	                        show: false
 	                    }
 	                },
-	                itemStyle:{
-	                    emphasis:{
-	                        color:'#00a69d',
-	                        opacity:0.8
+	                itemStyle: {
+	                    emphasis: {
+	                        color: '#00a69d',
+	                        opacity: 0.8
 	                    }
 	                },
 	                data: [
@@ -65359,13 +65400,17 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                var option = {
-	                    series: [{
-	                        data: result
-	                    }]
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    var option = {
+	                        series: [{
+	                            data: result.data
+	                        }]
+	                    }
+	                    self.chart.setOption(option);
+	                } else {
+	                    return false;
 	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);
@@ -65406,7 +65451,9 @@
 	        }
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        this.url = this.cfg.url ? this.cfg.url : null;
+	        if (this.el.getAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
 	        this.renderChart();
 	    },
 	    renderChart: function() {
@@ -65498,28 +65545,30 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                if (self.type == 'sex') {
-	                    self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    if (self.type == 'sex') {
+	                        self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+	                    }
+	                    var option = {
+	                        title: {
+	                            subtext: self.subTitle,
+	                        },
+	                        legend: {
+	                            data: [
+	                                { name: result[0].name, icon: 'rect' },
+	                                { name: result[1].name, icon: 'rect' }
+	                            ]
+	                        },
+	                        series: [{
+	                            data: [
+	                                { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
+	                                { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
+	                            ]
+	                        }]
+	                    }
+	                    self.chart.setOption(option);
 	                }
-	                var option = {
-	                    title: {
-	                        subtext: self.subTitle,
-	                    },
-	                    legend: {
-	                        data: [
-	                            { name: result[0].name, icon: 'rect' },
-	                            { name: result[1].name, icon: 'rect' }
-	                        ]
-	                    },
-	                    series: [{
-	                        data: [
-	                            { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
-	                            { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
-	                        ]
-	                    }]
-	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);
@@ -65561,7 +65610,9 @@
 	        }
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        this.url = this.cfg.url ? this.cfg.url : null;
+	        if (this.el.getAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
 	        this.renderChart();
 	    },
 	    renderChart: function() {
@@ -65628,7 +65679,7 @@
 	                    show: false,
 	                },
 	                type: 'category',
-	                data: ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上']
+	                data: ['19岁以下', '20-29', '30-39', '40-49', '49以上']
 	            },
 	            series: [],
 	            color: ['#EEEEEE', '#84D2CD'],
@@ -65644,7 +65695,7 @@
 	    },
 	    getSubText: function(resArr) {
 	        var maxAge = Math.max.apply(null, resArr);
-	        var titleArr = ['12以下', '13-18', '19-26', '27-34', '35-48', '49以上'];
+	        var titleArr = ['19岁以下', '20-29', '30-39', '40-49', '49以上'];
 	        for (var i = 0; i < resArr.length; i++) {
 	            if (resArr[i] == maxAge) {
 	                var subscript = i;
@@ -65661,35 +65712,37 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                if (self.type == 'age') {
-	                    self.subTitle = self.getSubText(result[1].value);
-	                }
-	                var option = {
-	                    title: {
-	                        subtext: self.subTitle,
-	                    },
-	                    legend: {
-	                        data: [result[0].name, result[1].name]
-	                    },
-	                    series: [{
-	                        name: result[0].name,
-	                        type: 'bar',
-	                        data: result[0].value,
-	                        itemStyle: {
-	                            emphasis: {
-	                                color: '#EEE'
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    if (self.type == 'age') {
+	                        self.subTitle = self.getSubText(result[1].value);
+	                    }
+	                    var option = {
+	                        title: {
+	                            subtext: self.subTitle,
+	                        },
+	                        legend: {
+	                            data: [result[0].name, result[1].name]
+	                        },
+	                        series: [{
+	                            name: result[0].name,
+	                            type: 'bar',
+	                            data: result[0].value,
+	                            itemStyle: {
+	                                emphasis: {
+	                                    color: '#EEE'
+	                                }
 	                            }
-	                        }
-	                    }, {
-	                        name: result[1].name,
-	                        type: 'bar',
-	                        barGap: '-50%',
-	                        z: 3,
-	                        data: result[1].value
-	                    }]
+	                        }, {
+	                            name: result[1].name,
+	                            type: 'bar',
+	                            barGap: '-50%',
+	                            z: 3,
+	                            data: result[1].value
+	                        }]
+	                    }
+	                    self.chart.setOption(option);
 	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);
@@ -65709,18 +65762,26 @@
 	var $ = __webpack_require__(1);
 	var echarts = __webpack_require__(2);
 
-	function Chart(element, url) {
-	    this.element = document.getElementById(element);
-	    this.chart = null;
-	    this.option = null;
-	    if (url) {
-	        this.url = url;
-	    }
+	function Chart(cfg) {
+	    this.cfg = cfg;
+	    this.el = null;
+	    // this.titleText = null; // 标题 由type决定
+	    this.subTitle = null; //如果是sex图表 计算得出
+	    this.name = null; // ip名称 
+	    // this.type = null; // 类型 sex social
+	    this.left = null; //  标题是否剧中 'center' 'left'
+	    this.chart = null; // 图表实例
+	    this.url = null; //ajax 请求地址
 	    this.init();
 	}
 	Chart.prototype = {
 	    init: function() {
-	        this.chart = echarts.init(this.element);
+	        this.el = document.getElementById(this.cfg.el);
+	        this.chart = echarts.init(this.el);
+	        this.name = this.cfg.name;
+	        if (this.el.getAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url');
+	        }
 	        optionBasic = {
 	            grid: {
 	                left: 65,
@@ -65797,14 +65858,16 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                self.chart.hideLoading();
-	                option = {
-	                    series: [{
-	                        name: result.name,
-	                        data: result.data,
-	                    }],
+	                if (result.error_code == 0) {
+	                    self.chart.hideLoading();
+	                    option = {
+	                        series: [{
+	                            name: result.name,
+	                            data: result.data,
+	                        }],
+	                    }
+	                    self.chart.setOption(option);
 	                }
-	                self.chart.setOption(option);
 	            },
 	            error: function(msg) {
 	                console.log(msg);

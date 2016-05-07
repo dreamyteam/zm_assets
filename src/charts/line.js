@@ -1,18 +1,26 @@
 var $ = require('jquery');
 var echarts = require('echarts');
 
-function Chart(element, url) {
-    this.element = document.getElementById(element);
-    this.chart = null;
-    this.option = null;
-    if (url) {
-        this.url = url;
-    }
+function Chart(cfg) {
+    this.cfg = cfg;
+    this.el = null;
+    // this.titleText = null; // 标题 由type决定
+    this.subTitle = null; //如果是sex图表 计算得出
+    this.name = null; // ip名称 
+    // this.type = null; // 类型 sex social
+    this.left = null; //  标题是否剧中 'center' 'left'
+    this.chart = null; // 图表实例
+    this.url = null; //ajax 请求地址
     this.init();
 }
 Chart.prototype = {
     init: function() {
-        this.chart = echarts.init(this.element);
+        this.el = document.getElementById(this.cfg.el);
+        this.chart = echarts.init(this.el);
+        this.name = this.cfg.name;
+        if (this.el.getAttribute('data-fetch-url')) {
+            this.url = this.el.getAttribute('data-fetch-url');
+        }
         var optionBasic = {
             tooltip: {
                 trigger: 'axis',
@@ -54,7 +62,7 @@ Chart.prototype = {
                     show: false,
                 },
                 boundaryGap: false,
-                data: ['5月1日', '5月2日', '5月3日', '5月4日', '5月5日', '5月6日', '5月7日', '5月8日', '5月9日', '5月10日', '5/11', '5/12', '5/13', '5/14', '5/15', '5/16', '5/17', '5/18', '5/19', '5/20', '5/21', '5/22', '5/23', '5/24', '5/25', '5/26', '5/27', '5/28', '5/29', '5/30', '5/31']
+                data: []
             }],
             yAxis: [{
                 type: 'value',
@@ -73,7 +81,7 @@ Chart.prototype = {
                 },
             }],
             series: [{
-                name: '',
+                name: this.name,
                 type: 'line',
                 symbolSize: 6,
                 lineStyle: {
@@ -97,9 +105,7 @@ Chart.prototype = {
             }
         }
         this.chart.setOption(optionBasic);
-        if (this.url) {
-            this.update();
-        }
+        if (this.url) { this.update(); }
     },
     update: function() {
         this.chart.showLoading();
@@ -110,17 +116,19 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                self.chart.hideLoading();
-                var option = {
-                    xAxis: [{
-                        data: result.date
-                    }],
-                    series: [{
-                        name: result.name,
-                        data: result.data
-                    }]
+                if (result.error_code == 0) {
+                    self.chart.hideLoading();
+                    var option = {
+                        xAxis: [{
+                            data: result.date
+                        }],
+                        series: [{
+                            name: result.name,
+                            data: result.data
+                        }]
+                    }
+                    self.chart.setOption(option);
                 }
-                self.chart.setOption(option);
             },
             error: function(msg) {
                 console.log(msg);
@@ -130,6 +138,3 @@ Chart.prototype = {
 }
 
 module.exports = Chart;
-
-
-

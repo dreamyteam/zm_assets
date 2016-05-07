@@ -24,7 +24,9 @@ Chart.prototype = {
         }
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
-        this.url = this.cfg.url ? this.cfg.url : null;
+        if (this.el.getAttribute('data-fetch-url')) {
+            this.url = this.el.getAttribute('data-fetch-url');
+        }
         this.renderChart();
     },
     renderChart: function() {
@@ -116,28 +118,30 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                self.chart.hideLoading();
-                if (self.type == 'sex') {
-                    self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+                if (result.error_code == 0) {
+                    self.chart.hideLoading();
+                    if (self.type == 'sex') {
+                        self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+                    }
+                    var option = {
+                        title: {
+                            subtext: self.subTitle,
+                        },
+                        legend: {
+                            data: [
+                                { name: result[0].name, icon: 'rect' },
+                                { name: result[1].name, icon: 'rect' }
+                            ]
+                        },
+                        series: [{
+                            data: [
+                                { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
+                                { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
+                            ]
+                        }]
+                    }
+                    self.chart.setOption(option);
                 }
-                var option = {
-                    title: {
-                        subtext: self.subTitle,
-                    },
-                    legend: {
-                        data: [
-                            { name: result[0].name, icon: 'rect' },
-                            { name: result[1].name, icon: 'rect' }
-                        ]
-                    },
-                    series: [{
-                        data: [
-                            { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
-                            { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
-                        ]
-                    }]
-                }
-                self.chart.setOption(option);
             },
             error: function(msg) {
                 console.log(msg);
