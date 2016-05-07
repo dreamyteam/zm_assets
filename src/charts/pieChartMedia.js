@@ -22,7 +22,6 @@ Chart.prototype = {
         if(this.el.getAttribute('data-fetch-url')){
             this.url = this.el.getAttribute('data-fetch-url');
         }
-        console.log(this.url)
         var optionBasic = {
             title: {
                 text: '在新闻媒体平台的传播构成',

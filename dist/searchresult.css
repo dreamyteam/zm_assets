@@ -704,7 +704,8 @@ section.search_result {
       width: 120px;
       height: 168px;
       float: left;
-      margin-right: 30px; }
+      margin-right: 30px;
+      background: #F2F2F2; }
       section.search_result .sresult_ip .sresult_ip_img_cointainer img {
         width: 120px; }
     section.search_result .sresult_ip .sresult_content {

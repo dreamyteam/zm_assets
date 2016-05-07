@@ -47,6 +47,11 @@ Chart.prototype = {
             },
             tooltip: {
                 trigger: 'axis',
+                formatter:function(params){
+                    var average = params[0];
+                    var curIp = params[1];
+                    return average.seriesName + ' : ' + Math.floor(average.value*100) + '%<br/>'+curIp.seriesName + ' : ' +Math.floor(curIp.value*100)+ '%';
+                },
                 axisPointer: {
                     type: 'shadow',
                     shadowStyle: {
@@ -126,33 +131,34 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     if (self.type == 'age') {
-                        self.subTitle = self.getSubText(result[1].value);
+                        self.subTitle = self.getSubText(result.data[1].value);
                     }
                     var option = {
                         title: {
                             subtext: self.subTitle,
                         },
                         legend: {
-                            data: [result[0].name, result[1].name]
+                            data: [result.data[0].name, result.data[1].name]
                         },
                         series: [{
-                            name: result[0].name,
+                            name: result.data[0].name,
                             type: 'bar',
-                            data: result[0].value,
+                            data: result.data[0].value,
                             itemStyle: {
                                 emphasis: {
                                     color: '#EEE'
                                 }
                             }
                         }, {
-                            name: result[1].name,
+                            name: result.data[1].name,
                             type: 'bar',
                             barGap: '-50%',
                             z: 3,
-                            data: result[1].value
+                            data: result.data[1].value
                         }]
                     }
                     self.chart.setOption(option);

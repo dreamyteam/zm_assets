@@ -118,10 +118,11 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
+                console.log(result)
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     if (self.type == 'sex') {
-                        self.subTitle = self.caculateSubTitle(result[0].value, result[1].value);
+                        self.subTitle = self.caculateSubTitle(result.data[0].value, result.data[1].value);
                     }
                     var option = {
                         title: {
@@ -129,14 +130,14 @@ Chart.prototype = {
                         },
                         legend: {
                             data: [
-                                { name: result[0].name, icon: 'rect' },
-                                { name: result[1].name, icon: 'rect' }
+                                { name: result.data[0].name, icon: 'rect' },
+                                { name: result.data[1].name, icon: 'rect' }
                             ]
                         },
                         series: [{
                             data: [
-                                { value: result[0].value, name: result[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
-                                { value: result[1].value, name: result[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
+                                { value: result.data[0].value, name: result.data[0].name, itemStyle: { emphasis: { color: '#EEEEEE' } } },
+                                { value: result.data[1].value, name: result.data[1].name, itemStyle: { emphasis: { color: '#84d2cd' } } }
                             ]
                         }]
                     }
