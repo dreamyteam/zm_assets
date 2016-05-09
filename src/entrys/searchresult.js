@@ -14,6 +14,7 @@ $(function() {
         var validate = new Validate({
             el: "#from_register",
             tips: ".err_msg",
+            type: "reg",
             hasValidateCode:true
         })
     })
