@@ -19,8 +19,9 @@ Chart.prototype = {
         this.chart = echarts.init(this.el);
         this.name = this.cfg.name;
         if (this.el.getAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url');
-            // console.log(this.url);
+            var time = new Date()
+            this.url = this.el.getAttribute('data-fetch-url') + '&' + time;
+            console.log(this.url);
         }
         var option = {
             tooltip: {
@@ -87,17 +88,16 @@ Chart.prototype = {
     update: function() {
         this.chart.showLoading();
         var self = this;
+        var time = new Date();
         $.ajax({
             url: self.url,
             type: 'GET',
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                // console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {
-                        indicator:result.data.indicator,
                         series: [{
                             data: [{
                                 value: result.data.value,

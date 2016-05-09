@@ -17,7 +17,7 @@ GetHistory.prototype = {
         this.historyDateEL = this.el.find('.highest_history_date');
         this.historyValueEL = this.el.find('.highest_histroy_value');
         this.bookId = $('#bookId').val();
-        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type;
+        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t='+new Date().getTime();
         if(this.el){this.getData();}
     },
     getData: function() {

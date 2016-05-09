@@ -25,7 +25,7 @@ Chart.prototype = {
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
         if (this.el.getAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url');
+            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
         }
         this.renderChart();
     },

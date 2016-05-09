@@ -1,7 +1,7 @@
 var $ = require('jquery');
-var echarts = require('echarts');
+// var echarts = require('echarts');
 var PopupSign = require('../components/pop_up_sign.js');
-var PopUpVote = require('../components/pop_up_vote.js');
+// var PopUpVote = require('../components/pop_up_vote.js');  改为直接投票
 var Validate = require('../components/validate.js');
 var Tab = require('../components/tab.js');
 var FixTop = require('../components/fix_top.js');

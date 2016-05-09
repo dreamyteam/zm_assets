@@ -45,9 +45,32 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(1);
+	var PopupSign = __webpack_require__(2);
+	var Validate = __webpack_require__(3);
 
-	var labelList = $('#index_serch label');
 
+	$(function(){
+		$("#register").on('click', function() {
+
+	        var popReg = new PopupSign('#popup_register');
+	        popReg.alert();
+
+	        var validate = new Validate({
+	            element: "#from_register",
+	            tips: ".err_msg"
+	        })
+	    })
+	    $("#login").on('click', function() {
+
+	            var popLogin = new PopupSign("#popup_login");
+	            popLogin.alert();
+
+	            var validate = new Validate({
+	                element: "#from_login",
+	                tips: ".err_msg"
+	            })
+	    })	
+	})
 
 /***/ },
 /* 1 */
@@ -9895,6 +9918,91 @@
 
 	return jQuery;
 	}));
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	function Popup(element) {
+		this.element = $(element);
+		this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+		this.init();
+	}
+	Popup.prototype.init = function(){
+		this.close();
+	};
+	Popup.prototype.alert = function(){
+		this.mask.appendTo("body");
+		this.element.show();
+	};
+	Popup.prototype.destory = function(){
+		this.mask.remove();
+		this.element.hide();
+	};
+	Popup.prototype.close = function(){
+		var self = this;
+		if(this.element.find('button.close')){
+			var btnClose = this.element.find('button.close');
+			btnClose.on('click',function(){
+				self.destory();
+			})
+		}
+	}
+
+	module.exports = Popup;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(1);
+
+	var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+
+	function Validate(cfg) {
+	    this.cfg = {
+	        element: $(cfg.element),
+	        tips: $(cfg.tips)
+	    }
+	    this.init()
+	}
+	Validate.prototype.init = function() {
+		var self = this;
+
+	    this.cfg.tips.hide();
+
+	    this.cfg.element.find('input').blur(function() {
+	        // 验证手机号
+	        if ($(this).is("input[name='phone_number']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请填写手机号码")
+	            } else if (!regPhone.test($(this).val())) {
+	                self.cfg.tips.show().html("手机号码格式错误")
+	            } else {
+	                this.cfg.tips.hide()
+	            }
+	        }
+	        //验证密码
+	        if ($(this).is("input[name='password']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入密码")
+	            }
+	        }
+	        // 验证验证码
+	        if ($(this).is("input[name='verify_code']")) {
+	            if ($(this).val() == "" || null) {
+	                self.cfg.tips.show().html("请输入验证码")
+	            }
+	        }
+
+	    })
+	}
+
+	module.exports = Validate;
 
 
 /***/ }

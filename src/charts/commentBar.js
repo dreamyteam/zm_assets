@@ -19,9 +19,8 @@ Chart.prototype = {
         this.chart = echarts.init(this.el);
         this.name = this.cfg.name;
         if (this.el.getAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url');
+            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
         }
-        console.log(this.url);
         optionBasic = {
             grid: {
                 left: 65,
