@@ -24,7 +24,7 @@ $(function() {
         popLogin.alert();
 
         var validate = new Validate({
-            element: "#from_login",
+            el: "#from_login",
             tips: ".err_msg"
         })
     })
