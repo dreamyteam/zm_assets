@@ -5,7 +5,11 @@ function Popup(element) {
 }
 Popup.prototype = {
     init: function() {
-        this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+        if ($('#popup_mask').length > 0) {
+            this.mask = $('#popup_mask');
+        } else {
+            this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+        }
         this.close();
     },
     alert: function() {
