@@ -1,5 +1,3 @@
-
-
 function GetHistory(el, type) {
     this.el = el;
     this.trendEL = null; //趋势箭头元素
@@ -17,10 +15,10 @@ GetHistory.prototype = {
         this.historyDateEL = this.el.find('.highest_history_date');
         this.historyValueEL = this.el.find('.highest_histroy_value');
         this.bookId = $('#bookId').val();
-        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t='+new Date().getTime();
-        if(this.el){this.getData();}
+        if (this.el.length > 0) { this.getData();}
     },
     getData: function() {
+        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
         var self = this;
         $.ajax({
             url: self.url,
@@ -28,7 +26,7 @@ GetHistory.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-            	// console.log(result);
+                // console.log(result);
                 if (result.error_code == 0) {
                     self.result = result.data;
                     self.renderUI();

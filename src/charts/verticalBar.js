@@ -1,4 +1,3 @@
-
 // var echarts = require('echarts');
 
 function Chart(cfg) {
@@ -24,10 +23,12 @@ Chart.prototype = {
         }
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
-        if (this.el.getAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+        if (this.el) {
+            this.renderChart();
+            if (this.el.getAttribute('data-fetch-url')) {
+                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+            }
         }
-        this.renderChart();
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);
@@ -47,10 +48,10 @@ Chart.prototype = {
             },
             tooltip: {
                 trigger: 'axis',
-                formatter:function(params){
+                formatter: function(params) {
                     var average = params[0];
                     var curIp = params[1];
-                    return average.seriesName + ' : ' + Math.floor(average.value*100) + '%<br/>'+curIp.seriesName + ' : ' +Math.floor(curIp.value*100)+ '%';
+                    return average.seriesName + ' : ' + Math.floor(average.value * 100) + '%<br/>' + curIp.seriesName + ' : ' + Math.floor(curIp.value * 100) + '%';
                 },
                 axisPointer: {
                     type: 'shadow',

@@ -1,4 +1,3 @@
-
 // var echarts = require('echarts');
 
 function Chart(cfg) {
@@ -16,12 +15,17 @@ function Chart(cfg) {
 Chart.prototype = {
     init: function() {
         this.el = document.getElementById(this.cfg.el);
-        this.chart = echarts.init(this.el);
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
-        if(this.el.getAttribute('data-fetch-url')){
-            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+        if (this.el) {
+            this.renderChart();
+            if (this.el.getAttribute('data-fetch-url')) {
+                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+            }
         }
+    },
+    renderChart: function() {
+        this.chart = echarts.init(this.el);
         var optionBasic = {
             title: {
                 text: '在新闻媒体平台的传播构成',

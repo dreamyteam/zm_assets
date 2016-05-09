@@ -44,8 +44,6 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	// var echarts = require('echarts');
 	var PopupSign = __webpack_require__(1);
 	// var PopUpVote = require('../components/pop_up_vote.js');  改为直接投票
 	var Validate = __webpack_require__(2);
@@ -70,7 +68,7 @@
 	        var validate = new Validate({
 	            element: "#from_register",
 	            tips: ".err_msg",
-	            hasValidateCode:true
+	            hasValidateCode: true
 	        })
 	    })
 	    $("#login").on('click', function() {
@@ -82,8 +80,8 @@
 	                element: "#from_login",
 	                tips: ".err_msg"
 	            })
-	    })
-	    //列表切换
+	        })
+	        //列表切换
 	    new Tab({ selector: '.program_tab' });
 	    //导航置顶
 	    new FixTop();
@@ -91,44 +89,47 @@
 	    var back_top = new BackTop();
 	    //找到ip名字
 	    var ip_name = $('.program_info .content h1.name').html();
-	    //异步趋势历史最高 
-	    var compositeValues = new GetHistory($('#composite_values'),5);
-	    var hotValues = new GetHistory($('#hot_values'),1);
-	    var developValues = new GetHistory($('#develop_values'),2);
-	    var propagateValues = new GetHistory($('#propagate_values'),3);
-	    var reputationValues = new GetHistory($('#reputation_values'),4);
+	    //异步趋势历史最高
+
+	    var compositeValues = new GetHistory($('#composite_values'), 5);
+	    var hotValues = new GetHistory($('#hot_values'), 1);
+	    var developValues = new GetHistory($('#develop_values'), 2);
+	    var propagateValues = new GetHistory($('#propagate_values'), 3);
+	    var reputationValues = new GetHistory($('#reputation_values'), 4);
+
 
 	    //图表们
-
 	    //综合指数
-	    if ($('chart_comprehensive_value')) {
-	        var comprehensiveValue = new LineChart({
-	            el:'chart_comprehensive_value',
-	            name:ip_name,
-	        });
-	    }
+	    var comprehensiveValue = new LineChart({
+	        el: 'chart_comprehensive_value',
+	        name: ip_name,
+	    });
 
 	    //潜力模型
 	    var potentialModel = new RadarChart({
-	        el:'chart_potential_model',
-	        name:ip_name
+	        el: 'chart_potential_model',
+	        name: ip_name
 	    });
+
 	    //热度趋势
 	    var heatTrend = new LineChart({
-	        el:'chart_heat_trend',
-	        name:ip_name
+	        el: 'chart_heat_trend',
+	        name: ip_name
 	    });
+
 	    //传播能力趋势
 	    var transmissionIndex = new LineChart({
-	        el:'chart_transmission_index',
-	        name:ip_name
+	        el: 'chart_transmission_index',
+	        name: ip_name
 	    });
+
 	    //新闻媒体平台
 	    var mediaPlatform = new PieChartMedia({
-	        el:'chart_media_platform',
-	        left:'center',
-	        name:ip_name,
+	        el: 'chart_media_platform',
+	        left: 'center',
+	        name: ip_name,
 	    })
+
 	    // 社交平台
 	    var socialPlatform = new PieChartDouble({
 	        el: 'chart_social_platform',
@@ -136,18 +137,21 @@
 	        left: 'center',
 	        name: ip_name,
 	    });
+
 	    // 用户活跃度趋势
 	    var userVitalty = new LineChart({
-	        el:'chart_user_vitalty',
-	        name:ip_name
+	        el: 'chart_user_vitalty',
+	        name: ip_name
 	    });
+
 	    // 性别比例分布
-	   var sexDistribution = new PieChartDouble({
+	    var sexDistribution = new PieChartDouble({
 	        el: 'chart_sex_distribution',
 	        type: 'sex',
 	        left: 'center',
 	        name: ip_name,
 	    });
+
 	    //年龄分布
 	    var ageDistribution = new VerticalBar({
 	        el: 'chart_age_distribution',
@@ -157,8 +161,8 @@
 	    });
 	    //点评图表
 	    var commentReviews = new CommentReviews({
-	        el:'chart_reviews',
-	        name:ip_name
+	        el: 'chart_reviews',
+	        name: ip_name
 	    });
 
 
@@ -197,6 +201,10 @@
 	            })
 	        })
 	    }
+
+	    //潜力模型页
+	   
+
 	})
 
 
@@ -497,7 +505,6 @@
 /* 6 */
 /***/ function(module, exports) {
 
-	
 	// var echarts = require('echarts');
 
 	function Chart(cfg) {
@@ -515,11 +522,18 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-	        this.chart = echarts.init(this.el);
+
 	        this.name = this.cfg.name;
-	        if (this.el.getAttribute('data-fetch-url')) {
-	            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
 	        var optionBasic = {
 	            tooltip: {
 	                trigger: 'axis',
@@ -615,7 +629,6 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	                console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    var option = {
@@ -644,7 +657,6 @@
 /* 7 */
 /***/ function(module, exports) {
 
-	
 	// var echarts = require('echarts');
 
 	function Chart(cfg) {
@@ -662,13 +674,17 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-	        this.chart = echarts.init(this.el);
 	        this.name = this.cfg.name;
-	        if (this.el.getAttribute('data-fetch-url')) {
-	            var time = new Date()
-	            this.url = this.el.getAttribute('data-fetch-url') + '&' + time;
-	            console.log(this.url);
+
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
 	        var option = {
 	            tooltip: {
 	                show: true,
@@ -763,7 +779,6 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	
 	// var echarts = require('echarts');
 
 	function Chart(cfg) {
@@ -781,12 +796,17 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-	        this.chart = echarts.init(this.el);
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        if(this.el.getAttribute('data-fetch-url')){
-	            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
 	        var optionBasic = {
 	            title: {
 	                text: '在新闻媒体平台的传播构成',
@@ -883,9 +903,6 @@
 /* 9 */
 /***/ function(module, exports) {
 
-	
-	// var echarts = require('echarts');
-
 	function Chart(cfg) {
 	    this.cfg = cfg;
 	    this.el = null;
@@ -909,10 +926,13 @@
 	        }
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        if (this.el.getAttribute('data-fetch-url')) {
-	            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
-	        this.renderChart();
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -1042,7 +1062,6 @@
 /* 10 */
 /***/ function(module, exports) {
 
-	
 	// var echarts = require('echarts');
 
 	function Chart(cfg) {
@@ -1068,10 +1087,12 @@
 	        }
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        if (this.el.getAttribute('data-fetch-url')) {
-	            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
-	        this.renderChart();
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -1091,10 +1112,10 @@
 	            },
 	            tooltip: {
 	                trigger: 'axis',
-	                formatter:function(params){
+	                formatter: function(params) {
 	                    var average = params[0];
 	                    var curIp = params[1];
-	                    return average.seriesName + ' : ' + Math.floor(average.value*100) + '%<br/>'+curIp.seriesName + ' : ' +Math.floor(curIp.value*100)+ '%';
+	                    return average.seriesName + ' : ' + Math.floor(average.value * 100) + '%<br/>' + curIp.seriesName + ' : ' + Math.floor(curIp.value * 100) + '%';
 	                },
 	                axisPointer: {
 	                    type: 'shadow',
@@ -1223,7 +1244,6 @@
 /* 11 */
 /***/ function(module, exports) {
 
-	
 	// var echarts = require('echarts');
 
 	function Chart(cfg) {
@@ -1241,11 +1261,19 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-	        this.chart = echarts.init(this.el);
+
+
 	        this.name = this.cfg.name;
-	        if (this.el.getAttribute('data-fetch-url')) {
-	            this.url = this.el.getAttribute('data-fetch-url') + '&t='+new Date().getTime();
+
+	        if (this.el) {
+	            this.renderChart();
+	            if (this.el.getAttribute('data-fetch-url')) {
+	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	            }
 	        }
+	    },
+	    renderChart: function() {
+	        this.chart = echarts.init(this.el);
 	        optionBasic = {
 	            grid: {
 	                left: 65,
@@ -1348,8 +1376,6 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	
-
 	function GetHistory(el, type) {
 	    this.el = el;
 	    this.trendEL = null; //趋势箭头元素
@@ -1367,10 +1393,10 @@
 	        this.historyDateEL = this.el.find('.highest_history_date');
 	        this.historyValueEL = this.el.find('.highest_histroy_value');
 	        this.bookId = $('#bookId').val();
-	        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t='+new Date().getTime();
-	        if(this.el){this.getData();}
+	        if (this.el.length > 0) { this.getData();}
 	    },
 	    getData: function() {
+	        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
 	        var self = this;
 	        $.ajax({
 	            url: self.url,
@@ -1378,7 +1404,7 @@
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
-	            	// console.log(result);
+	                // console.log(result);
 	                if (result.error_code == 0) {
 	                    self.result = result.data;
 	                    self.renderUI();

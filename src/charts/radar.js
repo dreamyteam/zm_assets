@@ -1,4 +1,3 @@
-
 // var echarts = require('echarts');
 
 function Chart(cfg) {
@@ -16,13 +15,17 @@ function Chart(cfg) {
 Chart.prototype = {
     init: function() {
         this.el = document.getElementById(this.cfg.el);
-        this.chart = echarts.init(this.el);
         this.name = this.cfg.name;
-        if (this.el.getAttribute('data-fetch-url')) {
-            var time = new Date()
-            this.url = this.el.getAttribute('data-fetch-url') + '&' + time;
-            console.log(this.url);
+
+        if (this.el) {
+            this.renderChart();
+            if (this.el.getAttribute('data-fetch-url')) {
+                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+            }
         }
+    },
+    renderChart: function() {
+        this.chart = echarts.init(this.el);
         var option = {
             tooltip: {
                 show: true,
