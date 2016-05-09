@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 // var echarts = require('echarts');
 var PopupSign = require('../components/pop_up_sign.js');
 // var PopUpVote = require('../components/pop_up_vote.js');  改为直接投票
@@ -23,7 +23,8 @@ $(function() {
 
         var validate = new Validate({
             element: "#from_register",
-            tips: ".err_msg"
+            tips: ".err_msg",
+            hasValidateCode:true
         })
     })
     $("#login").on('click', function() {

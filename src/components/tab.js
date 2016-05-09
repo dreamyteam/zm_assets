@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 function Tab(config) {
     this.config = config || {};

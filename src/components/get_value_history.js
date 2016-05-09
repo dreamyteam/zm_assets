@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 function GetHistory(el, type) {
     this.el = el;

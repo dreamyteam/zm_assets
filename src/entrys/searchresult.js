@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 var PopupSign = require('../components/pop_up_sign');
 var Validate = require('../components/validate.js');
 var Paging = require('../components/paging.js');
@@ -12,8 +12,9 @@ $(function() {
         popReg.alert();
 
         var validate = new Validate({
-            element: "#from_register",
-            tips: ".err_msg"
+            el: "#from_register",
+            tips: ".err_msg",
+            hasValidateCode:true
         })
     })
 

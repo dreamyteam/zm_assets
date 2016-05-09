@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 function Popup(element) {
 	this.element = $(element);

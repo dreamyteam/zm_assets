@@ -124,6 +124,12 @@
                 height: 45px;
                 font-size: 18px;
                 color: #999999;
+                transition: all 300ms ease;
+            }
+            button.btn_send_verify_code.active{
+                color:#FFF;
+                border:1px solid #00a69d;
+                background:#00a69d;
             }
         }
         .solid,

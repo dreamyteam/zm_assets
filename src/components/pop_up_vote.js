@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 function PopUp(cfg) {
     this.cfg = cfg;

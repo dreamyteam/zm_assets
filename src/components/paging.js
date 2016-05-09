@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 
 function Paging(element) {

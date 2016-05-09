@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 function FixTop(element) {
     this.element = element || $('#program_nav');

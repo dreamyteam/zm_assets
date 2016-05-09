@@ -1,5 +1,5 @@
-var $ = require('jquery');
-var echarts = require('echarts');
+
+// var echarts = require('echarts');
 
 function Chart(cfg) {
     this.cfg = cfg;

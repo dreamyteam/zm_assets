@@ -1,4 +1,4 @@
-var $ = require('jquery');
+
 
 // 设置位置元素
 function BackTop(contrastElement) {
