@@ -590,6 +590,10 @@ input[type=checkbox]:checked {
   background: url("../assets/images/icon_verify@2x.png") center center no-repeat;
   background-size: 12px; }
 
+.avatar {
+  width: 940px;
+  height: 500px; }
+
 .searchbar {
   margin: 55px auto;
   text-align: center; }

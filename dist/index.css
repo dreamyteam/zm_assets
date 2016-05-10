@@ -464,11 +464,15 @@ input[type=checkbox]:checked {
   background: url("../assets/images/icon_verify@2x.png") center center no-repeat;
   background-size: 12px; }
 
+.avatar {
+  width: 940px;
+  height: 500px; }
+
 .ipcool_hearder {
   position: absolute;
   top: 0;
   background: transparent;
-  z-index: 99999999;
+  z-index: 500;
   width: 100%;
   left: 0;
   top: 0; }
