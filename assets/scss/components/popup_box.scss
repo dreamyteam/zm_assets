@@ -42,7 +42,7 @@
         width: 153px;
         height: 46px;
     }
-    form {
+    .sign_form {
         text-align: left;
         position: relative;
         padding-top: 63px;
@@ -171,6 +171,10 @@
                 vertical-align: bottom;
             }
         }
+    }
+    .register,
+    .login{
+        display:none;
     }
     .infos {
         margin-top: 51px;

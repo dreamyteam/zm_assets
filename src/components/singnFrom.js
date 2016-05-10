@@ -1,0 +1,3 @@
+function SignForm(argument) {
+	// body...
+}

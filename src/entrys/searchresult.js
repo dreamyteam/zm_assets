@@ -1,5 +1,4 @@
-
-var PopupSign = require('../components/pop_up_sign');
+var Popup = require('../components/pop_up_sign');
 var Validate = require('../components/validate.js');
 var Paging = require('../components/paging.js');
 var BackTop = require('../components/back_top.js');
@@ -7,7 +6,7 @@ var BackTop = require('../components/back_top.js');
 
 $(function() {
  $("#register").on('click', function() {
-        var popReg = new PopupSign('#popup_sign');
+        var popReg = new Popup('#popup_sign');
         popReg.alert();
         var validate = new Validate({
             el: "#sign_form",
@@ -17,7 +16,7 @@ $(function() {
     })
 
     $("#login").on('click', function() {
-        var popLogin = new PopupSign("#popup_sign");
+        var popLogin = new Popup("#popup_sign");
         popLogin.alert();
         var validate = new Validate({
             el: "#sign_form",

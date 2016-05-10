@@ -44,8 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	var PopupSign = __webpack_require__(1);
+	var Popup = __webpack_require__(1);
 	var Validate = __webpack_require__(2);
 	var Paging = __webpack_require__(13);
 	var BackTop = __webpack_require__(5);
@@ -53,7 +52,7 @@
 
 	$(function() {
 	 $("#register").on('click', function() {
-	        var popReg = new PopupSign('#popup_sign');
+	        var popReg = new Popup('#popup_sign');
 	        popReg.alert();
 	        var validate = new Validate({
 	            el: "#sign_form",
@@ -63,7 +62,7 @@
 	    })
 
 	    $("#login").on('click', function() {
-	        var popLogin = new PopupSign("#popup_sign");
+	        var popLogin = new Popup("#popup_sign");
 	        popLogin.alert();
 	        var validate = new Validate({
 	            el: "#sign_form",
@@ -132,7 +131,6 @@
 	    this.cfg = cfg;
 	    this.el = null;
 	    this.tips = null; //错误提示容器
-	    // this.hasValidateCode = null;
 	    this.domValidate = null; //验证码dom
 	    this.formatPhone = false; //手机号验证状态
 	    this.formatPassword = false; //密码验证状态
@@ -193,17 +191,16 @@
 	            this.tips_bottom.html("没有帐号?点击");
 	            this.btn_bottom.html("创建");
 	        }
-
 	    },
 	    bindSubmit: function() {
 	        var self = this;
 	        this.btnSubmit.on('click', function(e) {
 	            e.preventDefault();
 	            if (self.formatVerifyCode && self.formatPassword && self.formatPhone) {
-	                self.btnSubmit.attr('disabled',false);
+	                self.btnSubmit.attr('disabled', false);
 	                self.checkAjax();
-	            }else {
-	                self.btnSubmit.attr('disabled',true);
+	            } else {
+	                self.btnSubmit.attr('disabled', true);
 	            }
 	            return false;
 	        })
@@ -247,11 +244,13 @@
 	    checkValidateCode: function() {
 	        // 验证验证码
 	        var self = this;
-	        if (this.formatPhone && this.formatPassword) {
+	        if (this.formatPhone && this.formatPassword && this.formatVerifyCode == false) {
 	            this.domValidate.addClass('active');
 	            this.domValidate.removeAttr("disabled");
-	            this.domValidate.on('click', function(e) {
+	            this.domValidate.one('click', function(e) {
+	                self.clickDomValidate();
 	                e.preventDefault(); //阻止提交按钮的默认行为
+	                e.stopPropagation();
 	                //发送验证码到手机
 	                //倒计时功能
 	                $.ajax({
@@ -268,8 +267,9 @@
 	                            self.tips.show().html(result.error_msg);
 	                        }
 	                    }
-	                })
-	                self.clickDomValidate();
+	                });
+
+	                return false;
 	            })
 	        }
 	    },
@@ -310,9 +310,7 @@
 	                },
 	                success: function(result) {
 	                    console.log(result);
-	                    if (result.error_code == 0) {
-	                        self.ver
-	                    } else if (result.error_code > 0) {
+	                    if (result.error_code == 0) {} else if (result.error_code > 0) {
 	                        self.tips.show().html(result.error_msg);
 	                    }
 	                }

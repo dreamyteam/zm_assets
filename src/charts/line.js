@@ -130,8 +130,7 @@ Chart.prototype = {
         this.chart.showLoading();
         var self = this;
         $.ajax({
-            // url: self.url,
-            url:'http://localhost:3000/jsonp',
+            url: self.url,
             type: 'GET',
             dataType: 'jsonp',
             jsonp: 'callback',
