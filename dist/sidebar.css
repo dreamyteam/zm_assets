@@ -575,7 +575,7 @@ ul.sidebar_nav {
     cursor: pointer; }
   .sidebar_content input[type=radio]:checked {
     border: 5px solid #9b9b9b; }
-  .sidebar_content input[type=text], .sidebar_content input[type=email], .sidebar_content input[type=password] {
+  .sidebar_content input[type=text], .sidebar_content input[type=email], .sidebar_content input[type=password], .sidebar_content select, .sidebar_content textarea {
     display: block;
     border: 1px solid #9b9b9b;
     border-radius: 2px;
@@ -583,6 +583,9 @@ ul.sidebar_nav {
     font-size: 14px;
     width: 100%;
     padding: 0 10px; }
+  .sidebar_content select {
+    background: url("../assets/images/selectbg.png") 95% center no-repeat;
+    background-size: 9px; }
   .sidebar_content .ip_nofollow {
     height: 260px;
     text-align: center;
@@ -648,6 +651,7 @@ ul.sidebar_nav {
       .sidebar_content .user_personal_information_container .col_2_container .col:nth-child(2n) {
         padding-left: 24px; }
     .sidebar_content .user_personal_information_container .personal_information_label {
+      margin-top: 5px;
       font-size: 14px;
       color: #9b9b9b;
       margin-bottom: 5px; }

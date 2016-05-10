@@ -216,7 +216,9 @@ ul.sidebar_nav {
     }
     input[type=text],
     input[type=email],
-    input[type=password] {
+    input[type=password],
+    select,
+    textarea{
         display: block;
         border: 1px solid #9b9b9b;
         border-radius: 2px;
@@ -224,6 +226,10 @@ ul.sidebar_nav {
         font-size: 14px;
         width: 100%;
         padding: 0 10px;
+    }
+    select {
+        background: url("../assets/images/selectbg.png") 95% center no-repeat;
+        background-size: 9px;
     }
     .ip_nofollow {
         height: 260px;
@@ -237,7 +243,7 @@ ul.sidebar_nav {
             height: 52px;
         }
         h6 {
-        	margin-top: 8px;
+            margin-top: 8px;
             font-size: 13px;
             color: #9b9b9b;
         }
@@ -307,6 +313,7 @@ ul.sidebar_nav {
             }
         }
         .personal_information_label {
+            margin-top: 5px;
             font-size: 14px;
             color: #9b9b9b;
             margin-bottom: 5px;
@@ -422,7 +429,7 @@ ul.sidebar_nav {
             height: 52px;
         }
         h6 {
-        	margin-top: 8px;
+            margin-top: 8px;
             font-size: 13px;
             color: #9b9b9b;
         }

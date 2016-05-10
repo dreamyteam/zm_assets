@@ -5,6 +5,7 @@ module.exports = {
         index: "./src/entrys/index.js",
         searchresult: './src/entrys/searchresult.js',
         program_detail: "./src/entrys/program_detail_entry.js",
+        user:"./src/entrys/user.js"
         // vendor: ['jquery','echarts'] //第三方库
     },
     output: {

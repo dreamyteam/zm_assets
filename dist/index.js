@@ -127,6 +127,7 @@
 	    this.domValidate = null; //验证码dom
 	    this.formatPhone = false; //手机号验证状态
 	    this.formatPassword = false; //密码验证状态
+	    this.formatVerifyCode = false; //验证码状态
 	    this.activeValidateCode = true;
 	    this.count = null; //计数器
 	    this.type = null;
@@ -181,14 +182,16 @@
 	            this.btn_bottom.html("创建");
 	        }
 	        this.btnSubmit.on('click', function(e) {
-	            e.preventDefault;
-	            self.checkAjax();
+	            e.preventDefault();
+	            if (self.formatVerifyCode && self.formatPassword && self.formatPhone) {
+	                self.checkAjax();
+	            }
 	            return false;
 	        })
 	    },
 	    checkBasic: function() {
 	        var self = this;
-	        this.el.find('input').on("input propertychange", function() {
+	        this.el.find('input').on("blur", function() {
 	            //验证手机号
 	            if ($(this).is("input[name='phone_number']")) {
 	                if ($(this).val() == "" || null) {
@@ -232,6 +235,21 @@
 	                e.preventDefault(); //阻止提交按钮的默认行为
 	                //发送验证码到手机
 	                //倒计时功能
+	                $.ajax({
+	                    url: '/user/register/verificationCode',
+	                    type: 'POST',
+	                    data: {
+	                        mobile: self.el.find("input[name='phone_number']").val(),
+	                    },
+	                    success: function(result) {
+	                        console.log(result);
+	                        if (result.error_code == 0) {
+	                            self.formatVerifyCode = true;
+	                        } else if (result.error_code > 0) {
+	                            self.tips.show().html(result.error_msg);
+	                        }
+	                    }
+	                })
 	                self.clickDomValidate();
 	            })
 	        }
@@ -274,7 +292,7 @@
 	                success: function(result) {
 	                    console.log(result);
 	                    if (result.error_code == 0) {
-	                        location.reload();
+	                        self.ver
 	                    } else if (result.error_code > 0) {
 	                        self.tips.show().html(result.error_msg);
 	                    }
