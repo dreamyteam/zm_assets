@@ -52,26 +52,22 @@
 
 
 	$(function() {
-	    $("#register").on('click', function() {
-
-	        var popReg = new PopupSign('#popup_register');
+	 $("#register").on('click', function() {
+	        var popReg = new PopupSign('#popup_sign');
 	        popReg.alert();
-
 	        var validate = new Validate({
-	            el: "#from_register",
+	            el: "#sign_form",
 	            tips: ".err_msg",
-	            type: "reg",
-	            hasValidateCode:true
+	            type: true
 	        })
 	    })
 
 	    $("#login").on('click', function() {
-
-	        var popLogin = new PopupSign("#popup_login");
+	        var popLogin = new PopupSign("#popup_sign");
 	        popLogin.alert();
-
 	        var validate = new Validate({
-	            el: "#from_login",
+	            el: "#sign_form",
+	            type: false,
 	            tips: ".err_msg"
 	        })
 	    })
@@ -111,6 +107,9 @@
 	    },
 	    close: function() {
 	        var self = this;
+	        this.mask.on('click', function() {
+	            self.destory();
+	        })
 	        if (this.element.find('button.close')) {
 	            var btnClose = this.element.find('button.close');
 	            btnClose.on('click', function() {
@@ -157,18 +156,23 @@
 	        this.tips_bottom = this.el.find('.tips_bottom');
 	        this.btn_bottom = this.el.find('.tips_bottom_btn');
 	        this.btnSubmit = this.el.find('.btn_submit');
-	        //清空数据
-	        this.el.find('input').each(function() {
-	            $(this).val('');
-	        });
+
 	        this.btn_bottom.on('click', function(e) {
 	            self.type = !self.type;
+	            self.setDefault();
 	            self.checkType();
 	            return false;
 	        })
 	        this.checkType();
-	        this.tips.hide();
+	        this.setDefault();
 	        this.checkBasic();
+	    },
+	    setDefault: function() {
+	        //清空数据
+	        this.el.find('input').each(function() {
+	            $(this).val('');
+	        });
+	        this.tips.hide();
 	    },
 	    checkType: function() {
 	        var self = this;
@@ -314,8 +318,6 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	
-
 	// 设置位置元素
 	function BackTop(contrastElement) {
 	    this.boundingBox = null;
@@ -323,11 +325,14 @@
 	    this.init();
 	}
 	BackTop.prototype.renderUI = function() {
-	    this.boundingBox = $(
-	        "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>"
-	    )
-
-	    this.boundingBox.appendTo(document.body);
+	    if ($('#gotoTop').length > 0) {
+	        this.boundingBox = $('#gotoTop');
+	    } else {
+	        this.boundingBox = $(
+	            "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>"
+	        )
+	        this.boundingBox.appendTo(document.body);
+	    }
 	    // 先消失
 	    this.boundingBox.hide();
 	    this.show();
@@ -392,76 +397,69 @@
 /* 13 */
 /***/ function(module, exports) {
 
-	
-
-
 	function Paging(element) {
 	    this.element = $(element);
 	    this.url = window.location.pathname;
 	    this.pageAttach = this.element.data("pageAttach");
-	    this.init();
+	    if (this.element.length > 0) {
+	        this.init();
+	    }
+
 	}
 	Paging.prototype.init = function() {
 	    var totalNum = this.pageAttach.totalNum;
 	    var current = this.pageAttach.currentPage;
 	    var pageSize = this.pageAttach.pageSize;
-
-	    var total = Math.ceil(totalNum/pageSize);
-
-	    console.log(total);
+	    var total = Math.ceil(totalNum / pageSize);
 	    var content = this.pageAttach.content;
+	    if (pageSize <= totalNum) {
+	        var ul = $('<ul></ul>');
+	        this.element.append(ul);
+	        //是否显示prev
+	        if (current != 1) {
+	            var prevBtn = $("<li><a href=" + this.url + '?content=' + content + '&currentPage=' + (current - 1) + "><</a></li>");
+	            prevBtn.appendTo(ul);
+	        }
 
-	    if(pageSize <= totalNum){
-	    	var ul = $('<ul></ul>');
-		    this.element.append(ul);
-		    //是否显示prev
-		    if (current != 1) {
-		        var prevBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current-1)+"><</a></li>");
-		        prevBtn.appendTo(ul);
-		    }
+	        //插入中间页
+	        if (total <= 7) {
+	            for (var i = 1, len = total + 1; i < len; i++) {
+	                if (i == current) {
+	                    ul.append($("<li class='active'><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                } else {
+	                    ul.append($("<li><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                }
+	            }
+	        } else {
+	            if (current <= 4) {
+	                for (var i = 1, len = 7; i <= len; i++) {
+	                    if (i == current) {
+	                        ul.append($("<li class='active'><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                    } else {
+	                        ul.append($("<li><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                    }
+	                }
+	            } else {
+	                var pageStart = current - 3;
+	                // console.log(pageStart);
+	                var pageEnd = (current + 3) > total ? total : (current + 3);
+	                // console.log(pageEnd);
+	                for (var i = pageStart; i <= pageEnd; i++) {
+	                    if (i == current) {
+	                        ul.append($("<li class='active'><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                    } else {
+	                        ul.append($("<li><a href=" + this.url + '?content=' + content + '&currentPage=' + i + ">" + i + "</a></li>"))
+	                    }
+	                }
+	            }
+	        }
 
-		    //插入中间页
-		    if (total <= 7) {
-		        for (var i = 1, len = total + 1; i < len; i++) {
-		            if (i == current) {
-		                ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		            } else {
-		                ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		            }
-		        }
-		    } else {
-		        if (current <= 4) {
-		            for (var i = 1, len = 7; i <= len; i++) {
-		                if (i == current) {
-		                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		                } else {
-		                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		                }
-		            }
-		        } else {
-		            var pageStart = current - 3;
-		            // console.log(pageStart);
-		            var pageEnd = (current + 3) > total ? total : (current + 3);
-		            // console.log(pageEnd);
-		            for (var i = pageStart; i <= pageEnd; i++) {
-		                if (i == current) {
-		                    ul.append($("<li class='active'><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		                } else {
-		                    ul.append($("<li><a href="+ this.url +'?content='+content+'&currentPage='+i+">" + i + "</a></li>"))
-		                }
-		            }
-		        }
-		    }
-
-		    //是否显示next
-		    if (current != total) {
-		        var nextBtn = $("<li><a href="+ this.url +'?content='+content+'&currentPage='+(current+1)+">></a></li>");
-		        nextBtn.appendTo(ul);
-		    }
+	        //是否显示next
+	        if (current != total) {
+	            var nextBtn = $("<li><a href=" + this.url + '?content=' + content + '&currentPage=' + (current + 1) + ">></a></li>");
+	            nextBtn.appendTo(ul);
+	        }
 	    }
-
-	   
-
 	};
 
 	module.exports = Paging;

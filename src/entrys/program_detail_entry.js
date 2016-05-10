@@ -15,27 +15,24 @@ var GetHistory = require('../components/get_value_history.js');
 
 $(function() {
     $("#register").on('click', function() {
-
-        var popReg = new PopupSign('#popup_register');
+        var popReg = new PopupSign('#popup_sign');
         popReg.alert();
-
         var validate = new Validate({
-            element: "#from_register",
+            el: "#sign_form",
             tips: ".err_msg",
-            hasValidateCode: true
+            type: true
         })
     })
     $("#login").on('click', function() {
-
-            var popLogin = new PopupSign("#popup_login");
+            var popLogin = new PopupSign("#popup_sign");
             popLogin.alert();
-
             var validate = new Validate({
-                element: "#from_login",
+                el: "#sign_form",
+                type: false,
                 tips: ".err_msg"
             })
-        })
-        //列表切换
+    })
+    //列表切换
     new Tab({ selector: '.program_tab' });
     //导航置顶
     new FixTop();
@@ -44,46 +41,38 @@ $(function() {
     //找到ip名字
     var ip_name = $('.program_info .content h1.name').html();
     //异步趋势历史最高
-
     var compositeValues = new GetHistory($('#composite_values'), 5);
     var hotValues = new GetHistory($('#hot_values'), 1);
     var developValues = new GetHistory($('#develop_values'), 2);
     var propagateValues = new GetHistory($('#propagate_values'), 3);
     var reputationValues = new GetHistory($('#reputation_values'), 4);
-
-
     //图表们
     //综合指数
     var comprehensiveValue = new LineChart({
         el: 'chart_comprehensive_value',
         name: ip_name,
     });
-
     //潜力模型
     var potentialModel = new RadarChart({
         el: 'chart_potential_model',
         name: ip_name
     });
-
     //热度趋势
     var heatTrend = new LineChart({
         el: 'chart_heat_trend',
         name: ip_name
     });
-
     //传播能力趋势
     var transmissionIndex = new LineChart({
         el: 'chart_transmission_index',
         name: ip_name
     });
-
     //新闻媒体平台
     var mediaPlatform = new PieChartMedia({
         el: 'chart_media_platform',
         left: 'center',
         name: ip_name,
     })
-
     // 社交平台
     var socialPlatform = new PieChartDouble({
         el: 'chart_social_platform',
@@ -91,13 +80,11 @@ $(function() {
         left: 'center',
         name: ip_name,
     });
-
     // 用户活跃度趋势
     var userVitalty = new LineChart({
         el: 'chart_user_vitalty',
         name: ip_name
     });
-
     // 性别比例分布
     var sexDistribution = new PieChartDouble({
         el: 'chart_sex_distribution',
@@ -105,7 +92,6 @@ $(function() {
         left: 'center',
         name: ip_name,
     });
-
     //年龄分布
     var ageDistribution = new VerticalBar({
         el: 'chart_age_distribution',
@@ -118,8 +104,6 @@ $(function() {
         el: 'chart_reviews',
         name: ip_name
     });
-
-
     //期待开发投票
     if ($('.vote_container .vote_content')) {
         var btns = $('.vote_container .vote_content').find('button');
@@ -155,8 +139,12 @@ $(function() {
             })
         })
     }
+    //综合指数细节
+    var comprehensiveValueDetain = new LineChart({
+        el: 'chart_comprehensive_value_detail',
+        name: ip_name,
+        type: 'more',
+    })
 
-    //潜力模型页
-   
 
 })

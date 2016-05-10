@@ -822,7 +822,7 @@ section.program_nav_scroll {
       text-align: justify; }
     .comments_container li.comment a.comment_more {
       display: block;
-      text-align: right;
+      float: right;
       font-size: 14px;
       color: #00a69d; }
     .comments_container li.comment span.comment_like {
@@ -1270,9 +1270,11 @@ section.user_reviews .review_container {
     section.user_reviews .review_container .review_chart button {
       right: 30px; }
 
-#chart_comprehensive_value {
-  padding: 0 20px;
-  height: 250px; }
+.line_charts {
+  position: relative;
+  margin-top: 67px;
+  height: 305px;
+  padding: 0 20px; }
 
 #chart_potential_model {
   position: relative;
@@ -1284,12 +1286,6 @@ section.user_reviews .review_container {
     left: 22px;
     font-size: 20px;
     color: #4a4a4a; }
-
-#chart_heat_trend, #chart_vitality_trend, #chart_vote_result, #chart_potential_trend, #chart_user_vitalty {
-  position: relative;
-  margin-top: 67px;
-  height: 305px;
-  padding: 0 20px; }
 
 #chart_heat_trend::before {
   content: '一周热度指数趋势';
@@ -1306,10 +1302,6 @@ section.user_reviews .review_container {
   top: -20px;
   font-size: 16px;
   color: #4a4a4a; }
-
-#chart_transmission_index {
-  padding: 0 20px;
-  height: 250px; }
 
 #chart_potential_model_small {
   height: 110px; }

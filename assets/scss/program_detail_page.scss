@@ -414,10 +414,13 @@ section.user_reviews {
 }
 
 // 综合指数图表
-#chart_comprehensive_value {
+.line_charts {
+    position: relative;
+    margin-top: 67px;
+    height: 305px;
     padding: 0 20px;
-    height: 250px;
 }
+
 
 // 潜力模型图表
 #chart_potential_model {
@@ -431,19 +434,6 @@ section.user_reviews {
     position: relative;
     padding: 50px 0;
     height: 440px;
-}
-
-// 热度趋势图表
-#chart_heat_trend,
-#chart_vitality_trend,
-#chart_vote_result,
-#chart_potential_trend,
-#chart_user_vitalty,
-{
-    position: relative;
-    margin-top: 67px;
-    height: 305px;
-    padding: 0 20px;
 }
 
 #chart_heat_trend {
@@ -468,11 +458,7 @@ section.user_reviews {
     }
 }
 
-//传播能力图表
-#chart_transmission_index {
-    padding: 0 20px;
-    height: 250px;
-}
+
 
 #chart_potential_model_small {
     height: 110px;

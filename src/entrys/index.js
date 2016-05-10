@@ -21,6 +21,4 @@ $(function() {
             tips: ".err_msg"
         })
     })
-
-
 })

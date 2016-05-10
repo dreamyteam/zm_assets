@@ -61,27 +61,24 @@
 
 	$(function() {
 	    $("#register").on('click', function() {
-
-	        var popReg = new PopupSign('#popup_register');
+	        var popReg = new PopupSign('#popup_sign');
 	        popReg.alert();
-
 	        var validate = new Validate({
-	            element: "#from_register",
+	            el: "#sign_form",
 	            tips: ".err_msg",
-	            hasValidateCode: true
+	            type: true
 	        })
 	    })
 	    $("#login").on('click', function() {
-
-	            var popLogin = new PopupSign("#popup_login");
+	            var popLogin = new PopupSign("#popup_sign");
 	            popLogin.alert();
-
 	            var validate = new Validate({
-	                element: "#from_login",
+	                el: "#sign_form",
+	                type: false,
 	                tips: ".err_msg"
 	            })
-	        })
-	        //列表切换
+	    })
+	    //列表切换
 	    new Tab({ selector: '.program_tab' });
 	    //导航置顶
 	    new FixTop();
@@ -90,46 +87,38 @@
 	    //找到ip名字
 	    var ip_name = $('.program_info .content h1.name').html();
 	    //异步趋势历史最高
-
 	    var compositeValues = new GetHistory($('#composite_values'), 5);
 	    var hotValues = new GetHistory($('#hot_values'), 1);
 	    var developValues = new GetHistory($('#develop_values'), 2);
 	    var propagateValues = new GetHistory($('#propagate_values'), 3);
 	    var reputationValues = new GetHistory($('#reputation_values'), 4);
-
-
 	    //图表们
 	    //综合指数
 	    var comprehensiveValue = new LineChart({
 	        el: 'chart_comprehensive_value',
 	        name: ip_name,
 	    });
-
 	    //潜力模型
 	    var potentialModel = new RadarChart({
 	        el: 'chart_potential_model',
 	        name: ip_name
 	    });
-
 	    //热度趋势
 	    var heatTrend = new LineChart({
 	        el: 'chart_heat_trend',
 	        name: ip_name
 	    });
-
 	    //传播能力趋势
 	    var transmissionIndex = new LineChart({
 	        el: 'chart_transmission_index',
 	        name: ip_name
 	    });
-
 	    //新闻媒体平台
 	    var mediaPlatform = new PieChartMedia({
 	        el: 'chart_media_platform',
 	        left: 'center',
 	        name: ip_name,
 	    })
-
 	    // 社交平台
 	    var socialPlatform = new PieChartDouble({
 	        el: 'chart_social_platform',
@@ -137,13 +126,11 @@
 	        left: 'center',
 	        name: ip_name,
 	    });
-
 	    // 用户活跃度趋势
 	    var userVitalty = new LineChart({
 	        el: 'chart_user_vitalty',
 	        name: ip_name
 	    });
-
 	    // 性别比例分布
 	    var sexDistribution = new PieChartDouble({
 	        el: 'chart_sex_distribution',
@@ -151,7 +138,6 @@
 	        left: 'center',
 	        name: ip_name,
 	    });
-
 	    //年龄分布
 	    var ageDistribution = new VerticalBar({
 	        el: 'chart_age_distribution',
@@ -164,8 +150,6 @@
 	        el: 'chart_reviews',
 	        name: ip_name
 	    });
-
-
 	    //期待开发投票
 	    if ($('.vote_container .vote_content')) {
 	        var btns = $('.vote_container .vote_content').find('button');
@@ -201,9 +185,13 @@
 	            })
 	        })
 	    }
+	    //综合指数细节
+	    var comprehensiveValueDetain = new LineChart({
+	        el: 'chart_comprehensive_value_detail',
+	        name: ip_name,
+	        type: 'more',
+	    })
 
-	    //潜力模型页
-	   
 
 	})
 
@@ -236,6 +224,9 @@
 	    },
 	    close: function() {
 	        var self = this;
+	        this.mask.on('click', function() {
+	            self.destory();
+	        })
 	        if (this.element.find('button.close')) {
 	            var btnClose = this.element.find('button.close');
 	            btnClose.on('click', function() {
@@ -282,18 +273,23 @@
 	        this.tips_bottom = this.el.find('.tips_bottom');
 	        this.btn_bottom = this.el.find('.tips_bottom_btn');
 	        this.btnSubmit = this.el.find('.btn_submit');
-	        //清空数据
-	        this.el.find('input').each(function() {
-	            $(this).val('');
-	        });
+
 	        this.btn_bottom.on('click', function(e) {
 	            self.type = !self.type;
+	            self.setDefault();
 	            self.checkType();
 	            return false;
 	        })
 	        this.checkType();
-	        this.tips.hide();
+	        this.setDefault();
 	        this.checkBasic();
+	    },
+	    setDefault: function() {
+	        //清空数据
+	        this.el.find('input').each(function() {
+	            $(this).val('');
+	        });
+	        this.tips.hide();
 	    },
 	    checkType: function() {
 	        var self = this;
@@ -480,30 +476,30 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	
-
-	function FixTop(element) {
-	    this.element = element || $('#program_nav');
+	function FixTop(el) {
+	    this.el = el || $('#program_nav');
 	    this.init();
 	}
 	FixTop.prototype.init = function() {
-	    var oriOffsetTop = $('#program_nav').offset().top;
-	    $(window).on('scroll', function() {
-	        if ($(this).scrollTop() > oriOffsetTop) {
-	            $('#program_nav').addClass('program_nav_scroll');
-	        } else {
-	            $('#program_nav').removeClass('program_nav_scroll');
-	        }
-	    })
+	    var self = this;
+	    if (this.el.length > 0) {
+	        var oriOffsetTop = this.el.offset().top;
+	        $(window).on('scroll', function() {
+	            if ($(this).scrollTop() > oriOffsetTop) {
+	                self.el.addClass('program_nav_scroll');
+	            } else {
+	                self.el.removeClass('program_nav_scroll');
+	            }
+	        })
+	    }
 	}
 
 	module.exports = FixTop
 
+
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
-
-	
 
 	// 设置位置元素
 	function BackTop(contrastElement) {
@@ -512,11 +508,14 @@
 	    this.init();
 	}
 	BackTop.prototype.renderUI = function() {
-	    this.boundingBox = $(
-	        "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>"
-	    )
-
-	    this.boundingBox.appendTo(document.body);
+	    if ($('#gotoTop').length > 0) {
+	        this.boundingBox = $('#gotoTop');
+	    } else {
+	        this.boundingBox = $(
+	            "<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>"
+	        )
+	        this.boundingBox.appendTo(document.body);
+	    }
 	    // 先消失
 	    this.boundingBox.hide();
 	    this.show();
@@ -575,14 +574,13 @@
 /***/ function(module, exports) {
 
 	// var echarts = require('echarts');
-
 	function Chart(cfg) {
 	    this.cfg = cfg;
 	    this.el = null;
 	    // this.titleText = null; // 标题 由type决定
 	    this.subTitle = null; //如果是sex图表 计算得出
 	    this.name = null; // ip名称 
-	    // this.type = null; // 类型 sex social
+	    this.type = null; // 类型 more 普通
 	    this.left = null; //  标题是否剧中 'center' 'left'
 	    this.chart = null; // 图表实例
 	    this.url = null; //ajax 请求地址
@@ -591,18 +589,32 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-
+	        this.type = this.cfg.type || null;
 	        this.name = this.cfg.name;
-
 	        if (this.el) {
 	            this.renderChart();
 	            if (this.el.getAttribute('data-fetch-url')) {
 	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+	                console.log(this.url);
 	            }
 	        }
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
+	        if (this.type == "more") {
+	            var datazom = [{
+	                type: 'inside',
+	                start: 70,
+	                end: 100
+	            }, {
+	                start: 70,
+	                end: 100
+	            }]
+	            var bottom = '8%';
+	        } else {
+	            var datazom = [];
+	            var bottom = '0%';
+	        }
 	        var optionBasic = {
 	            tooltip: {
 	                trigger: 'axis',
@@ -614,14 +626,14 @@
 	                        width: 0.5,
 	                        color: '#00A69D'
 	                    }
-
 	                }
 	            },
+	            dataZoom: datazom,
 	            grid: {
 	                top: '5%',
 	                left: '0%',
 	                right: '2%',
-	                bottom: '0%',
+	                bottom: bottom,
 	                containLabel: true
 	            },
 	            xAxis: [{
@@ -687,17 +699,19 @@
 	            }
 	        }
 	        this.chart.setOption(optionBasic);
-	        if (this.url) { this.update(); }
+	        this.update();
 	    },
 	    update: function() {
 	        this.chart.showLoading();
 	        var self = this;
 	        $.ajax({
-	            url: self.url,
+	            // url: self.url,
+	            url:'http://localhost:3000/jsonp',
 	            type: 'GET',
 	            dataType: 'jsonp',
 	            jsonp: 'callback',
 	            success: function(result) {
+	                console.log(result);
 	                if (result.error_code == 0) {
 	                    self.chart.hideLoading();
 	                    var option = {
@@ -705,15 +719,11 @@
 	                            data: result.data.date
 	                        }],
 	                        series: [{
-	                            name: self.name,
 	                            data: result.data.data
 	                        }]
 	                    }
 	                    self.chart.setOption(option);
 	                }
-	            },
-	            error: function(msg) {
-	                console.log(msg);
 	            }
 	        })
 	    }
@@ -1330,8 +1340,6 @@
 	Chart.prototype = {
 	    init: function() {
 	        this.el = document.getElementById(this.cfg.el);
-
-
 	        this.name = this.cfg.name;
 
 	        if (this.el) {

@@ -3,8 +3,20 @@
 @import "./components/footer.scss";
 @import "./components/popup_box.scss";
 
+
+.ipcool_hearder{
+    position:absolute;
+    top:0;
+    background:transparent;
+    z-index: 99999999;
+    width:100%;
+    left:0;
+    top:0;
+}
+
 .index_head {
     width: 100%;
+    padding-top: 88px;
     height: 707px;
     background-size: cover;
     position: relative;

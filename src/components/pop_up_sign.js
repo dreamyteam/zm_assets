@@ -22,6 +22,9 @@ Popup.prototype = {
     },
     close: function() {
         var self = this;
+        this.mask.on('click', function() {
+            self.destory();
+        })
         if (this.element.find('button.close')) {
             var btnClose = this.element.find('button.close');
             btnClose.on('click', function() {

@@ -29,18 +29,23 @@ Validate.prototype = {
         this.tips_bottom = this.el.find('.tips_bottom');
         this.btn_bottom = this.el.find('.tips_bottom_btn');
         this.btnSubmit = this.el.find('.btn_submit');
-        //清空数据
-        this.el.find('input').each(function() {
-            $(this).val('');
-        });
+
         this.btn_bottom.on('click', function(e) {
             self.type = !self.type;
+            self.setDefault();
             self.checkType();
             return false;
         })
         this.checkType();
-        this.tips.hide();
+        this.setDefault();
         this.checkBasic();
+    },
+    setDefault: function() {
+        //清空数据
+        this.el.find('input').each(function() {
+            $(this).val('');
+        });
+        this.tips.hide();
     },
     checkType: function() {
         var self = this;

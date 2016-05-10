@@ -15,8 +15,6 @@ function Chart(cfg) {
 Chart.prototype = {
     init: function() {
         this.el = document.getElementById(this.cfg.el);
-
-
         this.name = this.cfg.name;
 
         if (this.el) {

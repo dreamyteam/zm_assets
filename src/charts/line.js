@@ -1,12 +1,11 @@
 // var echarts = require('echarts');
-
 function Chart(cfg) {
     this.cfg = cfg;
     this.el = null;
     // this.titleText = null; // 标题 由type决定
     this.subTitle = null; //如果是sex图表 计算得出
     this.name = null; // ip名称 
-    // this.type = null; // 类型 sex social
+    this.type = null; // 类型 more 普通
     this.left = null; //  标题是否剧中 'center' 'left'
     this.chart = null; // 图表实例
     this.url = null; //ajax 请求地址
@@ -15,18 +14,32 @@ function Chart(cfg) {
 Chart.prototype = {
     init: function() {
         this.el = document.getElementById(this.cfg.el);
-
+        this.type = this.cfg.type || null;
         this.name = this.cfg.name;
-
         if (this.el) {
             this.renderChart();
             if (this.el.getAttribute('data-fetch-url')) {
                 this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+                console.log(this.url);
             }
         }
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);
+        if (this.type == "more") {
+            var datazom = [{
+                type: 'inside',
+                start: 70,
+                end: 100
+            }, {
+                start: 70,
+                end: 100
+            }]
+            var bottom = '8%';
+        } else {
+            var datazom = [];
+            var bottom = '0%';
+        }
         var optionBasic = {
             tooltip: {
                 trigger: 'axis',
@@ -38,14 +51,14 @@ Chart.prototype = {
                         width: 0.5,
                         color: '#00A69D'
                     }
-
                 }
             },
+            dataZoom: datazom,
             grid: {
                 top: '5%',
                 left: '0%',
                 right: '2%',
-                bottom: '0%',
+                bottom: bottom,
                 containLabel: true
             },
             xAxis: [{
@@ -111,17 +124,19 @@ Chart.prototype = {
             }
         }
         this.chart.setOption(optionBasic);
-        if (this.url) { this.update(); }
+        this.update();
     },
     update: function() {
         this.chart.showLoading();
         var self = this;
         $.ajax({
-            url: self.url,
+            // url: self.url,
+            url:'http://localhost:3000/jsonp',
             type: 'GET',
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
+                console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {
@@ -129,15 +144,11 @@ Chart.prototype = {
                             data: result.data.date
                         }],
                         series: [{
-                            name: self.name,
                             data: result.data.data
                         }]
                     }
                     self.chart.setOption(option);
                 }
-            },
-            error: function(msg) {
-                console.log(msg);
             }
         })
     }
