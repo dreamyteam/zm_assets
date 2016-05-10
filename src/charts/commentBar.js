@@ -17,11 +17,9 @@ Chart.prototype = {
         this.el = document.getElementById(this.cfg.el);
         this.name = this.cfg.name;
 
-        if (this.el) {
+         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
             this.renderChart();
-            if (this.el.getAttribute('data-fetch-url')) {
-                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-            }
         }
     },
     renderChart: function() {

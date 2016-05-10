@@ -21,7 +21,6 @@ Chart.prototype = {
             this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
             this.renderChart();
         }
-        console.log(this.url)
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);
@@ -123,7 +122,9 @@ Chart.prototype = {
             }
         }
         this.chart.setOption(optionBasic);
-        this.update();
+        if(this.url){
+            this.update();
+        }
     },
     update: function() {
         this.chart.showLoading();

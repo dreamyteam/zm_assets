@@ -627,7 +627,6 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
-	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -729,7 +728,9 @@
 	            }
 	        }
 	        this.chart.setOption(optionBasic);
-	        this.update();
+	        if(this.url){
+	            this.update();
+	        }
 	    },
 	    update: function() {
 	        this.chart.showLoading();
@@ -784,12 +785,9 @@
 	        this.el = document.getElementById(this.cfg.el);
 	        this.name = this.cfg.name;
 
-	        if (this.el) {
+	         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
-	            if (this.el.getAttribute('data-fetch-url')) {
-	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-	                console.log(this.url);
-	            }
 	        }
 	    },
 	    renderChart: function() {
@@ -906,11 +904,9 @@
 	        this.el = document.getElementById(this.cfg.el);
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        if (this.el) {
+	         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
-	            if (this.el.getAttribute('data-fetch-url')) {
-	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-	            }
 	        }
 	    },
 	    renderChart: function() {
@@ -1035,11 +1031,9 @@
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
 
-	        if (this.el) {
+	         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
-	            if (this.el.getAttribute('data-fetch-url')) {
-	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-	            }
 	        }
 	    },
 	    renderChart: function() {
@@ -1195,11 +1189,9 @@
 	        }
 	        this.name = this.cfg.name;
 	        this.left = this.cfg.left || 'center';
-	        if (this.el) {
+	        if (this.el && this.el.hasAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
-	            if (this.el.getAttribute('data-fetch-url')) {
-	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-	            }
 	        }
 	    },
 	    renderChart: function() {
@@ -1371,11 +1363,9 @@
 	        this.el = document.getElementById(this.cfg.el);
 	        this.name = this.cfg.name;
 
-	        if (this.el) {
+	         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
-	            if (this.el.getAttribute('data-fetch-url')) {
-	                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-	            }
 	        }
 	    },
 	    renderChart: function() {
