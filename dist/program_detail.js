@@ -248,19 +248,19 @@
 	function Validate(cfg) {
 	    this.cfg = cfg;
 	    this.el = null;
-	    this.tips = null;
-	    this.hasValidateCode = null;
+	    this.tips = null; //错误提示容器
+	    // this.hasValidateCode = null;
 	    this.domValidate = null; //验证码dom
 	    this.formatPhone = false; //手机号验证状态
 	    this.formatPassword = false; //密码验证状态
 	    this.formatVerifyCode = false; //验证码状态
 	    this.activeValidateCode = true;
 	    this.count = null; //计数器
-	    this.type = null;
-	    this.domValidateContainer = null;
-	    this.btnSubmit = null;
-	    this.tips_bottom = null;
-	    this.btn_bottom = null;
+	    this.type = null; //是否为注册页面 是为true
+	    this.domValidateContainer = null; //验证码container
+	    this.btnSubmit = null; //提交按钮
+	    this.tips_bottom = null; //按钮下 文字
+	    this.btn_bottom = null; //按钮下 切换按钮
 	    this.init();
 	}
 	Validate.prototype = {
@@ -276,20 +276,23 @@
 	        this.btnSubmit = this.el.find('.btn_submit');
 
 	        this.btn_bottom.on('click', function(e) {
-	            self.type = !self.type;
-	            self.setDefault();
+	            self.type = !self.type; //切换帐号
 	            self.checkType();
+	            self.setDefault();
 	            return false;
 	        })
 	        this.checkType();
 	        this.setDefault();
 	        this.checkBasic();
+	        this.bindSubmit();
 	    },
 	    setDefault: function() {
 	        //清空数据
 	        this.el.find('input').each(function() {
 	            $(this).val('');
 	        });
+	        this.domValidate.removeClass('active');
+	        this.domValidate.attr('disabled', true);
 	        this.tips.hide();
 	    },
 	    checkType: function() {
@@ -307,10 +310,17 @@
 	            this.tips_bottom.html("没有帐号?点击");
 	            this.btn_bottom.html("创建");
 	        }
+
+	    },
+	    bindSubmit: function() {
+	        var self = this;
 	        this.btnSubmit.on('click', function(e) {
 	            e.preventDefault();
 	            if (self.formatVerifyCode && self.formatPassword && self.formatPhone) {
+	                self.btnSubmit.attr('disabled',false);
 	                self.checkAjax();
+	            }else {
+	                self.btnSubmit.attr('disabled',true);
 	            }
 	            return false;
 	        })
