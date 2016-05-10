@@ -18,7 +18,7 @@ GetHistory.prototype = {
         if (this.el.length > 0) { this.getData();}
     },
     getData: function() {
-        this.url = 'http://ipcool.me/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
+        this.url = '/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
         var self = this;
         $.ajax({
             url: self.url,

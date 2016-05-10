@@ -136,6 +136,7 @@
 	    this.formatPassword = false; //密码验证状态
 	    this.formatVerifyCode = false; //验证码状态
 	    this.count = null; //计数器
+	    this.canSenverifyCode = true;
 	    this.type = null; //是否为注册页面 是为true
 	    this.domValidateContainer = null; //验证码container
 	    this.btnSubmit = null; //提交按钮
@@ -183,7 +184,6 @@
 	            this.btnSubmit.html("创建帐号");
 	            this.tips_bottom.html("已有帐号?点击");
 	            this.btn_bottom.html("登录");
-	            this.checkValidateCode();
 	        } else if (this.type == false) {
 	            this.domValidateContainer.hide();
 	            this.btnSubmit.html("登录");
@@ -206,60 +206,48 @@
 	    },
 	    checkBasic: function() {
 	        var self = this;
-	        this.el.find('input').on("blur", function() {
-	            //验证手机号
-	            if ($(this).is("input[name='phone_number']")) {
-	                if ($(this).val() == "" || null) {
-	                    self.tips.show().html("请填写手机号码")
-	                } else if (!regPhone.test($(this).val())) {
-	                    self.tips.show().html("手机号码格式错误")
-	                } else {
-	                    self.tips.hide();
-	                    self.formatPhone = true;
-	                }
-	            }
-	            //验证密码
-	            if ($(this).is("input[name='password']")) {
-	                if ($(this).val() == "" || null) {
-	                    self.tips.show().html("请输入密码")
-	                } else if (!regPwdLen.test($(this).val())) {
-	                    self.tips.show().html("密码长度必须大于6位数")
-	                } else {
-	                    self.tips.hide();
-	                    self.formatPassword = true;
-	                }
-	            }
-	            /* //输入验证码
-	             if ($(this).is("input[name='verify_code']")) {
-	                 if ($(this).val() == "" || null) {
-	                     self.tips.show().html("请输入验证码")
-	                 }
-	             }*/
-	            if (self.type) {
-	                self.checkValidateCode();
-	            }
 
-	            return false;
+	        this.el.find("input[name='phone_number']").on("blur", function() {
+	            if ($(this).val() == "" || null) {
+	                self.tips.show().html("请填写手机号码")
+	            } else if (!regPhone.test($(this).val())) {
+	                self.tips.show().html("手机号码格式错误")
+	            } else {
+	                self.tips.hide();
+	                self.formatPhone = true;
+	            }
+	        })
+
+	        this.el.find("input[name='password']").on("blur", function() {
+	            if ($(this).val() == "" || null) {
+	                self.tips.show().html("请输入密码")
+	            } else if (!regPwdLen.test($(this).val())) {
+	                self.tips.show().html("密码长度必须大于6位数")
+	            } else {
+	                self.tips.hide();
+	                self.formatPassword = true;
+	                if(self.formatPhone && this.type){
+	                    self.checkValidateCode();
+	                }
+	            }
 	        })
 	    },
 	    checkValidateCode: function() {
-	        // 验证验证码
-
 	        var self = this;
-	        if (this.formatPhone && this.formatPassword && this.formatVerifyCode == false) {
-	            this.domValidate.addClass('active');
-	            this.domValidate.removeAttr("disabled");
-	            this.domValidate.on('click', function(event) {
-	                var event = event || window.event;
-	                event.preventDefault(); //阻止提交按钮的默认行为
-	                event.stopPropagation();
-	                if (self.formatVerifyCode == false) {
-	                    self.clickDomValidate();
-	                }
-	                //倒计时功能
-	                return false;
-	            })
-	        }
+	        self.domValidate.addClass('active');
+	        self.domValidate.removeAttr("disabled");
+	        // 验证验证码
+	        this.domValidate.on('click', function(event) {
+	            var event = event || window.event;
+	            event.preventDefault(); //阻止提交按钮的默认行为
+	            event.stopPropagation();
+	            if (self.formatVerifyCode == false) {
+	                console.log("checkAjax")
+	                self.clickDomValidate();
+	            }
+	            //倒计时功能
+	            return false;
+	        })
 	    },
 	    clickDomValidate: function() {
 	        var self = this;

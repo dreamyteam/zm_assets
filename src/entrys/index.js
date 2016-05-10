@@ -11,9 +11,6 @@ $(function() {
             type: true
         })
     })
-
-
-
     $("#login").on('click', function() {
         var popLogin = new PopupSign("#popup_sign");
         popLogin.alert();
