@@ -21,6 +21,7 @@ Chart.prototype = {
             this.renderChart();
             if (this.el.getAttribute('data-fetch-url')) {
                 this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
+                console.log(this.url);
             }
         }
     },
@@ -91,7 +92,6 @@ Chart.prototype = {
     update: function() {
         this.chart.showLoading();
         var self = this;
-        var time = new Date();
         $.ajax({
             url: self.url,
             type: 'GET',

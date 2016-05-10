@@ -16,13 +16,12 @@ Chart.prototype = {
         this.el = document.getElementById(this.cfg.el);
         this.type = this.cfg.type || null;
         this.name = this.cfg.name;
-        if (this.el) {
+
+        if (this.el && this.el.hasAttribute('data-fetch-url')) {
+            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
             this.renderChart();
-            if (this.el.getAttribute('data-fetch-url')) {
-                this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-                console.log(this.url);
-            }
         }
+        console.log(this.url)
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);
@@ -129,13 +128,13 @@ Chart.prototype = {
     update: function() {
         this.chart.showLoading();
         var self = this;
+        console.log(self.url);
         $.ajax({
             url: self.url,
             type: 'GET',
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     var option = {

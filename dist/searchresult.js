@@ -135,7 +135,6 @@
 	    this.formatPhone = false; //手机号验证状态
 	    this.formatPassword = false; //密码验证状态
 	    this.formatVerifyCode = false; //验证码状态
-	    this.activeValidateCode = true;
 	    this.count = null; //计数器
 	    this.type = null; //是否为注册页面 是为true
 	    this.domValidateContainer = null; //验证码container
@@ -230,55 +229,60 @@
 	                    self.formatPassword = true;
 	                }
 	            }
-	            //输入验证码
-	            if ($(this).is("input[name='verify_code']")) {
-	                if ($(this).val() == "" || null) {
-	                    self.tips.show().html("请输入验证码")
-	                }
-	            }
+	            /* //输入验证码
+	             if ($(this).is("input[name='verify_code']")) {
+	                 if ($(this).val() == "" || null) {
+	                     self.tips.show().html("请输入验证码")
+	                 }
+	             }*/
 	            if (self.type) {
 	                self.checkValidateCode();
 	            }
+
+	            return false;
 	        })
 	    },
 	    checkValidateCode: function() {
 	        // 验证验证码
+
 	        var self = this;
 	        if (this.formatPhone && this.formatPassword && this.formatVerifyCode == false) {
 	            this.domValidate.addClass('active');
 	            this.domValidate.removeAttr("disabled");
-	            this.domValidate.one('click', function(e) {
-	                self.clickDomValidate();
-	                e.preventDefault(); //阻止提交按钮的默认行为
-	                e.stopPropagation();
-	                //发送验证码到手机
+	            this.domValidate.on('click', function(event) {
+	                var event = event || window.event;
+	                event.preventDefault(); //阻止提交按钮的默认行为
+	                event.stopPropagation();
+	                if (self.formatVerifyCode == false) {
+	                    self.clickDomValidate();
+	                }
 	                //倒计时功能
-	                $.ajax({
-	                    url: '/user/register/verificationCode',
-	                    type: 'POST',
-	                    data: {
-	                        mobile: self.el.find("input[name='phone_number']").val(),
-	                    },
-	                    success: function(result) {
-	                        console.log(result);
-	                        if (result.error_code == 0) {
-	                            self.formatVerifyCode = true;
-	                        } else if (result.error_code > 0) {
-	                            self.tips.show().html(result.error_msg);
-	                        }
-	                    }
-	                });
-
 	                return false;
 	            })
 	        }
 	    },
 	    clickDomValidate: function() {
 	        var self = this;
-	        self.activeValidateCode = false;
-	        self.domValidate.removeClass('active');
+	        //发送验证码到手机
+	        $.ajax({
+	            url: '/user/register/verificationCode',
+	            type: 'POST',
+	            data: {
+	                mobile: self.el.find("input[name='phone_number']").val(),
+	            },
+	            success: function(result) {
+	                console.log(result);
+	                if (result.error_code == 0) {
+	                    self.formatVerifyCode = true;
+	                    self.domValidate.removeClass('active');
+	                    settime(self.domValidate);
+	                } else if (result.error_code > 0) {
+	                    self.tips.show().html(result.error_msg);
+	                }
+	            }
+	        });
+
 	        var countdown = 60;
-	        settime(self.domValidate);
 
 	        function settime(obj) {
 	            if (countdown == 0) {

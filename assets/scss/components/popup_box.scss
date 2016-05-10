@@ -42,7 +42,7 @@
         width: 153px;
         height: 46px;
     }
-    .sign_form {
+    #sign_form {
         text-align: left;
         position: relative;
         padding-top: 63px;
@@ -111,22 +111,26 @@
             padding-right: 127px;
             input[type=text] {
                 border-radius: 0px;
+                width: 228px;
             }
-            button.btn_send_verify_code {
+            .btn_send_verify_code {
                 position: absolute;
                 right: 0;
                 top: 0;
+                z-index: 9999;
                 background: #eeeeee;
                 border: 1px solid #cccccc;
                 border-left: none;
+                text-align: center;
                 border-radius: 0px 2px 2px 0px;
                 width: 127px;
+                line-height: 45px;
                 height: 45px;
                 font-size: 18px;
                 color: #999999;
                 transition: all 300ms ease;
             }
-            button.btn_send_verify_code.active {
+            .btn_send_verify_code.active {
                 color: #FFF;
                 border: 1px solid #00a69d;
                 background: #00a69d;
@@ -145,10 +149,10 @@
         p.tips_bottom {
             font-size: 12px;
             color: #4a4a4a;
-            display:inline;
+            display: inline;
         }
         button.tips_bottom_btn {
-            display:inline;
+            display: inline;
             padding: 0;
             margin: 0;
             font-size: 14px;
@@ -173,8 +177,8 @@
         }
     }
     .register,
-    .login{
-        display:none;
+    .login {
+        display: none;
     }
     .infos {
         margin-top: 51px;
@@ -230,13 +234,7 @@ input[type=checkbox]:checked {
     background-size: 12px;
 }
 
-.avatar{
-    width:940px;
-    height:500px;
+.avatar {
+    width: 940px;
+    height: 500px;
 }
-
-
-
-
-
-
