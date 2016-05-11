@@ -36,9 +36,28 @@ $(function() {
                         //发送ajax
                         $("#avatar_upload_submit").off("click");
                         $("#avatar_upload_submit").on("click", function() {
-                            console.log("ajax");
-                            
+                            var fd = new FormData();
+                            fd.append("file", file);
+                            $.ajax({
+                                url: '/upload/img',
+                                type: 'POST',
+                                processData: false,
+                                contentType: false,
+                                data: fd,
+                                success: function(result) {
+                                    console.log(result);
+                                    if (result.error_code == 0) {
+                                        var image_url = result.data.image_url;
+                                        //赋值hidden input
+                                        $("#avatar_image").attr("src",image_url);
+                                        $("#hidden_avatar").val(image_url);
 
+                                    } else if (result.error_code > 0) {
+                                        console.log(result.error_msg)
+                                    }
+                                }
+                            })
+                            return false;
                         })
 
 
