@@ -1208,6 +1208,10 @@ section.program_values {
             border: 1px solid #00a69d;
             background: #00a69d;
             color: #fff; }
+          .vote_container .vote_content .vote .vote_btns button.active {
+            border: 1px solid #00a69d;
+            background: #00a69d;
+            color: #fff; }
         .vote_container .vote_content .vote .vote_btns .expext {
           border-radius: 4px 0 0 4px; }
         .vote_container .vote_content .vote .vote_btns .wantDevelop {

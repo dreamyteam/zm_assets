@@ -266,6 +266,11 @@ section.program_values {
                         background: #00a69d;
                         color: #fff;
                     }
+                    &.active {
+                        border: 1px solid #00a69d;
+                        background: #00a69d;
+                        color: #fff;
+                    }
                 }
                 .expext {
                     border-radius: 4px 0 0 4px;
@@ -421,7 +426,6 @@ section.user_reviews {
     padding: 0 20px;
 }
 
-
 // 潜力模型图表
 #chart_potential_model {
     &::before {
@@ -457,8 +461,6 @@ section.user_reviews {
         color: #4a4a4a;
     }
 }
-
-
 
 #chart_potential_model_small {
     height: 110px;

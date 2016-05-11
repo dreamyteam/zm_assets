@@ -50,6 +50,7 @@
 
 	$(function() {
 	    $('#avatar_mask').on('click', function() {
+
 	        var $inputImage = $("#avatar_input_upload");
 	        var URL = window.URL || window.webkitURL;
 	        var blobURL;
@@ -68,12 +69,12 @@
 	                        $avatar.cropper({
 	                            aspectRatio: 1 / 1,
 	                            crop: function(e) {
-	                                console.log(e.x);
-	                                console.log(e.y);
-	                                console.log(e.width);
-	                                console.log(e.height);
-	                                console.log(e.scaleX);
-	                                console.log(e.scaleY);
+	                                // console.log(e.x);
+	                                // console.log(e.y);
+	                                // console.log(e.width);
+	                                // console.log(e.height);
+	                                // console.log(e.scaleX);
+	                                // console.log(e.scaleY);
 	                            }
 	                        })
 	                        $avatar.one('built.cropper', function() {
@@ -83,6 +84,7 @@
 	                        //发送ajax
 	                        $("#avatar_upload_submit").off("click");
 	                        $("#avatar_upload_submit").on("click", function() {
+	                            avatar_popup.destory();
 	                            var fd = new FormData();
 	                            fd.append("file", file);
 	                            $.ajax({
@@ -96,8 +98,10 @@
 	                                    if (result.error_code == 0) {
 	                                        var image_url = result.data.image_url;
 	                                        //赋值hidden input
-	                                        $("#avatar_image").attr("src",image_url);
+	                                        $("#avatar_image").attr("src", image_url);
+
 	                                        $("#hidden_avatar").val(image_url);
+
 
 	                                    } else if (result.error_code > 0) {
 	                                        console.log(result.error_msg)
