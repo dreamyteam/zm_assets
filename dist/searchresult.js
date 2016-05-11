@@ -339,7 +339,7 @@
 	                success: function(result) {
 	                    console.log(result);
 	                    if (result.error_code == 0) {
-
+	                        location.reload();
 	                    } else if (result.error_code > 0) {
 	                        self.err_msg.show().html(result.error_msg);
 	                    }
