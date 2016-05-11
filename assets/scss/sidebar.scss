@@ -21,10 +21,13 @@ ul.sidebar_nav {
         .user_avatar_container {
             position: relative;
             cursor: pointer;
-            &:hover span {
+            &:hover label {
                 opacity: 0.4;
             }
-            span {
+            input[type=file]{
+                display:none;
+            }
+            label {
                 position: absolute;
                 display: block;
                 width: 120px;
