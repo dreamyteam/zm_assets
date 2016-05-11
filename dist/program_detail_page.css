@@ -437,30 +437,32 @@ footer {
     background-size: 153px;
     width: 153px;
     height: 46px; }
-  .sign #sign_form {
+  .sign .err_msg {
+    position: absolute;
+    top: 105px;
+    left: 50%;
+    margin-left: -201px;
+    display: block;
+    text-align: left;
+    background: #f2dede;
+    border: 1px solid #efd3d7;
+    border-radius: 3px;
+    width: 402px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    color: #bb4945;
+    padding-left: 19px; }
+  .sign #signForm {
     text-align: left;
     position: relative;
     padding-top: 63px; }
-    .sign #sign_form .err_msg {
-      position: absolute;
-      top: 19px;
-      left: 0;
-      display: block;
-      background: #f2dede;
-      border: 1px solid #efd3d7;
-      border-radius: 3px;
-      width: 100%;
-      height: 50px;
-      line-height: 50px;
-      font-size: 14px;
-      color: #bb4945;
-      padding-left: 19px; }
-    .sign #sign_form .sign_container {
+    .sign #signForm .sign_container {
       font-size: 0;
       padding-left: 47px;
       position: relative;
       margin-top: 18px; }
-      .sign #sign_form .sign_container label {
+      .sign #signForm .sign_container label {
         position: absolute;
         left: 0;
         top: 0;
@@ -471,16 +473,16 @@ footer {
         border-radius: 2px 0px 0px 2px;
         width: 47px;
         height: 45px; }
-      .sign #sign_form .sign_container label.icon_phone_number {
+      .sign #signForm .sign_container label.icon_phone_number {
         background: url("../assets/images/icon_phone@2x.png") center center no-repeat, #eeeeee;
         background-size: 12px; }
-      .sign #sign_form .sign_container label.icon_password {
+      .sign #signForm .sign_container label.icon_password {
         background: url("../assets/images/icon_password@2x.png") center center no-repeat, #eeeeee;
         background-size: 17px; }
-      .sign #sign_form .sign_container label.icon_verify {
+      .sign #signForm .sign_container label.icon_verify {
         background: url("../assets/images/icon_verify@2x.png") center center no-repeat, #eeeeee;
         background-size: 16px; }
-      .sign #sign_form .sign_container input[type=text], .sign #sign_form .sign_container input[type=password] {
+      .sign #signForm .sign_container input[type=text], .sign #signForm .sign_container input[type=password] {
         display: block;
         width: 100%;
         padding-left: 12px;
@@ -491,14 +493,14 @@ footer {
         height: 45px;
         font-size: 18px;
         color: #999999; }
-      .sign #sign_form .sign_container input[type=password] {
-        background: #FCF8E2; }
-    .sign #sign_form .verify {
+        .sign #signForm .sign_container input[type=text].active, .sign #signForm .sign_container input[type=password].active {
+          background: #FCF8E2; }
+    .sign #signForm .verify {
       padding-right: 127px; }
-      .sign #sign_form .verify input[type=text] {
+      .sign #signForm .verify input[type=text] {
         border-radius: 0px;
         width: 228px; }
-      .sign #sign_form .verify .btn_send_verify_code {
+      .sign #signForm .verify .btn_send_verify_code {
         position: absolute;
         right: 0;
         top: 0;
@@ -514,24 +516,30 @@ footer {
         font-size: 18px;
         color: #999999;
         transition: all 300ms ease; }
-      .sign #sign_form .verify .btn_send_verify_code.active {
+      .sign #signForm .verify .btn_send_verify_code.active {
         color: #FFF;
         border: 1px solid #00a69d;
         background: #00a69d; }
-    .sign #sign_form button.solid {
+    .sign #signForm button.solid {
       border-radius: 5px;
       width: 100%;
       height: 43px;
       font-size: 18px;
       text-align: center;
       margin-top: 58px;
-      background: #00a69d;
-      color: #fff; }
-    .sign #sign_form p.tips_bottom {
+      background: #fff;
+      border: 1px solid #00a69d;
+      color: #00a69d;
+      transition: all 300ms ease; }
+      .sign #signForm button.solid.active {
+        border: none;
+        background: #00a69d;
+        color: #fff; }
+    .sign #signForm p.tips_bottom {
       font-size: 12px;
       color: #4a4a4a;
       display: inline; }
-    .sign #sign_form button.tips_bottom_btn {
+    .sign #signForm button.tips_bottom_btn {
       display: inline;
       padding: 0;
       margin: 0;
@@ -539,13 +547,13 @@ footer {
       background: transparent;
       border: none;
       color: #00a69d; }
-    .sign #sign_form .remember_pwd_container label, .sign #sign_form .remember_pwd_container a {
+    .sign #signForm .remember_pwd_container label, .sign #signForm .remember_pwd_container a {
       display: inline-block;
       vertical-align: bottom;
       font-size: 14px;
       color: #4a4a4a;
       line-height: 14px; }
-    .sign #sign_form .remember_pwd_container a {
+    .sign #signForm .remember_pwd_container a {
       margin-top: 10px;
       float: right;
       vertical-align: bottom; }
@@ -598,7 +606,23 @@ input[type=checkbox]:checked {
 
 .avatar {
   width: 940px;
-  height: 500px; }
+  height: 600px; }
+  .avatar .img_upload_container {
+    padding: 10px; }
+    .avatar .img_upload_container .avatar_container {
+      float: left;
+      width: 400px;
+      height: 400px;
+      background: #f2f2f2; }
+      .avatar .img_upload_container .avatar_container img {
+        max-width: 100%; }
+    .avatar .img_upload_container .avatar_preview_container {
+      float: right;
+      width: 200px;
+      height: 200px;
+      background: #cccccc; }
+      .avatar .img_upload_container .avatar_preview_container img {
+        max-width: 100%; }
 
 .searchbar {
   margin: 55px auto;

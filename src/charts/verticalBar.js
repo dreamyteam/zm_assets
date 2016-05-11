@@ -130,7 +130,6 @@ Chart.prototype = {
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                // console.log(result);
                 if (result.error_code == 0) {
                     self.chart.hideLoading();
                     if (self.type == 'age') {
@@ -141,7 +140,7 @@ Chart.prototype = {
                             subtext: self.subTitle,
                         },
                         legend: {
-                            data: [result.data[0].name, result.data[1].name]
+                            data: [result.data[0].name, self.name]
                         },
                         series: [{
                             name: result.data[0].name,
@@ -153,7 +152,7 @@ Chart.prototype = {
                                 }
                             }
                         }, {
-                            name: result.data[1].name,
+                            name: self.name,
                             type: 'bar',
                             barGap: '-50%',
                             z: 3,

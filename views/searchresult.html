@@ -117,9 +117,9 @@
     <div class="popup_box sign" id="popup_sign">
         <button class="close"></button>
         <span class="logo"></span>
+        <span class="err_msg"></span>
         <div id="signForm">
             <div class="sign_form" id="register_form">
-                <span class="err_msg"></span>
                 <div class="sign_container">
                     <label class="icon_phone_number"></label>
                     <input type="text" name="phone_number" placeholder="手机号码" value="" />
@@ -139,7 +139,6 @@
                 </p>
             </div>
             <div class="sign_form" id="login_form">
-                <span class="err_msg"></span>
                 <div class="sign_container">
                     <label class="icon_phone_number"></label>
                     <input type="text" name="phone_number" placeholder="手机号码" value="" />
@@ -148,17 +147,22 @@
                     <label class="icon_password"></label>
                     <input type="password" name="password" placeholder="密码" />
                 </div>
+                <div class="remember_pwd_container">
+                    <input type="checkbox" name="remenber_pwd" />
+                    <label class="icon_verify">记住密码</label>
+                    <a href="#">忘记密码?</a>
+                </div>
                 <button class="solid">登录</button>
                 <p class="tips_bottom">没有帐号?点击
                     <button class="tips_bottom_btn">注册</button>
                 </p>
             </div>
         </div>
-        <div class="infos">
+        <!-- <div class="infos">
             <a href="#" target="_blank">用户协议</a>
             <a href="#" target="_blank">隐私政策</a>
             <a href="#" target="_blank">帮助文档</a>
-        </div>
+        </div> -->
     </div>
     <script type="text/javascript" src="../src/jquery.min.js"></script>
     <!-- <script type="text/javascript" src="../dist/vendor.js"></script> -->

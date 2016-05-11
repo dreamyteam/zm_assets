@@ -17,10 +17,11 @@ Chart.prototype = {
         this.el = document.getElementById(this.cfg.el);
         this.name = this.cfg.name;
         this.left = this.cfg.left || 'center';
-         if (this.el && this.el.hasAttribute('data-fetch-url')) {
+        if (this.el && this.el.hasAttribute('data-fetch-url')) {
             this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
             this.renderChart();
         }
+        console.log(this.url)
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);

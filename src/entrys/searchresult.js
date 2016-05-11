@@ -1,10 +1,37 @@
 var Popup = require('../components/pop_up_sign');
-var Validate = require('../components/validate.js');
 var Paging = require('../components/paging.js');
 var BackTop = require('../components/back_top.js');
-
+var SignIn = require('../components/LonginReg.js');
 
 $(function() {
+
+    $("#register").on('click', function() {
+        var popReg = new Popup('#popup_sign');
+        popReg.alert();
+
+        new SignIn({
+            el: '#popup_sign',
+            type: 0
+        })
+    })
+
+    $("#login").on('click', function() {
+        var popLogin = new Popup("#popup_sign");
+        popLogin.alert();
+        new SignIn({
+            el: "#popup_sign",
+            type: 1
+        })
+    })
+
+})
+
+
+
+
+
+/*$(function() {
+
  $("#register").on('click', function() {
         var popReg = new Popup('#popup_sign');
         popReg.alert();
@@ -29,4 +56,4 @@ $(function() {
 
     //返回顶部
     var backTop = new BackTop();
-})
+})*/
