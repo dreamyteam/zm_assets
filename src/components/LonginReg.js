@@ -221,16 +221,23 @@ Sign.prototype = {
         var regPwd = /^[a-zA-Z\d]{6,16}$/;
         var inputPhone = self.boxLogin.find("input[name='phone_number']");
         var inputPwd = self.boxLogin.find("input[name='password']");
+        var inputRememberPwd = self.boxLogin.find("input[name='remember_pwd']");
+        var rememberPwd;
+        if(inputRememberPwd.is(":checked")){
+            rememberPwd = 1;
+        }else{
+            rememberPwd = 0;
+        }
         if (!regPhone.test(inputPhone.val())) {
             self.err_msg.show().html("手机号码格式错误")
         } else if (!regPwd.test(inputPwd.val())) {
             self.err_msg.show().html("密码必须为6-16位,字母或数字")
         } else {
             self.err_msg.hide();
-            self.loginConfirm();
+            self.loginConfirm(rememberPwd);
         }
     },
-    loginConfirm: function() {
+    loginConfirm: function(cheked) {
         var self = this;
         $.ajax({
             url: '/user/login',
@@ -238,6 +245,7 @@ Sign.prototype = {
             data: {
                 mobile: self.boxLogin.find("input[name='phone_number']").val(),
                 password: self.boxLogin.find("input[name='password']").val(),
+                rememberPwd : cheked
             },
             success: function(result) {
                 console.log(result)
