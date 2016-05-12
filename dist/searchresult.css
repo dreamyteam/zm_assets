@@ -754,7 +754,6 @@ section.search_result {
   padding: 0 30px 24px 30px; }
   section.search_result .sresult_ip {
     border-bottom: 1px solid #BEBEBE;
-    overflow: hidden;
     padding-bottom: 30px;
     padding-top: 30px; }
     section.search_result .sresult_ip:last-child {
@@ -768,7 +767,12 @@ section.search_result {
       margin-right: 30px;
       background: #F2F2F2; }
       section.search_result .sresult_ip .sresult_ip_img_cointainer img {
-        width: 120px; }
+        width: 120px;
+        transition: all 300ms ease; }
+      section.search_result .sresult_ip .sresult_ip_img_cointainer:hover img {
+        -webkit-transform: translate(-2px, -2px);
+                transform: translate(-2px, -2px);
+        box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5); }
     section.search_result .sresult_ip .sresult_content {
       float: left;
       padding-top: 14px; }
@@ -795,8 +799,9 @@ section.search_result {
       section.search_result .sresult_ip .sresult_content .quotient {
         margin-top: 40px; }
         section.search_result .sresult_ip .sresult_content .quotient li {
-          display: inline-block;
-          margin-right: 60px; }
+          width: 140px;
+          overflow: hidden;
+          display: inline-block; }
           section.search_result .sresult_ip .sresult_content .quotient li h6 {
             color: #5E5E5E;
             font-size: 14px; }
@@ -806,7 +811,7 @@ section.search_result {
     section.search_result .sresult_ip .overall {
       float: right;
       text-align: center;
-      margin: 20px 20px; }
+      margin: 25px 20px 0 0; }
       section.search_result .sresult_ip .overall h6 {
         font-size: 14px;
         color: #5E5E5E; }

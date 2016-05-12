@@ -9,7 +9,6 @@ function Sign(cfg) {
     this.canClickSendVCB = true; //可以发送验证码
     this.init();
 }
-
 Sign.prototype = {
     init: function() {
         this.type = this.cfg.type;
@@ -49,74 +48,49 @@ Sign.prototype = {
     },
     validateBase: function(type) { // 0 跳入 reg判断 1 跳入 login 判断
         var self = this;
-        var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
-        var regPwdLen = /^\S{6,}$/;
-        var correctPhone = false;
-        var correctPwd = false;
+        var hasValueRegPhone = false,
+            hasValueRegPwd = false,
+            hasValueLoginPhone = false,
+            hasValueLoginPwd = false;
 
-        if (type == 0) {
-            this.boxReg.find('input').bind("input propertychange", function() {
+        if (type == 0) { //reg
+            this.boxReg.find('input').on("input propertychange", function() {
                 if ($(this).is("input[name='phone_number']")) {
-                    if ($(this).val() == "" || null) {
-                        self.err_msg.show().html("请填写手机号码")
-                        correctPhone = false;
-                    } else if (!regPhone.test($(this).val())) {
-                        self.err_msg.show().html("手机号码格式错误")
-                        correctPhone = false;
-                    } else {
-                        self.err_msg.hide();
-                        correctPhone = true;
+                    $(this).val($(this).val().replace(/\D/g, '')); //只能输入数字
+                    if ($(this).val() !== '') {
+                        hasValueRegPhone = true;
                     }
                 }
                 if ($(this).is("input[name='password']")) {
-                    if ($(this).val() == "" || null) {
-                        self.err_msg.show().html("请输入密码");
-                        correctPwd = false;
-                    } else if (!regPwdLen.test($(this).val())) {
-                        self.err_msg.show().html("密码长度必须大于6位数")
-                        correctPwd = false;
-                    } else {
-                        self.err_msg.hide();
-                        correctPwd = true;
+                    if ($(this).val() !== '') {
+                        hasValueRegPwd = true;
                     }
                 }
-                if (correctPhone && correctPwd) {
-                    self.bindBtnValidate();
+                if (hasValueRegPhone && hasValueRegPwd) {
+                    self.bindBtnValidateReg();
                 }
             })
-        } else if (type == 1) {
-            this.boxLogin.find('input').bind("input propertychange", function() {
+        } else if (type == 1) { //login
+            this.boxLogin.find('input').on("input propertychange", function() {
                 if ($(this).is("input[name='phone_number']")) {
-                    if ($(this).val() == "" || null) {
-                        self.err_msg.show().html("请填写手机号码")
-                        correctPhone = false;
-                    } else if (!regPhone.test($(this).val())) {
-                        self.err_msg.show().html("手机号码格式错误")
-                        correctPhone = false;
-                    } else {
-                        self.err_msg.hide();
-                        correctPhone = true;
+                    $(this).val($(this).val().replace(/\D/g, '')); //只能输入数字
+                    if ($(this).val() !== '') {
+                        hasValueLoginPhone = true;
                     }
                 }
                 if ($(this).is("input[name='password']")) {
-                    if ($(this).val() == "" || null) {
-                        self.err_msg.show().html("请输入密码");
-                        correctPwd = false;
-                    } else if (!regPwdLen.test($(this).val())) {
-                        self.err_msg.show().html("密码长度必须大于6位数")
-                        correctPwd = false;
-                    } else {
-                        self.err_msg.hide();
-                        correctPwd = true;
+                    if ($(this).val() !== '') {
+                        hasValueLoginPwd = true;
                     }
                 }
-                if (correctPhone && correctPwd) {
+                if (hasValueLoginPhone && hasValueLoginPwd) {
                     self.loginSubmit();
                 }
             })
         }
     },
-    bindBtnValidate: function() {
+    bindBtnValidateReg: function() {
+        console.log('can click validate')
         var self = this;
         if (this.canClickSendVCB) {
             this.boxValidate.addClass('active');
@@ -124,7 +98,18 @@ Sign.prototype = {
         }
         this.boxValidate.off('click');
         this.boxValidate.on('click', function(e) {
-            self.checkValidate();
+            var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+            var regPwd = /^[a-zA-Z\d]{6,16}$/;
+            var inputPhone = self.boxReg.find("input[name='phone_number']");
+            var inputPwd = self.boxReg.find("input[name='password']");
+            if (!regPhone.test(inputPhone.val())) {
+                self.err_msg.show().html("手机号码格式错误")
+            } else if (!regPwd.test(inputPwd.val())) {
+                self.err_msg.show().html("密码必须为6-16位,字母或数字")
+            } else {
+                self.err_msg.hide();
+                self.checkValidate();
+            }
             return false;
         })
     },
@@ -219,17 +204,29 @@ Sign.prototype = {
             var key = e.which;
             if (key == 13) {
                 e.preventDefault();
-                self.loginConfirm();
+                self.loginBeforeAjax();
                 return false;
             }
         })
-
         btnSubmit.off("click");
         btnSubmit.on('click', function(e) {
             e.preventDefault();
-            self.loginConfirm();
+            self.loginBeforeAjax();
             return false;
         })
+    },
+    loginBeforeAjax: function() {
+        var self = this;
+        var inputPhone = self.boxLogin.find("input[name='phone_number']");
+        var inputPwd = self.boxLogin.find("input[name='password']");
+        if (!regPhone.test(inputPhone.val())) {
+            self.err_msg.show().html("手机号码格式错误")
+        } else if (!regPwd.test(inputPwd.val())) {
+            self.err_msg.show().html("密码必须为6-16位,字母或数字")
+        } else {
+            self.err_msg.hide();
+            self.loginConfirm();
+        }
     },
     loginConfirm: function() {
         var self = this;
