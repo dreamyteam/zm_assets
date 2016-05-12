@@ -171,6 +171,7 @@ $(function() {
                     } else if ($(this).hasClass('wantDevelop')) {
                         choice = 2;
                     }
+
                     $.ajax({
                             url: '/user/intention/vote',
                             type: 'POST',

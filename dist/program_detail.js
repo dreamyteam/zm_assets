@@ -217,6 +217,7 @@
 	                    } else if ($(this).hasClass('wantDevelop')) {
 	                        choice = 2;
 	                    }
+
 	                    $.ajax({
 	                            url: '/user/intention/vote',
 	                            type: 'POST',
@@ -416,7 +417,6 @@
 	    },
 	    bindBtnValidate: function() {
 	        var self = this;
-	        console.log('can send validate code btn active' + this.canClickSendVCB);
 	        if (this.canClickSendVCB) {
 	            this.boxValidate.addClass('active');
 	            this.boxValidate.removeAttr("disabled");
@@ -436,7 +436,6 @@
 	                mobile: self.boxReg.find("input[name='phone_number']").val(),
 	            },
 	            success: function(result) {
-	                console.log(result);
 	                if (result.error_code == 0) {
 	                    self.boxValidate.removeClass('active');
 	                    self.boxValidate.attr("disabled", "disabled");
@@ -470,51 +469,84 @@
 	    regSubmit: function() {
 	        var self = this;
 	        var btnSubmit = this.boxReg.find("button.solid");
+	        var lastInput = this.boxReg.find("input[name='verify_code']");
 	        btnSubmit.addClass('active');
+	        lastInput.off("keydown");
+	        console.log(lastInput);
+	        lastInput.on("keydown", function(e) {
+	            var key = e.which;
+	            if (key == 13) {
+	                e.preventDefault();
+	                self.regConfirm();
+	                return false;
+	            }
+	        })
 	        btnSubmit.off('click');
 	        btnSubmit.on('click', function() {
-	            $.ajax({
-	                url: '/user/register',
-	                type: 'POST',
-	                data: {
-	                    mobile: self.el.find("input[name='phone_number']").val(),
-	                    password: self.el.find("input[name='password']").val(),
-	                    checkCode: self.el.find("input[name='verify_code']").val()
-	                },
-	                success: function(result) {
-	                    console.log(result);
-	                    if (result.error_code == 0) {
-	                        location.reload();
-	                    } else if (result.error_code > 0) {
-	                        self.err_msg.show().html(result.error_msg);
-	                    }
-	                }
-	            })
+	            self.regConfirm();
 	            return false;
+	        })
+	    },
+	    regConfirm: function() {
+	        var self = this;
+	        $.ajax({
+	            url: '/user/register',
+	            type: 'POST',
+	            data: {
+	                mobile: self.boxReg.find("input[name='phone_number']").val(),
+	                password: self.boxReg.find("input[name='password']").val(),
+	                checkCode: self.boxReg.find("input[name='verify_code']").val()
+	            },
+	            success: function(result) {
+	                console.log(result);
+	                if (result.error_code == 0) {
+	                    location.reload();
+	                } else if (result.error_code > 0) {
+	                    self.err_msg.show().html(result.error_msg);
+	                }
+	            }
 	        })
 	    },
 	    loginSubmit: function() {
 	        var self = this;
 	        var btnSubmit = this.boxLogin.find("button.solid");
+	        var lastInput = this.boxLogin.find("input[name='password']");
 	        btnSubmit.addClass('active');
-	        btnSubmit.on('click', function() {
-	            $.ajax({
-	                url: '/user/login',
-	                type: 'POST',
-	                data: {
-	                    mobile: self.boxLogin.find("input[name='phone_number']").val(),
-	                    password: self.boxLogin.find("input[name='password']").val(),
-	                },
-	                success: function(result) {
-	                    console.log(result)
-	                    if (result.error_code == 0) {
-	                        location.reload();
-	                    } else if (result.error_code > 0) {
-	                        self.err_msg.show().html(result.error_msg);
-	                    }
-	                }
-	            })
+
+	        lastInput.off("keydown");
+	        lastInput.on("keydown", function(e) {
+	            var key = e.which;
+	            if (key == 13) {
+	                e.preventDefault();
+	                self.loginConfirm();
+	                return false;
+	            }
+	        })
+
+	        btnSubmit.off("click");
+	        btnSubmit.on('click', function(e) {
+	            e.preventDefault();
+	            self.loginConfirm();
 	            return false;
+	        })
+	    },
+	    loginConfirm: function() {
+	        var self = this;
+	        $.ajax({
+	            url: '/user/login',
+	            type: 'POST',
+	            data: {
+	                mobile: self.boxLogin.find("input[name='phone_number']").val(),
+	                password: self.boxLogin.find("input[name='password']").val(),
+	            },
+	            success: function(result) {
+	                console.log(result)
+	                if (result.error_code == 0) {
+	                    location.reload();
+	                } else if (result.error_code > 0) {
+	                    self.err_msg.show().html(result.error_msg);
+	                }
+	            }
 	        })
 	    }
 	}
