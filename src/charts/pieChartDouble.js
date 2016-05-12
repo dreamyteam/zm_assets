@@ -26,6 +26,7 @@ Chart.prototype = {
             this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
             this.renderChart();
         }
+        console.log(this.url)
     },
     renderChart: function() {
         this.chart = echarts.init(this.el);

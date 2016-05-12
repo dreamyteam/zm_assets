@@ -46,7 +46,6 @@
 
 	var Popup = __webpack_require__(1);
 	var SignIn = __webpack_require__(2);
-
 	$(function() {
 	    $("#register").on('click', function() {
 	        var popReg = new Popup('#popup_sign');
@@ -56,7 +55,6 @@
 	            type: 0
 	        })
 	    })
-
 	    $("#login").on('click', function() {
 	        var popLogin = new Popup("#popup_sign");
 	        popLogin.alert();

@@ -442,6 +442,7 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
+	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -604,6 +605,7 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
+	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -851,6 +853,7 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
+	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -1009,6 +1012,7 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
+	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
@@ -1122,10 +1126,10 @@
 	                            subtext: self.subTitle,
 	                        },
 	                        legend: {
-	                            data: [result.data[0].name, self.name]
+	                            data: ['平均分布', self.name]
 	                        },
 	                        series: [{
-	                            name: result.data[0].name,
+	                            name: '平均分布',
 	                            type: 'bar',
 	                            data: result.data[0].value,
 	                            itemStyle: {
@@ -1182,6 +1186,7 @@
 	            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
 	            this.renderChart();
 	        }
+	        console.log(this.url)
 	    },
 	    renderChart: function() {
 	        this.chart = echarts.init(this.el);
