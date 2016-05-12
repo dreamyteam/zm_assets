@@ -217,6 +217,8 @@ Sign.prototype = {
     },
     loginBeforeAjax: function() {
         var self = this;
+        var regPhone = /^0?1[3|4|5|8][0-9]\d{8}$/;
+        var regPwd = /^[a-zA-Z\d]{6,16}$/;
         var inputPhone = self.boxLogin.find("input[name='phone_number']");
         var inputPwd = self.boxLogin.find("input[name='password']");
         if (!regPhone.test(inputPhone.val())) {
