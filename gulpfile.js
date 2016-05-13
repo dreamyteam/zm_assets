@@ -6,6 +6,7 @@ var precss = require('precss');
 var postcss = require('gulp-postcss');
 // var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
+var base64 = require('gulp-base64');
 
 
 gulp.task('css', function() {
@@ -50,8 +51,21 @@ gulp.task('css', function() {
         .pipe(sass())
         .pipe(concat('record.css'))
         .pipe(postcss(processors))
-        .pipe(gulp.dest('dist/')); 
+        .pipe(gulp.dest('dist/'));
 });
+
+gulp.task('build', function() {
+    return gulp.src('./dist/*.css')
+        .pipe(base64({
+            baseDir: 'public',
+            extensions: ['svg', 'png', /\.jpg#datauri$/i],
+            exclude: [/\.server\.(com|net)\/dynamic\//, '--live.jpg'],
+            maxImageSize: 8 * 1024, // bytes 
+            debug: true
+        }))
+        .pipe(gulp.dest('buildcss/'));
+});
+
 
 // 默认任务
 gulp.task('default', function() {

@@ -46,11 +46,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Popup = __webpack_require__(1);
-	var cropper = __webpack_require__(14);
+	var cropper  = __webpack_require__(14);
+	// var Avatar = require('../components/avatar_upload.js');
 
 	$(function() {
-	    $('#avatar_mask').on('click', function() {
+	   /* $("#avatar_mask").on("click",function(){
+	        var avatar = new Avatar({
+	            input: '#avatar_input_upload',
+	            preview: '#avatar_upload',
+	            confrimBtn: "#avatar_upload_submit"
+	        })
+	    })*/
 
+	    $('#avatar_mask').on('click', function() {
 	        var $inputImage = $("#avatar_input_upload");
 	        var URL = window.URL || window.webkitURL;
 	        var blobURL;
@@ -68,6 +76,10 @@
 	                        var $avatar = $("#avatar_upload");
 	                        $avatar.cropper({
 	                            aspectRatio: 1 / 1,
+	                            viewMode:3,
+	                            dragModel:'move',
+	                            highlight:false,
+	                            background: false,
 	                            crop: function(e) {
 	                                // console.log(e.x);
 	                                // console.log(e.y);
@@ -99,10 +111,7 @@
 	                                        var image_url = result.data.image_url;
 	                                        //赋值hidden input
 	                                        $("#avatar_image").attr("src", image_url);
-
 	                                        $("#hidden_avatar").val(image_url);
-
-
 	                                    } else if (result.error_code > 0) {
 	                                        console.log(result.error_msg)
 	                                    }
@@ -110,8 +119,6 @@
 	                            })
 	                            return false;
 	                        })
-
-
 	                    } else {
 	                        window.alert('请选择图片文件');
 	                    }
@@ -144,6 +151,7 @@
 	    alert: function() {
 	        this.mask.appendTo("body");
 	        this.element.show();
+	        this.element.addClass("active");
 	    },
 	    destory: function() {
 	        this.mask.remove();

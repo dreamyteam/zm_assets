@@ -1,4 +1,4 @@
-var Popup = require('../components/pop_up_sign');
+var Popup = require('../components/pop_up');
 var SignIn = require('../components/LonginReg.js');
 $(function() {
     $("#register").on('click', function() {

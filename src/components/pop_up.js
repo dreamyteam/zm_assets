@@ -15,6 +15,7 @@ Popup.prototype = {
     alert: function() {
         this.mask.appendTo("body");
         this.element.show();
+        this.element.addClass("active");
     },
     destory: function() {
         this.mask.remove();
