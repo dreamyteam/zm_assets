@@ -1,6 +1,9 @@
-var Popup = require('../components/pop_up');
-var SignIn = require('../components/LonginReg.js');
+import SignIn from '../components/LonginReg.js'
+import Popup from '../components/pop_up.js'
+import BackTop from '../components/back_top.js';
+
 $(function() {
+    new BackTop(); //返回顶部
     $("#register").on('click', function() {
         var popReg = new Popup('#popup_sign');
         popReg.alert();

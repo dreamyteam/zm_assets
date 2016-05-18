@@ -1,42 +1,40 @@
-function GetHistory(el, type) {
-    this.el = el;
-    this.trendEL = null; //趋势箭头元素
-    this.historyDateEL = null; //历史最高日起元素
-    this.historyValueEL = null; //历史最高日起值元素
-    this.bookId = null; //取到bookid
-    this.type = type; //指数type
-    this.url = null; //ajax地址
-    this.result = null; //ajax 值
-    this.init();
-}
-GetHistory.prototype = {
-    init: function() {
+export default class GetHistory {
+    constructor(el, type) {
+        this.el = el;
+        this.type = type;
+        this.trendEL = null; //趋势箭头
+        this.historyDateEL = null; //历史最高日期元素
+        this.historyValueEL = null; //历史最高日期值元素
+        this.bookId = null;
+        this.url = null;
+        this.init();
+    }
+    init() {
         this.trendEL = this.el.find(".arrow");
         this.historyDateEL = this.el.find('.highest_history_date');
         this.historyValueEL = this.el.find('.highest_histroy_value');
         this.bookId = $('#bookId').val();
-        if (this.el.length > 0) { this.getData();}
-    },
-    getData: function() {
-        this.url = '/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
+        (this.el.length > 0) && this.getRemoteData();
+    }
+    getRemoteData() {
         var self = this;
+        this.url = '/index/historyTrend?bookId=' + this.bookId + '&type=' + this.type + '&t=' + new Date().getTime();
         $.ajax({
-            url: self.url,
+            url: this.url,
             type: 'GET',
             dataType: 'jsonp',
             jsonp: 'callback',
             success: function(result) {
-                // console.log(result);
                 if (result.error_code == 0) {
-                    self.result = result.data;
-                    self.renderUI();
+                    self.renderUI(result.data);
                 }
+                //TODO 处理error_code
             }
         })
-    },
-    renderUI: function() {
+    }
+    renderUI(data) {
         //处理箭头
-        switch (this.result.current_index_trend) {
+        switch (data.current_index_trend) {
             case "0":
                 this.trendEL.html('-');
                 break;
@@ -51,10 +49,8 @@ GetHistory.prototype = {
                 break;
         }
         //处理日期
-        this.historyDateEL.html(this.result.history_top_date);
+        this.historyDateEL.html(data.history_top_date.replace(/-/g,'/'));
         //处理数值
-        this.historyValueEL.html(this.result.history_top_value);
+        this.historyValueEL.html(data.history_top_value);
     }
 }
-
-module.exports = GetHistory;

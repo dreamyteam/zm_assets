@@ -284,7 +284,7 @@
                 </div>
             </div>
             <!-- 潜力模型图表 -->
-            <div id="chart_potential_model" data-fetch-url="http://192.168.0.103:8082/developIndex/history?ip=55"></div>
+            <div id="chart_potential_model" data-fetch-url="http://ipcool.me/developIndex/history?ip=201"></div>
             <!-- 最受期待的开发项目 -->
             <div class="vote_container">
                 <h3>最受期待的开发项目</h3>
@@ -411,9 +411,9 @@
             <!-- 新闻平台 社交平台 饼图 容器-->
             <div class="col_2_container">
                 <!--新闻平台图表-->
-                <div class="col" id="chart_media_platform" data-fetch-url="http://192.168.0.105:8082/propagation/newMedia?ip=55"></div>
+                <div class="col" id="chart_media_platform" data-fetch-url="http://ipcool.me/propagation/newMedia?ip=201"></div>
                 <!--社交平台图表-->
-                <div class="col" id="chart_social_platform"></div>
+                <div class="col" id="chart_social_platform" data-fetch-url="http://ipcool.me/propagation/socialMedia?ip=201"></div>
             </div>
         </section>
         <!--用户活跃-->
@@ -456,9 +456,9 @@
             <!-- 受众年龄分布 容器-->
             <div class="col_2_container">
                 <!--男女比例分布 图表-->
-                <div class="col" id="chart_sex_distribution"></div>
+                <div class="col" id="chart_sex_distribution" data-fetch-url="http://ipcool.me/user/sex?ip=201"></div>
                 <!--年龄分布 图表-->
-                <div class="col" id="chart_age_distribution"></div>
+                <div class="col" id="chart_age_distribution" data-fetch-url="http://ipcool.me/user/age?ip=201"></div>
             </div>
             <!-- 查看全部 -->
             <div class="program_showMore">
@@ -600,6 +600,7 @@
         
         <script type="text/javascript" src="../../dist/jquery.min.js"></script>
         <script type="text/javascript" src="../../dist/echarts.min.js"></script>
+        <script type="text/javascript" src="../../dist/all.js"></script>
         <script src="../../dist/program_detail.js"></script>
 </body>
 

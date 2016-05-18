@@ -1,4 +1,4 @@
-var Popup = require('../components/pop_up');
+import Popup from '../components/pop_up.js'
 var cropper  = require('../components/cropper.js');
 // var Avatar = require('../components/avatar_upload.js');
 

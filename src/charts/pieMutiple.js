@@ -1,29 +1,7 @@
-// var echarts = require('echarts');
+import Chart from './baseChart.js'
 
-function Chart(cfg) {
-    this.cfg = cfg;
-    this.el = null;
-    // this.titleText = null; // 标题 由type决定
-    this.subTitle = null; //如果是sex图表 计算得出
-    this.name = null; // ip名称 
-    // this.type = null; // 类型 sex social
-    this.left = null; //  标题是否剧中 'center' 'left'
-    this.chart = null; // 图表实例
-    this.url = null; //ajax 请求地址
-    this.init();
-}
-Chart.prototype = {
-    init: function() {
-        this.el = document.getElementById(this.cfg.el);
-        this.name = this.cfg.name;
-        this.left = this.cfg.left || 'center';
-        if (this.el && this.el.hasAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-            this.renderChart();
-        }
-        console.log(this.url)
-    },
-    renderChart: function() {
+export default class pieMutiple extends Chart {
+    renderChart() {
         this.chart = echarts.init(this.el);
         var optionBasic = {
             title: {
@@ -83,35 +61,15 @@ Chart.prototype = {
             }
         }
         this.chart.setOption(optionBasic);
-        if (this.url) {
-            this.update();
+        this.url && this.getRemoteData();
+    }
+    updateChart(data) {
+        this.chart.hideLoading();
+        var option = {
+            series: [{
+                data: data
+            }]
         }
-    },
-    update: function() {
-        this.chart.showLoading();
-        var self = this;
-        $.ajax({
-            url: self.url,
-            type: 'GET',
-            dataType: 'jsonp',
-            jsonp: 'callback',
-            success: function(result) {
-                if (result.error_code == 0) {
-                    self.chart.hideLoading();
-                    var option = {
-                        series: [{
-                            data: result.data
-                        }]
-                    }
-                    self.chart.setOption(option);
-                } else {
-                    return false;
-                }
-            },
-            error: function(msg) {
-                console.log(msg);
-            }
-        })
+        this.chart.setOption(option);
     }
 }
-module.exports = Chart;

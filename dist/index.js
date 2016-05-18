@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
+/******/ (function(modules) { // webpackBootstrapqweqe
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -44,8 +44,7 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	
-
+	"use strict";
 
 /***/ }
 /******/ ]);

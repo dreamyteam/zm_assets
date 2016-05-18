@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        index: "./src/entrys/index.js",
+        // index: "./src/entrys/index.js",
         searchresult: './src/entrys/searchresult.js',
         program_detail: "./src/entrys/program_detail_entry.js",
         user:"./src/entrys/user.js",
@@ -23,7 +23,14 @@ module.exports = {
     ],
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" }
+            { test: /\.css$/, loader: "style!css" },
+            {
+                test: /\.js$/,
+                loader: 'babel',
+                query: {
+                  presets: ['es2015']
+                }
+            },
         ]
     }
 };

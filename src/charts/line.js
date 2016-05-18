@@ -1,29 +1,7 @@
-// var echarts = require('echarts');
-function Chart(cfg) {
-    this.cfg = cfg;
-    this.el = null;
-    // this.titleText = null; // 标题 由type决定
-    this.subTitle = null; //如果是sex图表 计算得出
-    this.name = null; // ip名称 
-    this.type = null; // 类型 more 普通
-    this.left = null; //  标题是否剧中 'center' 'left'
-    this.chart = null; // 图表实例
-    this.url = null; //ajax 请求地址
-    this.init();
-}
-Chart.prototype = {
-    init: function() {
-        this.el = document.getElementById(this.cfg.el);
-        this.type = this.cfg.type || null;
-        this.name = this.cfg.name;
+import Chart from './baseChart.js'
 
-        if (this.el && this.el.hasAttribute('data-fetch-url')) {
-            this.url = this.el.getAttribute('data-fetch-url') + '&t=' + new Date().getTime();
-            this.renderChart();
-        }
-        console.log(this.url)
-    },
-    renderChart: function() {
+export default class Line extends Chart {
+    renderChart() {
         this.chart = echarts.init(this.el);
         if (this.type == "more") {
             var datazom = [{
@@ -123,35 +101,18 @@ Chart.prototype = {
             }
         }
         this.chart.setOption(optionBasic);
-        if(this.url){
-            this.update();
+        this.url && this.getRemoteData();
+    }
+    updateChart(data) {
+        this.chart.hideLoading();
+        var option = {
+            xAxis: [{
+                data: data.date
+            }],
+            series: [{
+                data: data.data
+            }]
         }
-    },
-    update: function() {
-        this.chart.showLoading();
-        var self = this;
-        console.log(self.url);
-        $.ajax({
-            url: self.url,
-            type: 'GET',
-            dataType: 'jsonp',
-            jsonp: 'callback',
-            success: function(result) {
-                if (result.error_code == 0) {
-                    self.chart.hideLoading();
-                    var option = {
-                        xAxis: [{
-                            data: result.data.date
-                        }],
-                        series: [{
-                            data: result.data.data
-                        }]
-                    }
-                    self.chart.setOption(option);
-                }
-            }
-        })
+        this.chart.setOption(option);
     }
 }
-
-module.exports = Chart;

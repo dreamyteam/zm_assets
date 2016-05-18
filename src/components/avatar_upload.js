@@ -1,5 +1,5 @@
 var cropper = require('./cropper.js');
-var Popup = require('../components/pop_up');
+import Popup from '../components/pop_up.js'
 
 
 function Avatar(cfg) {
