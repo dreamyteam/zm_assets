@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        // index: "./src/entrys/index.js",
+        index: "./src/entrys/index.js",
         searchresult: './src/entrys/searchresult.js',
         program_detail: "./src/entrys/program_detail_entry.js",
         user:"./src/entrys/user.js",

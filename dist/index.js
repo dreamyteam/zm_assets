@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrapqweqe
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -45,6 +45,14 @@
 /***/ function(module, exports) {
 
 	"use strict";
+
+	$(function () {
+
+		$("#home_page").fullpage({
+			verticalCentered: false
+
+		});
+	});
 
 /***/ }
 /******/ ]);

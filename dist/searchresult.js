@@ -47,7 +47,7 @@
 
 	'use strict';
 
-	var _paging = __webpack_require__(15);
+	var _paging = __webpack_require__(18);
 
 	var _paging2 = _interopRequireDefault(_paging);
 
@@ -60,7 +60,7 @@
 
 /***/ },
 
-/***/ 15:
+/***/ 18:
 /***/ function(module, exports) {
 
 	"use strict";

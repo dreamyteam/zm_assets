@@ -46,15 +46,15 @@
 
 	'use strict';
 
-	var _LonginReg = __webpack_require__(3);
+	var _LonginReg = __webpack_require__(1);
 
 	var _LonginReg2 = _interopRequireDefault(_LonginReg);
 
-	var _pop_up = __webpack_require__(1);
+	var _pop_up = __webpack_require__(2);
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
-	var _back_top = __webpack_require__(2);
+	var _back_top = __webpack_require__(3);
 
 	var _back_top2 = _interopRequireDefault(_back_top);
 
@@ -82,163 +82,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Popup = function () {
-	    function Popup(el) {
-	        _classCallCheck(this, Popup);
-
-	        this.el = $(el);
-	        this.mask = null;
-	        this.init();
-	    }
-
-	    _createClass(Popup, [{
-	        key: 'init',
-	        value: function init() {
-	            if ($('#popup_mask').length > 0) {
-	                this.mask = $('#popup_mask');
-	            } else {
-	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
-	            }
-	            this.bindClose();
-	        }
-	    }, {
-	        key: 'bindClose',
-	        value: function bindClose() {
-	            var self = this;
-	            this.mask.on('click', function () {
-	                self.destory();
-	            });
-	            if (this.el.find('button.close')) {
-	                var btnClose = this.el.find('button.close');
-	                btnClose.on('click', function () {
-	                    self.destory();
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'destory',
-	        value: function destory() {
-	            this.mask.remove();
-	            this.el.hide();
-	        }
-	    }, {
-	        key: 'alert',
-	        value: function alert() {
-	            this.mask.appendTo("body");
-	            this.el.show();
-	            this.el.addClass("active");
-	        }
-	    }]);
-
-	    return Popup;
-	}();
-
-	exports.default = Popup;
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var BackTop = function () {
-	    function BackTop(contrastElement) {
-	        _classCallCheck(this, BackTop);
-
-	        //参照元素
-	        this.boundingBox = null;
-	        this.contrastElement = $(contrastElement || '.container');
-	        this.init();
-	    }
-
-	    _createClass(BackTop, [{
-	        key: 'init',
-	        value: function init() {
-	            this.renderUI();
-	            this.syncUI();
-	            this.toTop();
-	        }
-	    }, {
-	        key: 'renderUI',
-	        value: function renderUI() {
-	            if ($('#gotoTop').length > 0) {
-	                this.boundingBox = $('#gotoTop');
-	            } else {
-	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>");
-	                this.boundingBox.appendTo(document.body);
-	            }
-	            // 先消失
-	            this.boundingBox.hide();
-	            this.show();
-	        }
-	    }, {
-	        key: 'show',
-	        value: function show() {
-	            var self = this;
-	            $(window).scroll(function () {
-	                var top = $(document).scrollTop();
-	                if (top > 400) {
-	                    self.boundingBox.fadeIn(200);
-	                } else if (top < 400) {
-	                    self.boundingBox.fadeOut(200);
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'syncUI',
-	        value: function syncUI() {
-	            var self = this;
-	            var cLeft = this.contrastElement.offset().left;
-	            var cWidth = this.contrastElement.width();
-	            this.boundingBox.css({
-	                left: cLeft + cWidth + 20 + 'px'
-	            });
-	            $(window).resize(function () {
-	                var cLeft = self.contrastElement.offset().left;
-	                var cWidth = self.contrastElement.width();
-
-	                self.boundingBox.css({
-	                    left: cLeft + cWidth + 20 + 'px'
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'toTop',
-	        value: function toTop() {
-	            var self = this;
-	            this.boundingBox.find('button.back_to_top').on('click', function () {
-	                $('html,body').animate({ scrollTop: 0 }, 500);
-	            });
-	        }
-	    }]);
-
-	    return BackTop;
-	}();
-
-	exports.default = BackTop;
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -555,6 +398,163 @@
 	}();
 
 	exports.default = Sign;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Popup = function () {
+	    function Popup(el) {
+	        _classCallCheck(this, Popup);
+
+	        this.el = $(el);
+	        this.mask = null;
+	        this.init();
+	    }
+
+	    _createClass(Popup, [{
+	        key: 'init',
+	        value: function init() {
+	            if ($('#popup_mask').length > 0) {
+	                this.mask = $('#popup_mask');
+	            } else {
+	                this.mask = $("<div class='popup_mask' id='popup_mask'></div>");
+	            }
+	            this.bindClose();
+	        }
+	    }, {
+	        key: 'bindClose',
+	        value: function bindClose() {
+	            var self = this;
+	            this.mask.on('click', function () {
+	                self.destory();
+	            });
+	            if (this.el.find('button.close')) {
+	                var btnClose = this.el.find('button.close');
+	                btnClose.on('click', function () {
+	                    self.destory();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'destory',
+	        value: function destory() {
+	            this.mask.remove();
+	            this.el.hide();
+	        }
+	    }, {
+	        key: 'alert',
+	        value: function alert() {
+	            this.mask.appendTo("body");
+	            this.el.show();
+	            this.el.addClass("active");
+	        }
+	    }]);
+
+	    return Popup;
+	}();
+
+	exports.default = Popup;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var BackTop = function () {
+	    function BackTop(contrastElement) {
+	        _classCallCheck(this, BackTop);
+
+	        //参照元素
+	        this.boundingBox = null;
+	        this.contrastElement = $(contrastElement || '.container');
+	        this.init();
+	    }
+
+	    _createClass(BackTop, [{
+	        key: 'init',
+	        value: function init() {
+	            this.renderUI();
+	            this.syncUI();
+	            this.toTop();
+	        }
+	    }, {
+	        key: 'renderUI',
+	        value: function renderUI() {
+	            if ($('#gotoTop').length > 0) {
+	                this.boundingBox = $('#gotoTop');
+	            } else {
+	                this.boundingBox = $("<div id='gotoTop'><button class='back_to_top'></button><a class='feedback' href='#'></a></div>");
+	                this.boundingBox.appendTo(document.body);
+	            }
+	            // 先消失
+	            this.boundingBox.hide();
+	            this.show();
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            var self = this;
+	            $(window).scroll(function () {
+	                var top = $(document).scrollTop();
+	                if (top > 400) {
+	                    self.boundingBox.fadeIn(200);
+	                } else if (top < 400) {
+	                    self.boundingBox.fadeOut(200);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'syncUI',
+	        value: function syncUI() {
+	            var self = this;
+	            var cLeft = this.contrastElement.offset().left;
+	            var cWidth = this.contrastElement.width();
+	            this.boundingBox.css({
+	                left: cLeft + cWidth + 20 + 'px'
+	            });
+	            $(window).resize(function () {
+	                var cLeft = self.contrastElement.offset().left;
+	                var cWidth = self.contrastElement.width();
+
+	                self.boundingBox.css({
+	                    left: cLeft + cWidth + 20 + 'px'
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'toTop',
+	        value: function toTop() {
+	            var self = this;
+	            this.boundingBox.find('button.back_to_top').on('click', function () {
+	                $('html,body').animate({ scrollTop: 0 }, 500);
+	            });
+	        }
+	    }]);
+
+	    return BackTop;
+	}();
+
+	exports.default = BackTop;
 
 /***/ }
 /******/ ]);

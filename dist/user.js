@@ -47,13 +47,13 @@
 
 	'use strict';
 
-	var _pop_up = __webpack_require__(1);
+	var _pop_up = __webpack_require__(2);
 
 	var _pop_up2 = _interopRequireDefault(_pop_up);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var cropper = __webpack_require__(16);
+	var cropper = __webpack_require__(19);
 	// var Avatar = require('../components/avatar_upload.js');
 
 	$(function () {
@@ -137,7 +137,7 @@
 
 /***/ },
 
-/***/ 1:
+/***/ 2:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -205,7 +205,7 @@
 
 /***/ },
 
-/***/ 16:
+/***/ 19:
 /***/ function(module, exports) {
 
 	/*!
