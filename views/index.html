@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>IP库 | IPCool</title>
     <link rel="stylesheet" type="text/css" href="../dist/index.css">
 </head>
+
 <body>
-    
     <div id="home_page">
         <div class="section sec_1" data-anchor="slide1">
             <header>
-                <span class="logo"></span>
-                <nav>
+                <nav class="clearfix">
+                    <span class="logo"></span>
                     <ul class="home_page_nav_left">
                         <li><a href="">首页</a></li>
                         <li><a href="">排行</a></li>
@@ -20,27 +21,37 @@
                         <li><a href="">关于</a></li>
                     </ul>
                     <ul class="home_page_nav_right">
-                        <li><button>注册</button></li>
-                        <li><button>登录</button></li>
+                        <!-- case 1 -->
+                        <li>
+                            <button id="register">登录</button>
+                        </li>
+                        <li>
+                            <button id="login">免费注册</button>
+                        </li>
+                        <!-- case 2 -->
+                        <!-- <li><a href="#">认证</a></li> -->
+                        <!-- <li><span>Jeff</span><img src="../assets/images/avatar.png"></li> -->
                     </ul>
                 </nav>
             </header>
-            <span class="main Title">让IP有序 让文创有依</span>
-            <form>
-                
+            <span class="main_title"></span>
+            <form class="search_bar_container" action="/search.html">
+                <div class="serarch_bar_content">
+                    <input type="text" class="search" name="content" placeholder="搜索 书、影视作品、人物、机构" />
+                    <input type="submit" class="submit" value="" />
+                </div>
             </form>
         </div>
-        <div class="section" data-anchor="slide2">2</div>
-        <div class="section" data-anchor="slide3">3</div>
-        <div class="section" data-anchor="slide4">4</div>
-        <div class="section" data-anchor="slide5">5</div>
-        <div class="section" data-anchor="slide6">6</div>
-        <div class="section" data-anchor="slide7">7</div>
-    </div>    
-    
-
+        <div class="section sec_2" data-anchor="slide2">2</div>
+        <div class="section sec_3" data-anchor="slide3">3</div>
+        <div class="section sec_4" data-anchor="slide4">4</div>
+        <div class="section sec_5" data-anchor="slide5">5</div>
+        <div class="section sec_6" data-anchor="slide6">6</div>
+        <div class="section sec_7" data-anchor="slide7">7</div>
+    </div>
     <script type="text/javascript" src="../dist/vendor/jquery.min.js"></script>
     <script type="text/javascript" src="../dist/vendor/jquery.fullPage.js"></script>
     <script type="text/javascript" src="../dist/index.js"></script>
 </body>
+
 </html>
